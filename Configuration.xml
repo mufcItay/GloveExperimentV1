@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ExperimentConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Squence>41324</Squence>
+  <SubRuns />
+  <ParticipantConfiguration>
+    <Number>1</Number>
+    <GroupNumber>1</GroupNumber>
+    <Gender>Male</Gender>
+    <Age>0</Age>
+  </ParticipantConfiguration>
+  <SessionsConfiguration>
+    <SessionConfiguration>
+      <Number>1</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>2</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+  </SessionsConfiguration>
+  <HWConfiguration />
+  <OutputFilesConfiguration>
+    <UserPressesLogPath>Presses.csv</UserPressesLogPath>
+    <ConfigurationFilePath>Subject Configurations\1_1_2.xml</ConfigurationFilePath>
+    <GloveMovementLogPath>GloveMovements\Movemenvts.csv</GloveMovementLogPath>
+  </OutputFilesConfiguration>
+  <VRHandConfiguration>
+    <HandToAnimate>Right</HandToAnimate>
+    <HandColor>
+      <r>141</r>
+      <g>85</g>
+      <b>36</b>
+      <a>255</a>
+    </HandColor>
+    <HandGender>Male</HandGender>
+    <HandModel>hand_ModelM.obj</HandModel>
+  </VRHandConfiguration>
+  <ExperimentType>PassiveSimulation</ExperimentType>
+  <ReplayFilePath>SimulationUserPresses.csv</ReplayFilePath>
+  <PressFrequency>50</PressFrequency>
+</ExperimentConfiguration>
