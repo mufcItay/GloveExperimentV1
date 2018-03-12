@@ -65,6 +65,6 @@ namespace TestGame
 
             return strategy;
         }
-
-        #endregion    }
+        #endregion
     }
+}

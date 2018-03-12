@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace CommonTools
 {
+    #region Enum
     public enum SkinTone
     {
         Light = 1,
@@ -12,14 +13,19 @@ namespace CommonTools
         Medium,
         Darkish,
         Dark
-    }
+    } 
+    #endregion
 
+    /// <summary>
+    /// the class contains configuration of how the hand in the experiment should apear
+    /// </summary>
     [Serializable]
     public class VRHandConfiguration
     {
+        #region Consts
         private const GenderType DEFUALT_HAND_GENDER = GenderType.Male;
         private const HandType DEFUALT_HAND_TO_ANIMATE = HandType.Right;
-
+        
         public static readonly Color32 SKIN_TONE_DARK = new Color32(141, 85, 36,255);
         public static readonly Color32 SKIN_TONE_DARKISH = new Color32(198, 134, 66,255);
         public static readonly Color32 SKIN_TONE_MEDIUM = new Color32(224, 172, 105,255);
@@ -30,17 +36,38 @@ namespace CommonTools
         public const char FEMALE_HANDMODEL_TAG = 'W';
 
         private static readonly string DEFAULT_HAND_MODEL_PATH = "hand_Model" + MALE_HANDMODEL_TAG+ ".obj";
+        #endregion
 
+        #region Data Members
+        /// <summary>
+        /// member which hods data about the gender of the subject, the hand will be updated accordingly
+        /// </summary>
+        private GenderType mHandGender;
 
+        /// <summary>
+        /// The path to the model of the hand
+        /// </summary>
+        private string mHandModelPath = DEFAULT_HAND_MODEL_PATH;
+
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// The hand to animate in the experiment
+        /// </summary>
         [ConfigurationProperty("Hand To Animate", DefaultValue = DEFUALT_HAND_TO_ANIMATE)]
         public HandType HandToAnimate { get; set; }
 
+        /// <summary>
+        /// the color of the hand
+        /// </summary>
         [Browsable(false)]
         [Validator(IsRequiered = true)]
         public Color32 HandColor { get; set; }
-
-        private GenderType mHandGender;
-
+        
+        /// <summary>
+        /// the gender of the subject, relevant to choose hand model
+        /// </summary>
         [ConfigurationProperty("Hand Gender", DefaultValue = DEFUALT_HAND_GENDER)]
         [Browsable(false)]
         public GenderType HandGender
@@ -48,7 +75,8 @@ namespace CommonTools
             get { return mHandGender; }
             set
             {
-                mHandGender =value;
+                // if we switch gender of subject we need to change hnad model accordingly
+                mHandGender = value;
                 var modelPathCArr = mHandModelPath.ToCharArray();
                 if (mHandGender == GenderType.Male)
                 {
@@ -62,8 +90,9 @@ namespace CommonTools
             }
         }
 
-        private string mHandModelPath = DEFAULT_HAND_MODEL_PATH;
-
+        /// <summary>
+        /// the hand model to be presented
+        /// </summary>
         [Browsable(false)]
         public string HandModel
         {
@@ -84,6 +113,9 @@ namespace CommonTools
             }
         }
 
+        #endregion
+
+        #region Ctors
         public VRHandConfiguration()
         {
             HandColor = SKIN_TONE_MEDIUM;
@@ -96,6 +128,12 @@ namespace CommonTools
             UpdateContents(other);
         }
 
+        #endregion
+
+        /// <summary>
+        /// The function updates the contents of the instance according to an other VRHandConfiguration object.
+        /// </summary>
+        /// <param name="other"></param>
         public void UpdateContents(VRHandConfiguration other)
         {
             HandGender = other.HandGender;

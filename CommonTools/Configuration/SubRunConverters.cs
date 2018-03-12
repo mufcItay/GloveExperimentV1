@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace CommonTools
 {
-	// This is a special type converter which will be associated with the Employee class.
-	// It converts an Employee object to string representation for use in a property grid.
-	internal class SubRunConverter : ExpandableObjectConverter
+    // This is a special type converter which will be associated with the SubRunConfiguration class.
+    // It converts an SubRunConfiguration object to string representation for use in a property grid.
+    internal class SubRunConverter : ExpandableObjectConverter
 	{
 		public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destType )
 		{
@@ -21,9 +21,9 @@ namespace CommonTools
 		}
 	}
 
-	// This is a special type converter which will be associated with the EmployeeCollection class.
-	// It converts an EmployeeCollection object to a string representation for use in a property grid.
-	internal class SubRunCollectionConverter : ExpandableObjectConverter
+    // This is a special type converter which will be associated with the SubRunCollection class.
+    // It converts an SubRunCollection object to a string representation for use in a property grid.
+    internal class SubRunCollectionConverter : ExpandableObjectConverter
 	{
 		public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destType )
 		{

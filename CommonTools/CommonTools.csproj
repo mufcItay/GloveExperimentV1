@@ -54,7 +54,6 @@
     <Compile Include="Configuration\ConfiguartionUtilities.cs" />
     <Compile Include="Configuration\ExperimentConfiguration.cs" />
     <Compile Include="Configuration\FileRepository.cs" />
-    <Compile Include="Configuration\HWConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationRepository.cs" />
     <Compile Include="Configuration\IValidatable.cs" />
     <Compile Include="Configuration\OutputFilesConfiguration.cs" />
