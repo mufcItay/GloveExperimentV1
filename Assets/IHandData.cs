@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace TestGame
 {
+    /// <summary>
+    /// interface for data structure regarding hand movement
+    /// </summary>
     public interface IHandData : ICloneable
     {
+        /// <summary>
+        /// The function sets the abstract movement data to the instance of IHandData
+        /// </summary>
+        /// <param name="data">abstract data to set inner state from</param>
         void SetHandMovementData(object data);
     }
 }

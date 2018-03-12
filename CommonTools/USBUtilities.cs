@@ -8,6 +8,10 @@ using System.Diagnostics;
 namespace CommonTools
 {
 
+    /// <summary>
+    /// static utility class for usb detection.
+    /// primary use : GetConnectedDevices function.
+    /// </summary>
     public static class USBUtilities
     {
         #region "API Region"
@@ -514,6 +518,7 @@ namespace CommonTools
             }
             return DevList;
         }
+
         // private routine for enumerating a hub
         static void ListHub(USBHub Hub, List<USBDevice> DevList)
         {

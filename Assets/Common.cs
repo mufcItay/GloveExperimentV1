@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace TestGame
 {
+    #region Enums
     public enum FingerType
     {
         Index = 0,
@@ -60,40 +61,57 @@ namespace TestGame
     {
         Time = 0,
         Key = 1
-    }
+    } 
+    #endregion
 
+    /// <summary>
+    /// The class contains constant members that are relevant across the application
+    /// </summary>
     public static class CommonConstants
     {
+        // file relevant consts
         public const char CSV_SEPERATOR = ',';
         public const int SCALED_SESORS_ARRAY_LENGTH = 20;
         public const int TIME_COL_INDEX = 0;
         public const int KEY_PRESS_COL_INDEX = 1;
 
+        // hand prefab names
         internal const string MALE_HAND_RENDERER_CONTAINING_OBJECT_NAME = "fp_male_hand";
         internal  const string FEMALE_HAND_RENDERER_CONTAINING_OBJECT_NAME = "fp_female_hand";
-        
         internal const string FEMALE_HAND_PREFAB = "FemaleHand";
         internal const string MALE_HAND_PREFAB = "MaleHand";
 
+        // animation consts
         internal const string INDEX_KEY_PRESS_PARAM = "RIndexPress";
         internal const string MIDDLE_KEY_PRESS_PARAM = "RMiddlePress";
         internal const string RING_KEY_PRESS_PARAM = "RRingPress";
         internal const string PINKY_KEY_PRESS_PARAM = "RPinkyPress";
 
+        // animation triggers consts
         internal const string INDEX_KEY_PRESS_STRING = "1";
         internal const string MIDDLE_KEY_PRESS_STRING = "2";
         internal const string RING_KEY_PRESS_STRING = "3";
         internal const string PINKY_KEY_PRESS_STRING = "4";
 
+        // glove consts
         internal const string USB_PORT_NAME_PREFIX = "USB";
         internal const string DT_GLOVE_PRODUCT = "5DT Glove";
         internal const string DT_GLOVE_INSTANCE_ID_PREFIX = "DG14U";
     }
 
+
+    /// <summary>
+    /// The clas contains common functions being used accross the application
+    /// </summary>
     public static class CommonUtilities
     {
         private const string HAND_JOINT_OBJECT_NAME = "hand_joint";
 
+        /// <summary>
+        /// The function returns the relevant hand prefab according to gender
+        /// </summary>
+        /// <param name="gender">the relevant gender</param>
+        /// <returns>name of the relevant prefab</returns>
         public static string GetHandPrefabName(GenderType gender)
         {
             if (gender == GenderType.Female)
@@ -104,6 +122,11 @@ namespace TestGame
             return CommonConstants.MALE_HAND_PREFAB;
         }
 
+        /// <summary>
+        /// The function returns the renderer name of the hand according to gender
+        /// </summary>
+        /// <param name="gender">the relevant gender</param>
+        /// <returns>name of the relevant prefab</returns>
         public static string GetRendererParentObjectName(GenderType gender)
         {
             if (gender == GenderType.Female)
@@ -113,7 +136,12 @@ namespace TestGame
 
             return CommonConstants.MALE_HAND_RENDERER_CONTAINING_OBJECT_NAME;
         }
-
+        
+        /// <summary>
+        /// The function returns relevant columns for CSV file for each experiment type
+        /// </summary>
+        /// <param name="type">relevant experiment type</param>
+        /// <returns>columns IEnumerable of all of the columns of the CSVFile relevant to the experiment type</returns>
         public static IEnumerable<string> CreateGlovesDataFileColumns(ExperimentType type)
         {
             IEnumerable<string> cols;
@@ -133,6 +161,10 @@ namespace TestGame
             return cols;
         }
 
+        /// <summary>
+        /// The function wrapps usb utilities use to get glove usb port
+        /// </summary>
+        /// <returns>string of the port name of relevant usb port that the glove is connected to. if to gloves are connected the first one will be picked</returns>
         public static string GetGloveUSBPort()
         {
             // get reqiuered usb dev id
@@ -145,12 +177,14 @@ namespace TestGame
                 {
                     if (usbDevs[i].InstanceID.StartsWith(CommonConstants.DT_GLOVE_INSTANCE_ID_PREFIX))
                     {
+                        // return first suitable usb port
                         portNumber = i.ToString();
                         break;
                     }
                 }
             }
             
+            // build port name string
             StringBuilder sb = new StringBuilder();
             sb.Append(CommonConstants.USB_PORT_NAME_PREFIX);
             sb.Append(portNumber);
@@ -158,29 +192,51 @@ namespace TestGame
             return sb.ToString();
         }
 
+        /// <summary>
+        /// The function seached for a specific finger object and returns it's Transform
+        /// </summary>
+        /// <param name="handController">the hand controller so search from</param>
+        /// <param name="type">the finger we search for</param>
+        /// <returns>Transform object of the finger we were searching</returns>
         public static Transform GetFingerObject(Transform handController, FingerType type)
         {
             var handJoint = FindObjectWithName(handController, HAND_JOINT_OBJECT_NAME);
             return handJoint.GetChild((int)type);
         }
 
+        /// <summary>
+        /// extension method for a Transform object, the fucntino searches for a given game object below given parent game object.
+        /// </summary>
+        /// <param name="parent">from where to search</param>
+        /// <param name="nameToSearch">nae of the game pbject we are searching</param>
+        /// <returns>The transform of the game object we are searching. the function will return the first occurence of this name</returns>
         public static Transform FindObjectWithName(this Transform parent, string nameToSearch)
         {
             return GetChildObject(parent, nameToSearch);
         }
 
+        /// <summary>
+        /// the fucntino searches for a given game object below given parent game object.
+        /// </summary>
+        /// <param name="parent">from where to search</param>
+        /// <param name="nameToSearch">nae of the game pbject we are searching</param>
+        /// <returns>nul if we didn't find suitable game object, or otherwise, The transform of the game object we are searching. the function will return the first occurence of this name</returns>
         private static Transform GetChildObject(Transform parent, string nameToSearch)
         {
+            // end of search
             if (parent == null)
             {
                 return null;
             }
 
+            // run on all child and continue searching
             for (int i = 0; i < parent.childCount; i++)
             {
                 Transform child = parent.GetChild(i);
                 if (string.Equals(child.name, nameToSearch))
                 {
+
+                    // spread seach t children
                     return child;
                 }
                 if (child.childCount > 0)
@@ -188,14 +244,20 @@ namespace TestGame
                     var suitableChild = GetChildObject(child, nameToSearch);
                     if (suitableChild != null)
                     {
+                        // suitable match
                         return suitableChild;
                     }
                 }
             }
-
+            
+            // out of luck
             return null;
         }
 
+        /// <summary>
+        /// the function figures out which key was pressed.
+        /// </summary>
+        /// <returns>the that was pressed, if no key was pressed KeyCode.None is returned</returns>
         public static KeyCode FetchKey()
         {
             var e = System.Enum.GetNames(typeof(KeyCode)).Length;

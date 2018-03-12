@@ -4,21 +4,45 @@ using UnityEngine;
 using TestGame;
 using System;
 
+/// <summary>
+/// The class is the controller of a hand in the experiment.
+/// it controlls all aspects of the hand (visual state, movement, writing to files etc...)
+/// </summary>
 public class HandController : MonoBehaviour {
+
+    #region Data Members
+    
+    /// <summary>
+    /// FOR NOW 000000000000000000000000
+    /// </summary>
     public GameObject myPrefab;
-    // for unity configuration to determine which hand side is this
+
+    /// <summary>
+    /// for unity configuration to determine which hand side is this
+    /// </summary>
     public HandType HandSide;
-    //the gender of the hand
+
+    /// <summary>
+    /// the gender of the hand
+    /// </summary>
     public GenderType HandGender;
-    // holds the strategy to handle hand movement for given experiment type
+
+    /// <summary>
+    /// holds the strategy to handle hand movement for given experiment type
+    /// </summary>
     private BaseExperimentStrategy mExperimentStrategy;
 
+    /// <summary>
+    /// The experiment type
+    /// </summary>
     private ExperimentType mExperimentType;
-    
-    // Use this for initialization
-    void Start () {
+    #endregion
+
+    #region Functions
+    void Start()
+    {
         SetConfiguredHandAppearance();
-        var fingers = new List<Finger>();
+        // are we in an animated hand?
         HandType handToAnimate = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
         if (!handToAnimate.Equals(HandSide))
         {
@@ -30,26 +54,37 @@ public class HandController : MonoBehaviour {
 
         ////
 
+        // set parameters and init selected strategy
         mExperimentType = ConfigurationManager.Instance.Configuration.ExperimentType;
         mExperimentStrategy = ExperimentStrategyFactory.GetOrCreate(mExperimentType);
         mExperimentStrategy.Init(this);
     }
-    
+
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
+        // only move the hand
         mExperimentStrategy.MoveHand();
     }
 
+    /// <summary>
+    /// the function sets the appearance of the hand according to configuration
+    /// </summary>
     public void SetConfiguredHandAppearance()
     {
+        // get hand model
         var handModel = CommonUtilities.FindObjectWithName(transform, CommonUtilities.GetRendererParentObjectName(HandGender));
+        // get renderer of hand
         Renderer rend = handModel.GetComponent<Renderer>();
+        // set hand color
         rend.material.color = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandColor;
     }
 
     private void OnDestroy()
     {
+        // when the hand is destroyed, close he strategy
         mExperimentStrategy.Close();
     }
 
+    #endregion
 }
