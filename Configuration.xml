@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <ExperimentConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Squence>41324</Squence>
-  <SubRuns />
+  <SubRuns>
+    <SubRunConfiguration>
+      <BlocksAmount>12</BlocksAmount>
+      <InterBlockTimeout>30</InterBlockTimeout>
+      <BlockDuration>1</BlockDuration>
+    </SubRunConfiguration>
+  </SubRuns>
   <ParticipantConfiguration>
-    <Number>1</Number>
+    <Number>5</Number>
     <GroupNumber>1</GroupNumber>
     <Gender>Male</Gender>
     <Age>0</Age>
@@ -13,29 +19,24 @@
       <Number>1</Number>
       <SleepHours>0</SleepHours>
     </SessionConfiguration>
-    <SessionConfiguration>
-      <Number>2</Number>
-      <SleepHours>0</SleepHours>
-    </SessionConfiguration>
   </SessionsConfiguration>
-  <HWConfiguration />
   <OutputFilesConfiguration>
-    <UserPressesLogPath>Presses.csv</UserPressesLogPath>
-    <ConfigurationFilePath>Subject Configurations\1_1_2.xml</ConfigurationFilePath>
+    <UserPressesLogPath>UserPresses\Presses.csv</UserPressesLogPath>
+    <ConfigurationFilePath>Subject Configurations\5_1_1.xml</ConfigurationFilePath>
     <GloveMovementLogPath>GloveMovements\Movemenvts.csv</GloveMovementLogPath>
   </OutputFilesConfiguration>
   <VRHandConfiguration>
     <HandToAnimate>Right</HandToAnimate>
     <HandColor>
-      <r>141</r>
-      <g>85</g>
-      <b>36</b>
+      <r>224</r>
+      <g>172</g>
+      <b>105</b>
       <a>255</a>
     </HandColor>
     <HandGender>Male</HandGender>
     <HandModel>hand_ModelM.obj</HandModel>
   </VRHandConfiguration>
   <ExperimentType>PassiveSimulation</ExperimentType>
-  <ReplayFilePath>SimulationUserPresses.csv</ReplayFilePath>
-  <PressFrequency>50</PressFrequency>
+  <ReplayFilePath>UserPresses\SimulationUserPresses.csv</ReplayFilePath>
+  <PressFrequency>20</PressFrequency>
 </ExperimentConfiguration>

@@ -194,30 +194,47 @@ namespace JasHandExperiment.UI
                 MessageBox.Show("Invalid Properties, configure them please");
                 return;
             }
+            SaveToFile(mExpConfiguration);
+            FillComboboxes();
+        }
+
+        /// <summary>
+        /// The functino saves the configuration to file in subjects directory,
+        /// and replaces current configuration by the saved one.
+        /// </summary>
+        /// <param name="repository">the </param>
+        /// <param name="subjectId"></param>
+        private void SaveToFile(ExperimentConfiguration conf)
+        {
+            string subjectId = conf.ParticipantConfiguration.Number.ToString();
+
             FileRepository repository = new FileRepository();
-            string subjectId = mExpConfiguration.ParticipantConfiguration.Number.ToString();
+
             try
             {
-                repository.Save(mExpConfiguration, mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath);
+                repository.Save(mExpConfiguration, conf.OutputFilesConfiguration.ConfigurationFilePath);
                 // if not first session
                 if (mSubjectToSessionIDDict.ContainsKey(subjectId) && mSubjectToSessionIDDict[subjectId] != 1)
                 {
                     // delete older session file
-                    string sessionIdToDelete = (mSubjectToSessionIDDict[subjectId] -1).ToString();
+                    string sessionIdToDelete = (mSubjectToSessionIDDict[subjectId] - 1).ToString();
                     // delete old session
-                    string oldFilePath = GetConfigurationFilePath(subjectId, mExpConfiguration.ParticipantConfiguration.GroupNumber.ToString(), sessionIdToDelete);
+                    string oldFilePath = GetConfigurationFilePath(subjectId, conf.ParticipantConfiguration.GroupNumber.ToString(), sessionIdToDelete);
                     // if the file exists means we creating new session, not updating it, so old file exists
                     if (File.Exists(oldFilePath))
                     {
                         File.Delete(oldFilePath);
                     }
                 }
+
+                //replace current configuration file with new one
+                //copy newly saved conf to new conf directory, overrite if there exsits a current conf file
+                File.Copy(conf.OutputFilesConfiguration.ConfigurationFilePath, ExperimentConfiguration.DEFAULT_CONF_FILE_NAME,true);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed saving configuration file. exception : " + ex.Message);
             }
-            FillComboboxes();
         }
 
         private void UpdateConfigurationFromGUI()
