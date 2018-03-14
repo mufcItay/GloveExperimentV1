@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// the class represents a simulation file device, reads from a simulation file the keys that need to be simulated

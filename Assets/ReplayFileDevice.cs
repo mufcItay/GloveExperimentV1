@@ -1,6 +1,6 @@
 ﻿using CommonTools;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// the cass represents the device of reading from saved glove data (a replay of previous Active experiment)

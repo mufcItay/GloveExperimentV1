@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// the class represents a finger in a hand. being held by an experiment strategy

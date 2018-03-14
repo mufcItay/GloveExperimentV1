@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// The class handles animations for given object.

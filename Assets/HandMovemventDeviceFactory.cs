@@ -1,7 +1,8 @@
 ﻿using System;
 using CommonTools;
+using JasHandExperiment.Configuration;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// Factory class for HandMovementDevices, creates only one copy of each Device.

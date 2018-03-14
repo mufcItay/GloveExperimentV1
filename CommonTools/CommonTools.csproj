@@ -52,21 +52,12 @@
     <Compile Include="Configuration\ConfigurationEditorAttribute.cs" />
     <Compile Include="CSVFile.cs" />
     <Compile Include="Configuration\ConfiguartionUtilities.cs" />
-    <Compile Include="Configuration\ExperimentConfiguration.cs" />
     <Compile Include="Configuration\FileRepository.cs" />
     <Compile Include="Configuration\IConfigurationRepository.cs" />
     <Compile Include="Configuration\IValidatable.cs" />
-    <Compile Include="Configuration\OutputFilesConfiguration.cs" />
-    <Compile Include="Configuration\ParticipantConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Configuration\SessionConfiguration.cs" />
-    <Compile Include="Configuration\SubRunCollection.cs" />
-    <Compile Include="Configuration\SubRunCollectionPropertyDescriptor.cs" />
-    <Compile Include="Configuration\SubRunConfiguration.cs" />
-    <Compile Include="Configuration\SubRunConverters.cs" />
     <Compile Include="USBUtilities.cs" />
     <Compile Include="Configuration\ValidatorAttribute.cs" />
-    <Compile Include="Configuration\VRHandConfiguration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

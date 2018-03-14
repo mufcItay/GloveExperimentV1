@@ -1,7 +1,8 @@
 ﻿using System;
 using CommonTools;
+using JasHandExperiment.Configuration;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// Factory class for ExperimentStrategies, creates only one copy of each strategy.

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using CommonTools;
 using UnityEngine;
-using TestGame;
+using JasHandExperiment;
 using System;
+using JasHandExperiment.Configuration;
 
 /// <summary>
 /// The class is the controller of a hand in the experiment.

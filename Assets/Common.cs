@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using CommonTools;
+using JasHandExperiment.Configuration;
 using UnityEngine;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     #region Enums
     public enum FingerType

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// the class is an implementation of IHandData, gives data about each bone in a finger in the hand.

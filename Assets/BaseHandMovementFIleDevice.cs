@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// abstract calss the represents hand movement information from a file.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// interface for a device that reads movement data 

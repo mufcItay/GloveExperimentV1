@@ -1,4 +1,5 @@
 ﻿using CommonTools;
+using JasHandExperiment.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// Abstract class for an experiment strategy

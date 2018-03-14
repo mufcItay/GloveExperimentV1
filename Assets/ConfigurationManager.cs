@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommonTools;
+using JasHandExperiment.Configuration;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// Singletine class that provides services for reading from congiguration 

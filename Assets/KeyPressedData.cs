@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// IHandData impelemntation for hand movement directed from a key press. releven to simulation experiments

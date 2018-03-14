@@ -2,7 +2,7 @@
 using FDTGloveUltraCSharpWrapper;
 using UnityEngine;
 
-namespace TestGame
+namespace JasHandExperiment
 {
     /// <summary>
     /// The class represents the device that reads from 5DT glove.
