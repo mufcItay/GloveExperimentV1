@@ -13,8 +13,9 @@ namespace JasHandExperiment.UI
     [ConfigurationEditor(typeof(ExperimentConfiguration))]
     public partial class ExperimentConfiugrationEditorForm : Form
     {
+        #region Consts
         private const string SUBJECTS_CONFIGURATIONS_FOLDER_PATH = @"Subject Configurations\";
-        private const string CONFIGURATION_FILE_NAME_PATTERN = "subjID"+ CONFIGURATION_FILE_NAME_PATTERN_DELIMITER + "groupID" + CONFIGURATION_FILE_NAME_PATTERN_DELIMITER + "sessionID";
+        private const string CONFIGURATION_FILE_NAME_PATTERN = "subjID" + CONFIGURATION_FILE_NAME_PATTERN_DELIMITER + "groupID" + CONFIGURATION_FILE_NAME_PATTERN_DELIMITER + "sessionID";
         private const string CONFIGURATION_FILE_NAME_PATTERN_DELIMITER = "_";
         private const int SUBJECTID_INDEX = 0;
         private const int GROUPID_INDEX = 1;
@@ -22,26 +23,56 @@ namespace JasHandExperiment.UI
         private const int DEFAULT_NEW_SESSION_ID = 1;
         private const int DEFAULT_SLEEPING_HOURS = 0;
 
+        #endregion
 
+        #region Data Members
+
+        /// <summary>
+        /// The configuration object being edited.
+        /// </summary>
         private ExperimentConfiguration mExpConfiguration;
+
+        /// <summary>
+        /// list of file names, of currently available configurations saved earlier
+        /// </summary>
         private List<String> mSavedConfFiles;
+
+        /// <summary>
+        /// dictionary that mapps between subjects to their current session
+        /// </summary>
         private Dictionary<String, int> mSubjectToSessionIDDict;
+
+        /// <summary>
+        /// remembers last selected subject for GUI puposes
+        /// </summary>
         private string mLastSelectedSubject;
+
+        #endregion
+
+
+        #region Ctors
 
         public ExperimentConfiugrationEditorForm()
         {
             InitializeComponent();
+            // create outputfiles directories
             CreateFolders();
             mExpConfiguration = new ExperimentConfiguration();
             // add a default first sub run
             mExpConfiguration.SubRuns.Add(new SubRunConfiguration());
-
             mSubjectToSessionIDDict = new Dictionary<string, int>();
+
+            // fill GUI
             FillComboboxes();
             FillGUIData(mExpConfiguration);
             subRunEditorControl.XMLHandlingVisible(false);
         }
+        #endregion
 
+        #region Functions
+        /// <summary>
+        /// The functions creates output files directories if they havn't been created
+        /// </summary>
         private void CreateFolders()
         {
             if (!Directory.Exists(SUBJECTS_CONFIGURATIONS_FOLDER_PATH))
@@ -58,12 +89,13 @@ namespace JasHandExperiment.UI
             }
         }
 
-        private void ExperimentConfiugrationEditorForm_Load(object sender, EventArgs e)
-        {
-        }
-
+        /// <summary>
+        /// The function fills GUI controls with the configuraton object data.
+        /// </summary>
+        /// <param name="exp">the configuration object to set data from</param>
         private void FillGUIData(ExperimentConfiguration exp)
         {
+            // fill controls
             textBoxSequence.Text = exp.Squence;
             vrHandEditorControl.ConfigurationObject = exp.VRHandConfiguration;
             textBoxAge.Text = exp.ParticipantConfiguration.Age.ToString();
@@ -72,6 +104,7 @@ namespace JasHandExperiment.UI
             comboBoxGroupNumber.Text = exp.ParticipantConfiguration.GroupNumber.ToString();
             string subjectNumberStr = exp.ParticipantConfiguration.Number.ToString();
             comboBoxSubjectNumber.Text = subjectNumberStr;
+            // handle sessions
             if (exp.SessionsConfiguration.Any())
             {
 
@@ -97,9 +130,14 @@ namespace JasHandExperiment.UI
             }
             string fileName = GetConfigurationFilePath(subjectId, exp.ParticipantConfiguration.GroupNumber.ToString(), confFileSessionId.ToString());
             textBoxCurretConfFile.Text = fileName;
+
+            // handle experiment type
             SetExperimentTypeControlsState(exp);
         }
 
+        /// <summary>
+        /// The function fils comboboxes of the gui
+        /// </summary>
         private void FillComboboxes()
         {
             comboBoxGroupNumber.Text = string.Empty;
@@ -107,8 +145,11 @@ namespace JasHandExperiment.UI
             List<String> groupNumbersList = new List<string>();
             List<String> subjectNumbersList = new List<string>();
             mSavedConfFiles = Directory.GetFiles(SUBJECTS_CONFIGURATIONS_FOLDER_PATH, "*.xml", SearchOption.TopDirectoryOnly).ToList();
+            // learn how to fill vomoboxes according to ptten of file names in saved configuration files list
             foreach (var file in mSavedConfFiles)
             {
+                // file name format is :    SUBJECTID_GROUPID_SESSIONID.xml
+
                 var fileNameParts = file.Split(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER.ToCharArray());
                 if (!subjectNumbersList.Contains(fileNameParts[SUBJECTID_INDEX].Split('\\')[1]))
                 {
@@ -144,7 +185,7 @@ namespace JasHandExperiment.UI
                 comboBoxSubjectNumber.SelectedItem = mLastSelectedSubject;
             }
         }
-        
+
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
@@ -153,11 +194,16 @@ namespace JasHandExperiment.UI
 
         private void comboBoxSubjectNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // handle subject number comobox selection change by updating GUI
             UpdateSubjectDataOnGUI();
         }
 
+        /// <summary>
+        /// the fucntion updated GUI accordign to newly selected subject
+        /// </summary>
         private void UpdateSubjectDataOnGUI()
         {
+            // get selected subject
             string selectedSubjectFile = mSavedConfFiles.Where(x =>
             {
                 string subjectPart = x.Split(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER.ToCharArray())[SUBJECTID_INDEX];
@@ -171,6 +217,7 @@ namespace JasHandExperiment.UI
             }
             try
             {
+                // read the configruation file of the subject
                 var repository = new FileRepository();
                 repository.Connect(selectedSubjectFile);
                 mExpConfiguration = repository.GetObject<ExperimentConfiguration>();
@@ -181,20 +228,26 @@ namespace JasHandExperiment.UI
                 Close();
                 return;
             }
+            //populate GUI according to loaded configuration object
             FillGUIData(mExpConfiguration);
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            // get all changes to the confgiruation objct
             UpdateConfigurationFromGUI();
+            // validate the configurated values
             GenericValidator<ExperimentConfiguration> validator = new GenericValidator<ExperimentConfiguration>(mExpConfiguration);
             var invalidProps = validator.GetInvalidPropertiesErrors();
             if (invalidProps.Any())
             {
+                // react to invalid configuration
                 MessageBox.Show("Invalid Properties, configure them please");
                 return;
             }
+            //save configuratino to file
             SaveToFile(mExpConfiguration);
+            // populate GUI
             FillComboboxes();
         }
 
@@ -202,8 +255,7 @@ namespace JasHandExperiment.UI
         /// The functino saves the configuration to file in subjects directory,
         /// and replaces current configuration by the saved one.
         /// </summary>
-        /// <param name="repository">the </param>
-        /// <param name="subjectId"></param>
+        /// <param name="conf">the confiuration object to save to file</param>
         private void SaveToFile(ExperimentConfiguration conf)
         {
             string subjectId = conf.ParticipantConfiguration.Number.ToString();
@@ -212,6 +264,7 @@ namespace JasHandExperiment.UI
 
             try
             {
+                // save the configuration
                 repository.Save(mExpConfiguration, conf.OutputFilesConfiguration.ConfigurationFilePath);
                 // if not first session
                 if (mSubjectToSessionIDDict.ContainsKey(subjectId) && mSubjectToSessionIDDict[subjectId] != 1)
@@ -229,7 +282,7 @@ namespace JasHandExperiment.UI
 
                 //replace current configuration file with new one
                 //copy newly saved conf to new conf directory, overrite if there exsits a current conf file
-                File.Copy(conf.OutputFilesConfiguration.ConfigurationFilePath, ExperimentConfiguration.DEFAULT_CONF_FILE_NAME,true);
+                File.Copy(conf.OutputFilesConfiguration.ConfigurationFilePath, ExperimentConfiguration.DEFAULT_CONF_FILE_NAME, true);
             }
             catch (Exception ex)
             {
@@ -237,6 +290,9 @@ namespace JasHandExperiment.UI
             }
         }
 
+        /// <summary>
+        /// The fucntion gets all configurated data from GUI and updated the configuration object edited
+        /// </summary>
         private void UpdateConfigurationFromGUI()
         {
             //subject number
@@ -272,11 +328,11 @@ namespace JasHandExperiment.UI
             {
                 mExpConfiguration.ParticipantConfiguration.Gender = GenderType.Female;
             }
-            
+
             //Hand
             mExpConfiguration.VRHandConfiguration = vrHandEditorControl.ConfigurationObject;
             mExpConfiguration.VRHandConfiguration.HandGender = mExpConfiguration.ParticipantConfiguration.Gender;
-        
+
             //Sequence
             mExpConfiguration.Squence = textBoxSequence.Text;
 
@@ -297,15 +353,15 @@ namespace JasHandExperiment.UI
             newSess.Number = sessionNumber;
             newSess.SleepHours = sleepHours;
             mExpConfiguration.SessionsConfiguration.Add(newSess);
-            
+
             //Hand
-            mExpConfiguration.SubRuns= subRunEditorControl.ConfigurationObject;
+            mExpConfiguration.SubRuns = subRunEditorControl.ConfigurationObject;
             // experiment type
             mExpConfiguration.ExperimentType = GetSelectedExperimentType();
-            if(mExpConfiguration.ExperimentType == ExperimentType.PassiveSimulation)
+            if (mExpConfiguration.ExperimentType == ExperimentType.PassiveSimulation)
             {
                 uint pressFreq;
-                if(!uint.TryParse(textBoxPressesFreq.Text, out pressFreq))
+                if (!uint.TryParse(textBoxPressesFreq.Text, out pressFreq))
                 {
                     MessageBox.Show("Bad presses frequency!");
                     return;
@@ -314,7 +370,7 @@ namespace JasHandExperiment.UI
 
                 mExpConfiguration.ReplayFilePath = textBoxReplayFile.Text;
             }
-            else if(mExpConfiguration.ExperimentType == ExperimentType.PassiveWatchingReplay)
+            else if (mExpConfiguration.ExperimentType == ExperimentType.PassiveWatchingReplay)
             {
                 mExpConfiguration.ReplayFilePath = textBoxReplayFile.Text;
             }
@@ -324,16 +380,24 @@ namespace JasHandExperiment.UI
             mExpConfiguration.OutputFilesConfiguration.UserPressesLogPath = textBoxKeyboardLogFile.Text;
             string fileName = GetConfigurationFilePath(comboBoxSubjectNumber.Text, comboBoxGroupNumber.Text, textBoxSessionNumber.Text);
             textBoxCurretConfFile.Text = fileName;
-            mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath= textBoxCurretConfFile.Text;
+            mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath = textBoxCurretConfFile.Text;
         }
 
         private void comboBoxGroupNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // react to group number selection change
             string fileName = GetConfigurationFilePath(comboBoxSubjectNumber.Text, comboBoxGroupNumber.Text, textBoxSessionNumber.Text);
             textBoxCurretConfFile.Text = fileName;
         }
 
-        private string GetConfigurationFilePath(string participantID,string groupId, string sessionID)
+        /// <summary>
+        /// the function the file path for given subject,group,session combination.
+        /// </summary>
+        /// <param name="participantID">subject number</param>
+        /// <param name="groupId">group number</param>
+        /// <param name="sessionID">sessino number</param>
+        /// <returns>the file name relevant to arguments according to the configration file name pattern needed</returns>
+        private string GetConfigurationFilePath(string participantID, string groupId, string sessionID)
         {
             StringBuilder sb = new StringBuilder();
             // participant id
@@ -349,6 +413,10 @@ namespace JasHandExperiment.UI
             return sb.ToString();
         }
 
+        /// <summary>
+        /// the function clears GUI controls and initializes subject number to given one
+        /// </summary>
+        /// <param name="subjectId">subject number to set after clearing GUI</param>
         private void ClearGUI(uint subjectId)
         {
             mExpConfiguration = new ExperimentConfiguration();
@@ -359,16 +427,22 @@ namespace JasHandExperiment.UI
 
         private void comboBoxSubjectNumber_Leave(object sender, EventArgs e)
         {
+            // when leaving subject number combobox, update GUI
             if (!comboBoxSubjectNumber.Text.Equals(mLastSelectedSubject))
             {
                 ApplySubjectNumberComboboxUpdate();
             }
         }
 
+        /// <summary>
+        /// the fucntion applies changing the subject number and refreshes inner state and GUI accordingly
+        /// </summary>
         private void ApplySubjectNumberComboboxUpdate()
         {
+            // get applied subject number
             string selectedSubjectId = comboBoxSubjectNumber.Text;
             mLastSelectedSubject = selectedSubjectId;
+            // if new subject number
             if (!comboBoxSubjectNumber.Items.Contains(selectedSubjectId))
             {
                 uint subjectId;
@@ -382,6 +456,7 @@ namespace JasHandExperiment.UI
             }
             else
             {
+                // if the subject number already exsits, just update GUI
                 UpdateSubjectDataOnGUI();
             }
         }
@@ -396,6 +471,10 @@ namespace JasHandExperiment.UI
             GetFilePath(textBoxGloveLogFile);
         }
 
+        /// <summary>
+        /// the function connects given file dialog to a text box
+        /// </summary>
+        /// <param name="tBoxToSet">the text box to set according to selected file name in save file dialog</param>
         private void GetFilePath(TextBox tBoxToSet)
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -406,16 +485,22 @@ namespace JasHandExperiment.UI
 
         private void radioButtonMale_CheckedChanged(object sender, EventArgs e)
         {
+            // the ufunction reacts to changes in gender by changing hand model
             mExpConfiguration.VRHandConfiguration.HandGender = radioButtonMale.Checked ? GenderType.Male : GenderType.Female;
             vrHandEditorControl.SetModelPath(mExpConfiguration.VRHandConfiguration.HandModel);
         }
 
         private void radioButtonExperimentType_CheckedChanged(object sender, EventArgs e)
         {
+            // the function reacts to changing experiment type by changing GUI and inner satate
             mExpConfiguration.ExperimentType = GetSelectedExperimentType();
             SetExperimentTypeControlsState(mExpConfiguration);
         }
-        
+
+        /// <summary>
+        /// the function gets selected experiment type from GUI and returnes it
+        /// </summary>
+        /// <returns>selected experiment type</returns>
         private ExperimentType GetSelectedExperimentType()
         {
             if (radioButtonTypeA.Checked)
@@ -429,12 +514,18 @@ namespace JasHandExperiment.UI
             return ExperimentType.PassiveSimulation;
         }
 
+        /// <summary>
+        /// the function reacts to experiment type by changing GUI controls visibility.
+        /// for example simulation experiment type need a place to edit user presses frequency,
+        /// but in active experiemt type user presses frequency is irelevant and sould not be editable
+        /// </summary>
+        /// <param name="exp">the experiment configruatino object to react to</param>
         private void SetExperimentTypeControlsState(ExperimentConfiguration exp)
         {
             textBoxPressesFreq.Text = exp.PressFrequency.ToString();
             textBoxReplayFile.Text = exp.ReplayFilePath;
             switch (exp.ExperimentType)
-            {   
+            {
                 case ExperimentType.Active:
                     textBoxReplayFile.Visible = false;
                     labelTypeAdditionalParam.Visible = false;
@@ -464,10 +555,11 @@ namespace JasHandExperiment.UI
 
         private void buttonBrowseReplayFile_Click(object sender, EventArgs e)
         {
-            if(openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxReplayFile.Text = openFileDialog.FileName;
             }
-        }
+        } 
+        #endregion
     }
 }

@@ -502,7 +502,6 @@
             this.Controls.Add(this.groupBoxParticipant);
             this.Name = "ExperimentConfiugrationEditorForm";
             this.Text = "ExperimentConfiugrationEditorForm";
-            this.Load += new System.EventHandler(this.ExperimentConfiugrationEditorForm_Load);
             this.groupBoxParticipant.ResumeLayout(false);
             this.groupBoxParticipant.PerformLayout();
             this.groupBoxSessionInfo.ResumeLayout(false);

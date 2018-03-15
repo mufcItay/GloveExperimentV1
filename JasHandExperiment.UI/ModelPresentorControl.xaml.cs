@@ -13,18 +13,40 @@ namespace JasHandExperiment.UI
     /// </summary>
     public partial class ModelPresentorControl : UserControl
     {
+        #region Data Members
+        /// <summary>
+        /// Model for 3D vsualiation
+        /// </summary>
         ModelVisual3D mDeviceVisual3D;
+
+        /// <summary>
+        /// 3D devise to present a model
+        /// </summary>
         Model3D mDevice3D;
+
+        #endregion
+
+        #region Ctor
         public ModelPresentorControl()
         {
             InitializeComponent();
             mDeviceVisual3D = new ModelVisual3D();
         }
+        #endregion
 
+        #region Functions
+        /// <summary>
+        /// The functino loads given model with given color to the 3D device.
+        /// model need to be an .obj file.
+        /// </summary>
+        /// <param name="modelPath">path to the model file</param>
+        /// <param name="col">the color to paint the model</param>
+        /// <returns>boolean indicating successful operation</returns>
         public bool LoadModel(string modelPath, Color col)
         {
             try
             {
+                // get 3D content
                 mDeviceVisual3D.Content = Display3d(modelPath, col);
             }
             catch (Exception ex)
@@ -69,6 +91,10 @@ namespace JasHandExperiment.UI
             return mDevice3D;
         }
 
+        /// <summary>
+        /// The function sets the model color accordign to 'modelColor'
+        /// </summary>
+        /// <param name="modelColor">the color to set</param>
         public void ChangeModelColor(Color modelColor)
         {
             // Set your RGB Color on the SolitColorBrush
@@ -83,6 +109,7 @@ namespace JasHandExperiment.UI
                 geometryModel.BackMaterial = mat;
             }
         }
-        
+
+        #endregion
     }
 }

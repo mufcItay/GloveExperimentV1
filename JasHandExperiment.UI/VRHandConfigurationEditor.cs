@@ -10,6 +10,9 @@ using JasHandExperiment.Configuration;
 
 namespace JasHandExperiment.UI
 {
+    /// <summary>
+    /// the class enables default editor for VRHandConfiguration
+    /// </summary>
     [ConfigurationEditor(typeof(VRHandConfiguration))]
 	public class VRHandConfigrationEditor: System.Drawing.Design.UITypeEditor 
 	{
