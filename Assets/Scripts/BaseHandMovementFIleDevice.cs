@@ -88,8 +88,8 @@ namespace JasHandExperiment
             mData = CreateHandMovementData();
             mCSVFile = new CSVFile();
             BatchCSVRWSettings settings = new BatchCSVRWSettings();
-            settings.ReadBatchDelayMsec = 120; // ????
-            //settings.ReadBatchDelayMsec = (1 / ConfigurationManager.Instance.Configuration.PressFrequency); // ????
+            //settings.ReadBatchDelayMsec = 120; // ????
+            settings.ReadBatchDelayMsec = (uint)((1.0 / ConfigurationManager.Instance.Configuration.PressFrequency) * 1000); // ????
             settings.ReadBatchSize = 1;
             try
             {
