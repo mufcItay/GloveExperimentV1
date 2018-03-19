@@ -14,9 +14,10 @@ namespace JasHandExperiment.UI
     public partial class ExperimentConfiugrationEditorForm : Form
     {
         #region Consts
-        private const string SUBJECTS_CONFIGURATIONS_FOLDER_PATH = @"Subject Configurations\";
         private const string CONFIGURATION_FILE_NAME_PATTERN = "subjID" + CONFIGURATION_FILE_NAME_PATTERN_DELIMITER + "groupID" + CONFIGURATION_FILE_NAME_PATTERN_DELIMITER + "sessionID";
         private const string CONFIGURATION_FILE_NAME_PATTERN_DELIMITER = "_";
+        private const char DIR_SLASH = '\\';
+
         private const int SUBJECTID_INDEX = 0;
         private const int GROUPID_INDEX = 1;
         private const int SESSIONID_INDEX = 2;
@@ -47,6 +48,17 @@ namespace JasHandExperiment.UI
         /// </summary>
         private string mLastSelectedSubject;
 
+        /// <summary>
+        /// the repositroey of runtime configuration. here we set the current configruatino fiel of the experiment.
+        /// </summary>
+        private FileRepository mRuntimeRepository;
+
+
+        /// <summary>
+        /// The runtime confgiruation loaded from runtime repositroy
+        /// </summary>
+        private RuntimeConfiguration mRuntimeConfiguration;
+
         #endregion
 
 
@@ -56,8 +68,14 @@ namespace JasHandExperiment.UI
         {
             InitializeComponent();
             // create outputfiles directories
-            CreateFolders();
             mExpConfiguration = new ExperimentConfiguration();
+            mRuntimeRepository = new FileRepository();
+
+            mRuntimeRepository.Connect(RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
+            mRuntimeConfiguration = mRuntimeRepository.GetObject<RuntimeConfiguration>();
+
+            CreateFolders();
+
             // add a default first sub run
             mExpConfiguration.SubRuns.Add(new SubRunConfiguration());
             mSubjectToSessionIDDict = new Dictionary<string, int>();
@@ -75,17 +93,17 @@ namespace JasHandExperiment.UI
         /// </summary>
         private void CreateFolders()
         {
-            if (!Directory.Exists(SUBJECTS_CONFIGURATIONS_FOLDER_PATH))
+            if (!Directory.Exists(mRuntimeConfiguration.PathToSubjectDir))
             {
-                Directory.CreateDirectory(SUBJECTS_CONFIGURATIONS_FOLDER_PATH);
+                Directory.CreateDirectory(mRuntimeConfiguration.PathToSubjectDir);
             }
-            if (!Directory.Exists(OutputFilesConfiguration.GLOVE_MOVEMENTS_FOLDER))
+            if (!Directory.Exists(RuntimeConfiguration.DEFAULT_GLOVE_MOVEMENTS_FOLDER))
             {
-                Directory.CreateDirectory(OutputFilesConfiguration.GLOVE_MOVEMENTS_FOLDER);
+                Directory.CreateDirectory(RuntimeConfiguration.DEFAULT_GLOVE_MOVEMENTS_FOLDER);
             }
-            if (!Directory.Exists(OutputFilesConfiguration.USER_PRESSES_FOLDER))
+            if (!Directory.Exists(RuntimeConfiguration.DEFAULT_USER_PRESSES_FOLDER))
             {
-                Directory.CreateDirectory(OutputFilesConfiguration.USER_PRESSES_FOLDER);
+                Directory.CreateDirectory(RuntimeConfiguration.DEFAULT_USER_PRESSES_FOLDER);
             }
         }
 
@@ -144,27 +162,27 @@ namespace JasHandExperiment.UI
             comboBoxSubjectNumber.Text = string.Empty;
             List<String> groupNumbersList = new List<string>();
             List<String> subjectNumbersList = new List<string>();
-            mSavedConfFiles = Directory.GetFiles(SUBJECTS_CONFIGURATIONS_FOLDER_PATH, "*.xml", SearchOption.TopDirectoryOnly).ToList();
+            mSavedConfFiles = Directory.GetFiles(RuntimeConfiguration.DEFAULT_SUBJECTS_CONFIGURATIONS_FOLDER_PATH, "*.xml", SearchOption.TopDirectoryOnly).ToList();
             // learn how to fill vomoboxes according to ptten of file names in saved configuration files list
             foreach (var file in mSavedConfFiles)
             {
                 // file name format is :    SUBJECTID_GROUPID_SESSIONID.xml
-
-                var fileNameParts = file.Split(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER.ToCharArray());
-                if (!subjectNumbersList.Contains(fileNameParts[SUBJECTID_INDEX].Split('\\')[1]))
-                {
-                    subjectNumbersList.Add(fileNameParts[SUBJECTID_INDEX].Split('\\')[1]);
-                }
+                string fileName = file.Split(DIR_SLASH).Last();
+                var fileNameParts = fileName.Split(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER.ToCharArray());
                 if (!subjectNumbersList.Contains(fileNameParts[SUBJECTID_INDEX]))
+                {
+                    subjectNumbersList.Add(fileNameParts[SUBJECTID_INDEX]);
+                }
+                if (!groupNumbersList.Contains(fileNameParts[GROUPID_INDEX]))
                 {
                     groupNumbersList.Add(fileNameParts[GROUPID_INDEX]);
                 }
                 int sessionId;
                 if (!int.TryParse(fileNameParts[SESSIONID_INDEX].Split('.')[0], out sessionId))
                 {
-                    throw new FormatException("configuration objects directory located at : " + SUBJECTS_CONFIGURATIONS_FOLDER_PATH + "has file : " + file + " with invalid name, the right name pattern should be : " + CONFIGURATION_FILE_NAME_PATTERN);
+                    throw new FormatException("configuration objects directory located at : " + RuntimeConfiguration.DEFAULT_SUBJECTS_CONFIGURATIONS_FOLDER_PATH + "has file : " + file + " with invalid name, the right name pattern should be : " + CONFIGURATION_FILE_NAME_PATTERN);
                 }
-                string subjectId = fileNameParts[SUBJECTID_INDEX].Split('\\')[1];
+                string subjectId = fileNameParts[SUBJECTID_INDEX];
                 if (mSubjectToSessionIDDict.ContainsKey(subjectId))
                 {
                     // increment cause we want to work on next session
@@ -206,8 +224,8 @@ namespace JasHandExperiment.UI
             // get selected subject
             string selectedSubjectFile = mSavedConfFiles.Where(x =>
             {
-                string subjectPart = x.Split(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER.ToCharArray())[SUBJECTID_INDEX];
-                subjectPart = subjectPart.Split('\\')[1];
+                string fileName = x.Split(DIR_SLASH).Last();
+                string subjectPart = fileName.Split(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER.ToCharArray())[SUBJECTID_INDEX];
                 return comboBoxSubjectNumber.Text.Equals(subjectPart);
             }).FirstOrDefault();
 
@@ -280,9 +298,10 @@ namespace JasHandExperiment.UI
                     }
                 }
 
-                //replace current configuration file with new one
-                //copy newly saved conf to new conf directory, overrite if there exsits a current conf file
-                File.Copy(conf.OutputFilesConfiguration.ConfigurationFilePath, ExperimentConfiguration.DEFAULT_CONF_FILE_NAME, true);
+                // save the path to conifguration file to runtime conf
+                mRuntimeConfiguration.PathToConfigurationFile = conf.OutputFilesConfiguration.ConfigurationFilePath;
+                mRuntimeRepository.Save(mRuntimeConfiguration, RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
+                mRuntimeRepository.Close();
             }
             catch (Exception ex)
             {
@@ -401,7 +420,7 @@ namespace JasHandExperiment.UI
         {
             StringBuilder sb = new StringBuilder();
             // participant id
-            sb.Append(SUBJECTS_CONFIGURATIONS_FOLDER_PATH);
+            sb.Append(RuntimeConfiguration.DEFAULT_SUBJECTS_CONFIGURATIONS_FOLDER_PATH);
             sb.Append(participantID);
             // group id
             sb.Append(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER);
@@ -439,9 +458,20 @@ namespace JasHandExperiment.UI
         /// </summary>
         private void ApplySubjectNumberComboboxUpdate()
         {
+            if (!string.IsNullOrEmpty(mLastSelectedSubject))
+            {
+                // if we switched from an unsaved subject remove redundant dictionary entry
+                if (mSubjectToSessionIDDict.ContainsKey(mLastSelectedSubject) &&
+                    !comboBoxSubjectNumber.Items.Contains(mLastSelectedSubject))
+                {
+                    mSubjectToSessionIDDict.Remove(mLastSelectedSubject);
+                }
+            }
+
             // get applied subject number
             string selectedSubjectId = comboBoxSubjectNumber.Text;
             mLastSelectedSubject = selectedSubjectId;
+            
             // if new subject number
             if (!comboBoxSubjectNumber.Items.Contains(selectedSubjectId))
             {
@@ -527,12 +557,15 @@ namespace JasHandExperiment.UI
             switch (exp.ExperimentType)
             {
                 case ExperimentType.Active:
+                    textBoxReplayFile.Text = string.Empty;
+
                     textBoxReplayFile.Visible = false;
                     labelTypeAdditionalParam.Visible = false;
                     buttonBrowseReplayFile.Visible = false;
-                    textBoxReplayFile.Text = string.Empty;
                     textBoxPressesFreq.Visible = false;
                     labelPressFreq.Visible = false;
+
+                    radioButtonTypeA.Checked = true;
                     break;
                 case ExperimentType.PassiveWatchingReplay:
                     textBoxReplayFile.Visible = true;
@@ -540,6 +573,8 @@ namespace JasHandExperiment.UI
                     buttonBrowseReplayFile.Visible = true;
                     textBoxPressesFreq.Visible = false;
                     labelPressFreq.Visible = false;
+                    
+                    radioButtonTypePWR.Checked = true;
                     break;
                 case ExperimentType.PassiveSimulation:
                     textBoxReplayFile.Visible = true;
@@ -547,6 +582,9 @@ namespace JasHandExperiment.UI
                     buttonBrowseReplayFile.Visible = true;
                     textBoxPressesFreq.Visible = true;
                     labelPressFreq.Visible = true;
+
+
+                    radioButtonTypePWS.Checked = true;
                     break;
                 default:
                     break;

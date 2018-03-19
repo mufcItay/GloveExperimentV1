@@ -109,7 +109,7 @@ namespace CommonTools
             
             try
             {
-                FileStream saveFileFS = new FileStream(path, FileMode.OpenOrCreate);
+                FileStream saveFileFS = new FileStream(path, FileMode.Create);
                 XmlSerializer serializer = new XmlSerializer(obj.GetType());
 
                 serializer.Serialize(saveFileFS, obj);

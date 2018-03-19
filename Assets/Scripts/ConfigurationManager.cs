@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,12 @@ namespace JasHandExperiment
         /// the configuratino file
         /// </summary>
         private FileRepository mConfigurationFile;
+
+        /// <summary>
+        /// the runtime configuration file,
+        /// from which we will get path for actual experiment confgiruation (provides indirection of configuration)
+        /// </summary>
+        private FileRepository mRuntimeConfigurationFile;
 
         /// <summary>
         /// The configuration object we are currently working with
@@ -61,8 +68,15 @@ namespace JasHandExperiment
         }
         private ConfigurationManager()
         {
+            mRuntimeConfigurationFile = new FileRepository();
+            mRuntimeConfigurationFile.Connect(RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
+            var runtimeConf = mRuntimeConfigurationFile.GetObject<RuntimeConfiguration>();
+            if (!File.Exists(runtimeConf.PathToConfigurationFile))
+            {
+                // ERROR
+            }
             mConfigurationFile = new FileRepository();
-            mConfigurationFile.Connect(ExperimentConfiguration.DEFAULT_CONF_FILE_NAME);
+            mConfigurationFile.Connect(runtimeConf.PathToConfigurationFile);
 
             mConfigurationObject = mConfigurationFile.GetObject<ExperimentConfiguration>();
         } 

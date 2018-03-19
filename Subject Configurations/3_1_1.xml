@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<ExperimentConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Squence>44</Squence>
+  <SubRuns>
+    <SubRunConfiguration>
+      <BlocksAmount>12</BlocksAmount>
+      <InterBlockTimeout>30</InterBlockTimeout>
+      <BlockDuration>1</BlockDuration>
+    </SubRunConfiguration>
+  </SubRuns>
+  <ParticipantConfiguration>
+    <Number>3</Number>
+    <GroupNumber>1</GroupNumber>
+    <Gender>Male</Gender>
+    <Age>0</Age>
+  </ParticipantConfiguration>
+  <SessionsConfiguration>
+    <SessionConfiguration>
+      <Number>1</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+  </SessionsConfiguration>
+  <OutputFilesConfiguration>
+    <UserPressesLogPath>D:\UnityWS\TestGame\UserPresses\Presses.csv</UserPressesLogPath>
+    <ConfigurationFilePath>D:\UnityWS\TestGame\Subject Configurations\3_1_1.xml</ConfigurationFilePath>
+    <GloveMovementLogPath>D:\UnityWS\TestGame\GloveMovements\Movemenvts.csv</GloveMovementLogPath>
+  </OutputFilesConfiguration>
+  <VRHandConfiguration>
+    <HandToAnimate>Right</HandToAnimate>
+    <HandColor>
+      <r>224</r>
+      <g>172</g>
+      <b>105</b>
+      <a>255</a>
+    </HandColor>
+    <HandGender>Male</HandGender>
+    <HandModel>hand_ModelM.obj</HandModel>
+  </VRHandConfiguration>
+  <ExperimentType>Active</ExperimentType>
+  <ReplayFilePath>D:\UnityWS\TestGame\UserPresses\Replay.csv</ReplayFilePath>
+  <PressFrequency>1</PressFrequency>
+</ExperimentConfiguration>

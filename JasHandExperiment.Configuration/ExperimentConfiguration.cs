@@ -31,15 +31,10 @@ namespace JasHandExperiment.Configuration
     public partial class ExperimentConfiguration
     {
         #region Constants
-
-        /// <summary>
-        /// the path to configuration file
-        /// </summary>
-        public const string DEFAULT_CONF_FILE_NAME = "Configuration.xml";
-
+        
         private const string DEFAULT_SEQUENCE = "41324";
         private const ExperimentType DEFAULT_EXPERIMENT_TYPE = ExperimentType.Active;
-        private const string DEFAULT_REPLAY_FILE = @"UserPresses\Replay.csv";
+        private const string DEFAULT_REPLAY_FILE = RuntimeConfiguration.DEFAULT_USER_PRESSES_FOLDER + "Replay.csv";
         private const uint DEFAULT_PRESS_FREQ = 1;
         #endregion
 
