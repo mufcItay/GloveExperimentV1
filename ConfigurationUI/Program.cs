@@ -69,7 +69,7 @@ namespace ConfigurationUI
                 else
                 {
                     // CREATE EDITOR FORM WITH CONF OBJECT AS A PARAMETER
-                    confObj = new EditorForm(expConfigurationObjectType);
+                    confForm = new EditorForm(expConfigurationObjectType);
                 }
             }
             

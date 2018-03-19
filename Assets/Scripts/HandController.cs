@@ -14,11 +14,6 @@ public class HandController : MonoBehaviour {
     #region Data Members
     
     /// <summary>
-    /// FOR NOW 000000000000000000000000
-    /// </summary>
-    public GameObject myPrefab;
-
-    /// <summary>
     /// for unity configuration to determine which hand side is this
     /// </summary>
     public HandType HandSide;
@@ -49,12 +44,7 @@ public class HandController : MonoBehaviour {
         {
             return; // we sholudn't animate this hand, so return and save your energy
         }
-
-        ////
-        //GameObject go = Instantiate(myPrefab) as GameObject;
-
-        ////
-
+        
         // set parameters and init selected strategy
         mExperimentType = ConfigurationManager.Instance.Configuration.ExperimentType;
         mExperimentStrategy = ExperimentStrategyFactory.GetOrCreate(mExperimentType);

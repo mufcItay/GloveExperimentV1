@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: RPinkyPress
+  m_Name: MaleIndexPress
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -18,13 +18,13 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: 7.754, y: -17.859001, z: 31.906002}
+        value: {x: 5.94, y: 9.1, z: -33.35}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
         time: 0.16666667
-        value: {x: 1.51, y: -17.859001, z: 31.906002}
+        value: {x: -5.19, y: 9.1, z: -33.35}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -32,7 +32,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: amrature_fp_hand/shoulder/arm_up_deform/arm_down_deform/forearm_up_deform/forearm_
-      down_deform/hand_joint/little_bone
+      down_deform/hand_joint/index_bone
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
@@ -45,11 +45,11 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1940330143
+      path: 3166099284
       attribute: 4
       script: {fileID: 0}
       typeID: 4
-      customType: 14
+      customType: 4
       isPPtrCurve: 0
     pptrCurveMapping: []
   m_AnimationClipSettings:
@@ -78,13 +78,13 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 7.754
+        value: 5.94
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.16666667
-        value: 1.51
+        value: -5.19
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -93,7 +93,7 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
     path: amrature_fp_hand/shoulder/arm_up_deform/arm_down_deform/forearm_up_deform/forearm_
-      down_deform/hand_joint/little_bone
+      down_deform/hand_joint/index_bone
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -101,13 +101,13 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -17.859001
+        value: 9.1
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.16666667
-        value: -17.859001
+        value: 9.1
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -116,7 +116,7 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
     path: amrature_fp_hand/shoulder/arm_up_deform/arm_down_deform/forearm_up_deform/forearm_
-      down_deform/hand_joint/little_bone
+      down_deform/hand_joint/index_bone
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -124,13 +124,13 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 31.906002
+        value: -33.35
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.16666667
-        value: 31.906002
+        value: -33.35
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -139,7 +139,7 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
     path: amrature_fp_hand/shoulder/arm_up_deform/arm_down_deform/forearm_up_deform/forearm_
-      down_deform/hand_joint/little_bone
+      down_deform/hand_joint/index_bone
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -151,7 +151,7 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
     path: amrature_fp_hand/shoulder/arm_up_deform/arm_down_deform/forearm_up_deform/forearm_
-      down_deform/hand_joint/little_bone
+      down_deform/hand_joint/index_bone
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -162,7 +162,7 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
     path: amrature_fp_hand/shoulder/arm_up_deform/arm_down_deform/forearm_up_deform/forearm_
-      down_deform/hand_joint/little_bone
+      down_deform/hand_joint/index_bone
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -173,7 +173,7 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
     path: amrature_fp_hand/shoulder/arm_up_deform/arm_down_deform/forearm_up_deform/forearm_
-      down_deform/hand_joint/little_bone
+      down_deform/hand_joint/index_bone
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

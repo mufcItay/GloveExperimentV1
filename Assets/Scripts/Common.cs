@@ -83,10 +83,10 @@ namespace JasHandExperiment
         internal const string MALE_HAND_PREFAB = "MaleHand";
 
         // animation consts
-        internal const string INDEX_KEY_PRESS_PARAM = "RIndexPress";
-        internal const string MIDDLE_KEY_PRESS_PARAM = "RMiddlePress";
-        internal const string RING_KEY_PRESS_PARAM = "RRingPress";
-        internal const string PINKY_KEY_PRESS_PARAM = "RPinkyPress";
+        internal const string INDEX_KEY_PRESS_PARAM = "IndexPress";
+        internal const string MIDDLE_KEY_PRESS_PARAM = "MiddlePress";
+        internal const string RING_KEY_PRESS_PARAM = "RingPress";
+        internal const string PINKY_KEY_PRESS_PARAM = "PinkyPress";
 
         // animation triggers consts
         internal const string INDEX_KEY_PRESS_STRING = "1";

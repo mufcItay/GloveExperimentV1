@@ -319,6 +319,7 @@
     <Compile Include="Assets\Scripts\GloveDevice.cs" />
     <Compile Include="Assets\Scripts\HandController.cs" />
     <Compile Include="Assets\Scripts\HandCoordinatesData.cs" />
+    <Compile Include="Assets\Scripts\HandCreature.cs" />
     <Compile Include="Assets\Scripts\HandMovemventDeviceFactory.cs" />
     <Compile Include="Assets\Scripts\IHandData.cs" />
     <Compile Include="Assets\Scripts\IHandMovementDevice.cs" />
