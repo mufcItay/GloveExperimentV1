@@ -598,7 +598,11 @@ namespace JasHandExperiment.UI
 
         private void buttonBrowseReplayFile_Click(object sender, EventArgs e)
         {
-            GetFilePath(textBoxReplayFile, CSV_FILTER);
+            openFileDialog.Filter = CSV_FILTER;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxReplayFile.Text = openFileDialog.FileName;
+            }
         } 
         #endregion
     }
