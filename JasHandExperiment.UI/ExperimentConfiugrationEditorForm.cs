@@ -24,6 +24,9 @@ namespace JasHandExperiment.UI
         private const int DEFAULT_NEW_SESSION_ID = 1;
         private const int DEFAULT_SLEEPING_HOURS = 0;
 
+        private const string XML_FILTER = "XML Files |*.xml"; 
+        private const string CSV_FILTER = "CSV Files |*.csv";
+
         #endregion
 
         #region Data Members
@@ -493,20 +496,22 @@ namespace JasHandExperiment.UI
 
         private void buttonBrowseKeyboardFile_Click(object sender, EventArgs e)
         {
-            GetFilePath(textBoxKeyboardLogFile);
+            GetFilePath(textBoxKeyboardLogFile, CSV_FILTER);
         }
 
         private void buttonBrowseGloveFile_Click(object sender, EventArgs e)
         {
-            GetFilePath(textBoxGloveLogFile);
+            GetFilePath(textBoxGloveLogFile, CSV_FILTER);
         }
 
         /// <summary>
         /// the function connects given file dialog to a text box
         /// </summary>
         /// <param name="tBoxToSet">the text box to set according to selected file name in save file dialog</param>
-        private void GetFilePath(TextBox tBoxToSet)
+        /// <param name="filter">the filter to set in save file dialog</param>
+        private void GetFilePath(TextBox tBoxToSet, string filter)
         {
+            saveFileDialog.Filter = filter;
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 tBoxToSet.Text = saveFileDialog.FileName;
@@ -593,10 +598,7 @@ namespace JasHandExperiment.UI
 
         private void buttonBrowseReplayFile_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBoxReplayFile.Text = openFileDialog.FileName;
-            }
+            GetFilePath(textBoxReplayFile, CSV_FILTER);
         } 
         #endregion
     }
