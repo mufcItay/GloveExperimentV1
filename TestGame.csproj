@@ -311,21 +311,27 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\BaseHandMovementFIleDevice.cs" />
+    <Compile Include="Assets\Scripts\blueButtonConroller.cs" />
+    <Compile Include="Assets\Scripts\blueButtonText.cs" />
     <Compile Include="Assets\Scripts\Common.cs" />
+    <Compile Include="Assets\Scripts\ConditionedDynamicCreature.cs" />
     <Compile Include="Assets\Scripts\ConfigurationManager.cs" />
     <Compile Include="Assets\Scripts\ExperimentStrategy.cs" />
     <Compile Include="Assets\Scripts\ExperimentStrategyFactory.cs" />
     <Compile Include="Assets\Scripts\Finger.cs" />
     <Compile Include="Assets\Scripts\GloveDevice.cs" />
+    <Compile Include="Assets\Scripts\greenButtonText.cs" />
     <Compile Include="Assets\Scripts\HandController.cs" />
     <Compile Include="Assets\Scripts\HandCoordinatesData.cs" />
-    <Compile Include="Assets\Scripts\HandCreature.cs" />
     <Compile Include="Assets\Scripts\HandMovemventDeviceFactory.cs" />
     <Compile Include="Assets\Scripts\IHandData.cs" />
     <Compile Include="Assets\Scripts\IHandMovementDevice.cs" />
+    <Compile Include="Assets\Scripts\KeyBoardConroller.cs" />
     <Compile Include="Assets\Scripts\KeyPressedData.cs" />
+    <Compile Include="Assets\Scripts\redButtonText.cs" />
     <Compile Include="Assets\Scripts\ReplayFileDevice.cs" />
     <Compile Include="Assets\Scripts\SimulationFileDevice.cs" />
+    <Compile Include="Assets\Scripts\yellowButtonText.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ProjectSettings\ProjectVersion.txt" />

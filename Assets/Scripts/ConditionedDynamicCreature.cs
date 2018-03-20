@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandCreature : MonoBehaviour {
+public class ConditionedDynamicCreature: MonoBehaviour {
 
     #region Data Members
     /// <summary>
@@ -16,7 +16,9 @@ public class HandCreature : MonoBehaviour {
     /// </summary>
     public GameObject MaleHandPrefab;
 
+    //public string 
     #endregion
+
     // Use this for initialization
     void Start () {
 
