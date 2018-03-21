@@ -14,7 +14,9 @@ namespace JasHandExperiment
         /// <summary>
         /// opens the device and initializes it. MUST be called to start the device
         /// </summary>
-        void Open();
+        /// <returns> the function returns a boolean indicating whether it successfully opened the device,
+        /// if device is already opened returns false</returns>
+        bool Open();
 
         /// <summary>
         /// The function reads movement data and returns a IHandData structure that describes the hand movement

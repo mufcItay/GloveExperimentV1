@@ -55,8 +55,12 @@ namespace JasHandExperiment
         /// <summary>
         /// see interface for documentation
         /// </summary>
-        public void Open()
+        public bool Open()
         {
+            if (mGlove == null)
+            {
+                return false;
+            }
             // try to open glove
             mGlove = new CfdGlove();
             try
@@ -69,6 +73,7 @@ namespace JasHandExperiment
             catch (System.Exception ex)
             {
                 Debug.Log(ex.Message);
+                return false;
             }
             mCoordinates = new HandCoordinatesData();
             mWriteFile = new CSVFile();
@@ -80,6 +85,7 @@ namespace JasHandExperiment
             settings.WriteBatchDelayMsec = 1000 * 20;
             // init the file to write to
             mWriteFile.Init(path, ',', columns, settings);
+            return false;
         } 
         #endregion
     }

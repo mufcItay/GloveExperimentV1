@@ -51,6 +51,7 @@ namespace JasHandExperiment
         public void Close()
         {
             mCSVFile.Close();
+            mCSVFile = null;
         }
 
         /// <summary>
@@ -81,8 +82,12 @@ namespace JasHandExperiment
         /// <summary>
         /// see interface for documentation
         /// </summary>
-        public void Open()
+        public bool Open()
         {
+            if (mCSVFile != null)
+            {
+                return false;
+            }
             // save the file params, and open it
             mFileName = GetFileName();
             mData = CreateHandMovementData();
@@ -97,12 +102,14 @@ namespace JasHandExperiment
             catch (Exception ex)
             {
                 Debug.Log(ex.Message);
-                return;
+                return false;
             }
             // subscribe to lines ready
             mCSVFile.OnLinesReady += OnLinesReady;
             // start reading from file
             mCSVFile.ReadLines();
+
+            return false;
         }
 
         /// <summary>

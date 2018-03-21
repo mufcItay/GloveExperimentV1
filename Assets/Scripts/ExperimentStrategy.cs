@@ -28,7 +28,12 @@ namespace JasHandExperiment
         /// <summary>
         /// holds the controller of the hand to associate with fingers
         /// </summary>
-        protected MonoBehaviour mHandController; 
+        protected MonoBehaviour mHandController;
+
+        /// <summary>
+        /// boolean indicating whether the strategy was initialized
+        /// </summary>
+        protected bool mIsInitialized;
         #endregion
 
         #region Properties
@@ -47,6 +52,11 @@ namespace JasHandExperiment
         /// <param name="handController">the hand controller to apply experiment process to</param>
         public void Init(MonoBehaviour handController)
         {
+            if (mIsInitialized)
+            {
+                return;
+            }
+            mIsInitialized = true;
             mFingers = new List<Finger>();
             mHandController = handController;
             mDevice = HandMovemventDeviceFactory.GetOrCreate(Type);
@@ -91,6 +101,8 @@ namespace JasHandExperiment
         /// </summary>
         public virtual void Close()
         {
+            mIsInitialized = false;
+            mFingers.Clear();
             mDevice.Close();
         } 
         #endregion
@@ -162,6 +174,7 @@ namespace JasHandExperiment
         /// </summary>
         public override void MoveHand()
         {
+            Debug.Log(DateTime.Now.Second +":" + DateTime.Now.Millisecond + " HAND");
             var keyPressedData = mDevice.GetHandData() as KeyPressedData;
             mAnimationManager.RespondExclusivleyToTrigger(keyPressedData.KeyPressed);
         }

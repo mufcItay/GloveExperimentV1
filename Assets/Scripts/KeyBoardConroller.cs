@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using JasHandExperiment.Configuration;
 using JasHandExperiment;
+using System;
 
 public class KeyBoardConroller : MonoBehaviour {
 
@@ -12,12 +13,13 @@ public class KeyBoardConroller : MonoBehaviour {
     int lastPressedInput;
     HandType handSide;
 
-	// Use this for initialization
+    // Use this for initialization
 	void Start () {
         ///////////////ADVA//////////////// remove the comeent after sinchronize with itays code
         // check wich animated hand we would like to move
         keyBoard = GetComponent<Animator>();
         handSide = HandType.Left;//ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
+
     }
 
 // Update is called once per frame
@@ -27,7 +29,6 @@ public class KeyBoardConroller : MonoBehaviour {
         //{
         //    keyBoard.SetInteger("pressedButton", -1);
         //}
-       
         input = Input.inputString;
         if (input != "")
         {
