@@ -15,7 +15,7 @@ namespace JasHandExperiment.Configuration
     {
         #region Constants
 
-        public const string DEFAULT_MAIN_DIR = @"C:\GloveExperimentV1\";
+        public const string DEFAULT_MAIN_DIR = "";//@"C:\GloveExperimentV1\";
 
         /// <summary>
         /// the path to the runtime configuration file

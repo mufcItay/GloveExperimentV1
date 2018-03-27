@@ -22,7 +22,8 @@ public class BaseConditionedDynamicObjectCreator <T>
     #region Ctor
     public BaseConditionedDynamicObjectCreator(GameObject trueGO, GameObject falseGO)
     {
-
+        mTrueGameObject = trueGO;
+        mFalseGameObject = falseGO;
     }
     #endregion
 

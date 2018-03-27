@@ -170,9 +170,9 @@
     </SessionConfiguration>
   </SessionsConfiguration>
   <OutputFilesConfiguration>
-    <UserPressesLogPath>C:\GloveExperimentV1\UserPresses\</UserPressesLogPath>
-    <ConfigurationFilePath>C:\GloveExperimentV1\Subject Configurations\19_1_12.xml</ConfigurationFilePath>
-    <GloveMovementLogPath>C:\GloveExperimentV1\GloveMovements\</GloveMovementLogPath>
+    <UserPressesLogPath>UserPresses\</UserPressesLogPath>
+    <ConfigurationFilePath>Subject Configurations\19_1_12.xml</ConfigurationFilePath>
+    <GloveMovementLogPath>GloveMovements\</GloveMovementLogPath>
   </OutputFilesConfiguration>
   <VRHandConfiguration>
     <HandToAnimate>Left</HandToAnimate>
@@ -185,7 +185,7 @@
     <HandGender>Male</HandGender>
     <HandModel>hand_ModelM.obj</HandModel>
   </VRHandConfiguration>
-  <ExperimentType>PassiveSimulation</ExperimentType>
-  <ReplayFilePath>C:\GloveExperimentV1\SimulationUserPresses.csv</ReplayFilePath>
+  <ExperimentType>PassiveWatchingReplay</ExperimentType>
+  <ReplayFilePath>KEYBOARD.csv</ReplayFilePath>
   <PressFrequency>20</PressFrequency>
 </ExperimentConfiguration>

@@ -33,7 +33,8 @@ namespace JasHandExperiment
     public enum BoneSection
     {
         Near = 0,
-        Far = 1
+        Inter = 1,
+        Far = 2
     }
 
     public enum EfdSensors

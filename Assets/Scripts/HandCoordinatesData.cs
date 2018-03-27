@@ -77,11 +77,11 @@ namespace JasHandExperiment
         {
             mCurrentSensorsScaled = scaledSensors;
             // add each finger and then value per bone
-            Add(FingerType.Index, new float[] { scaledSensors[(int)EfdSensors.FD_INDEXNEAR], scaledSensors[(int)EfdSensors.FD_INDEXFAR] });
-            Add(FingerType.Little, new float[] { scaledSensors[(int)EfdSensors.FD_LITTLENEAR], scaledSensors[(int)EfdSensors.FD_LITTLEFAR] });
-            Add(FingerType.Middle, new float[] { scaledSensors[(int)EfdSensors.FD_MIDDLENEAR], scaledSensors[(int)EfdSensors.FD_MIDDLEFAR] });
-            Add(FingerType.Ring, new float[] { scaledSensors[(int)EfdSensors.FD_RINGNEAR], scaledSensors[(int)EfdSensors.FD_RINGFAR] });
-            Add(FingerType.Thumb, new float[] { scaledSensors[(int)EfdSensors.FD_THUMBNEAR], scaledSensors[(int)EfdSensors.FD_THUMBFAR] });
+            Add(FingerType.Index, new float[] { scaledSensors[(int)EfdSensors.FD_INDEXNEAR], scaledSensors[(int)EfdSensors.FD_INDEXFAR], scaledSensors[(int)EfdSensors.FD_INDEXFAR] });
+            Add(FingerType.Little, new float[] { scaledSensors[(int)EfdSensors.FD_LITTLENEAR], scaledSensors[(int)EfdSensors.FD_LITTLEFAR], scaledSensors[(int)EfdSensors.FD_LITTLEFAR] });
+            Add(FingerType.Middle, new float[] { scaledSensors[(int)EfdSensors.FD_MIDDLENEAR], scaledSensors[(int)EfdSensors.FD_MIDDLEFAR], scaledSensors[(int)EfdSensors.FD_MIDDLEFAR] });
+            Add(FingerType.Ring, new float[] { scaledSensors[(int)EfdSensors.FD_RINGNEAR], scaledSensors[(int)EfdSensors.FD_RINGFAR], scaledSensors[(int)EfdSensors.FD_RINGFAR] });
+            Add(FingerType.Thumb, new float[] { scaledSensors[(int)EfdSensors.FD_THUMBNEAR], scaledSensors[(int)EfdSensors.FD_THUMBFAR], scaledSensors[(int)EfdSensors.FD_THUMBFAR] });
         }
 
         /// <summary>
@@ -105,14 +105,19 @@ namespace JasHandExperiment
             mCurrentSensorsScaled = scaledSensors;
             // sets per each bone and finger the current scaled sensor hand data
             this[FingerType.Index][(int)BoneSection.Near] = scaledSensors[(int)EfdSensors.FD_INDEXNEAR];
+            this[FingerType.Index][(int)BoneSection.Inter] = scaledSensors[(int)EfdSensors.FD_INDEXFAR];
             this[FingerType.Index][(int)BoneSection.Far] = scaledSensors[(int)EfdSensors.FD_INDEXFAR];
             this[FingerType.Little][(int)BoneSection.Near] = scaledSensors[(int)EfdSensors.FD_LITTLENEAR];
+            this[FingerType.Little][(int)BoneSection.Inter] = scaledSensors[(int)EfdSensors.FD_LITTLEFAR];
             this[FingerType.Little][(int)BoneSection.Far] = scaledSensors[(int)EfdSensors.FD_LITTLEFAR];
             this[FingerType.Middle][(int)BoneSection.Near] = scaledSensors[(int)EfdSensors.FD_MIDDLENEAR];
+            this[FingerType.Middle][(int)BoneSection.Inter] = scaledSensors[(int)EfdSensors.FD_MIDDLEFAR];
             this[FingerType.Middle][(int)BoneSection.Far] = scaledSensors[(int)EfdSensors.FD_MIDDLEFAR];
             this[FingerType.Ring][(int)BoneSection.Near] = scaledSensors[(int)EfdSensors.FD_RINGNEAR];
+            this[FingerType.Ring][(int)BoneSection.Inter] = scaledSensors[(int)EfdSensors.FD_RINGFAR];
             this[FingerType.Ring][(int)BoneSection.Far] = scaledSensors[(int)EfdSensors.FD_RINGFAR];
             this[FingerType.Thumb][(int)BoneSection.Near] = scaledSensors[(int)EfdSensors.FD_THUMBNEAR];
+            this[FingerType.Thumb][(int)BoneSection.Inter] = scaledSensors[(int)EfdSensors.FD_THUMBFAR];
             this[FingerType.Thumb][(int)BoneSection.Far] = scaledSensors[(int)EfdSensors.FD_THUMBFAR];
         }
 

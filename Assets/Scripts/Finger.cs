@@ -57,7 +57,9 @@ namespace JasHandExperiment
             // get prox bone
             mBones[(int)BoneSection.Near] = fingerTransform.GetChild(0);
             // get dist bone
-            mBones[(int)BoneSection.Far] = fingerTransform.GetChild(0).GetChild(0).GetChild(0);
+            mBones[(int)BoneSection.Inter] = mBones[(int)BoneSection.Near].GetChild(0);
+            // get dist bone
+            mBones[(int)BoneSection.Far] = mBones[(int)BoneSection.Inter].GetChild(0);
 
             // remember initial state
             SetInitialRotation(numOfBoneSections);
@@ -104,8 +106,10 @@ namespace JasHandExperiment
         private void SetInitialRotation(int numOfBoneSections)
         {
             mInitialRotate = new Quaternion[numOfBoneSections];
-            mInitialRotate[(int)BoneSection.Near] = mBones[(int)BoneSection.Near].rotation;
-            mInitialRotate[(int)BoneSection.Far] = mBones[(int)BoneSection.Far].rotation;
+            for (int i = 0; i < mBones.Length; i++)
+            {
+                mInitialRotate[i] = mBones[i].rotation;
+            }
         } 
         #endregion
     }
