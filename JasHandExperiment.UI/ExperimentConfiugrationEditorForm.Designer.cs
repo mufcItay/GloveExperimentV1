@@ -43,6 +43,7 @@
             this.radioButtonMale = new System.Windows.Forms.RadioButton();
             this.labelSubjectNumber = new System.Windows.Forms.Label();
             this.groupBoxSessionInfo = new System.Windows.Forms.GroupBox();
+            this.subRunEditorControl = new JasHandExperiment.UI.SubRunEditorControl();
             this.labelSessionNumber = new System.Windows.Forms.Label();
             this.textBoxSessionNumber = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -60,16 +61,16 @@
             this.groupBoxFileLocations = new System.Windows.Forms.GroupBox();
             this.buttonBrowseGloveFile = new System.Windows.Forms.Button();
             this.buttonBrowseKeyboardFile = new System.Windows.Forms.Button();
-            this.textBoxKeyboardLogFile = new System.Windows.Forms.TextBox();
+            this.textBoxKeyboardLogDirectory = new System.Windows.Forms.TextBox();
             this.labelConfigurationFile = new System.Windows.Forms.Label();
-            this.labelKeyoardLogFile = new System.Windows.Forms.Label();
+            this.labelKeyoardLogDirectory = new System.Windows.Forms.Label();
             this.textBoxCurretConfFile = new System.Windows.Forms.TextBox();
-            this.labelGloveLogFile = new System.Windows.Forms.Label();
-            this.textBoxGloveLogFile = new System.Windows.Forms.TextBox();
+            this.labelGloveLogDirectory = new System.Windows.Forms.Label();
+            this.textBoxGloveLogDirectory = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.subRunEditorControl = new JasHandExperiment.UI.SubRunEditorControl();
             this.vrHandEditorControl = new JasHandExperiment.UI.VRHandEditorControl();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBoxParticipant.SuspendLayout();
             this.groupBoxSessionInfo.SuspendLayout();
             this.groupBoxExperimentParams.SuspendLayout();
@@ -225,6 +226,14 @@
             this.groupBoxSessionInfo.TabStop = false;
             this.groupBoxSessionInfo.Text = "Session Info";
             // 
+            // subRunEditorControl
+            // 
+            this.subRunEditorControl.ConfigurationObject = null;
+            this.subRunEditorControl.Location = new System.Drawing.Point(20, 123);
+            this.subRunEditorControl.Name = "subRunEditorControl";
+            this.subRunEditorControl.Size = new System.Drawing.Size(658, 365);
+            this.subRunEditorControl.TabIndex = 11;
+            // 
             // labelSessionNumber
             // 
             this.labelSessionNumber.AutoSize = true;
@@ -379,14 +388,14 @@
             // 
             this.groupBoxFileLocations.Controls.Add(this.buttonBrowseGloveFile);
             this.groupBoxFileLocations.Controls.Add(this.buttonBrowseKeyboardFile);
-            this.groupBoxFileLocations.Controls.Add(this.textBoxKeyboardLogFile);
+            this.groupBoxFileLocations.Controls.Add(this.textBoxKeyboardLogDirectory);
             this.groupBoxFileLocations.Controls.Add(this.labelConfigurationFile);
-            this.groupBoxFileLocations.Controls.Add(this.labelKeyoardLogFile);
+            this.groupBoxFileLocations.Controls.Add(this.labelKeyoardLogDirectory);
             this.groupBoxFileLocations.Controls.Add(this.buttonCancel);
             this.groupBoxFileLocations.Controls.Add(this.buttonSave);
             this.groupBoxFileLocations.Controls.Add(this.textBoxCurretConfFile);
-            this.groupBoxFileLocations.Controls.Add(this.labelGloveLogFile);
-            this.groupBoxFileLocations.Controls.Add(this.textBoxGloveLogFile);
+            this.groupBoxFileLocations.Controls.Add(this.labelGloveLogDirectory);
+            this.groupBoxFileLocations.Controls.Add(this.textBoxGloveLogDirectory);
             this.groupBoxFileLocations.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBoxFileLocations.Location = new System.Drawing.Point(0, 715);
             this.groupBoxFileLocations.Name = "groupBoxFileLocations";
@@ -415,12 +424,12 @@
             this.buttonBrowseKeyboardFile.UseVisualStyleBackColor = true;
             this.buttonBrowseKeyboardFile.Click += new System.EventHandler(this.buttonBrowseKeyboardFile_Click);
             // 
-            // textBoxKeyboardLogFile
+            // textBoxKeyboardLogDirectory
             // 
-            this.textBoxKeyboardLogFile.Location = new System.Drawing.Point(219, 38);
-            this.textBoxKeyboardLogFile.Name = "textBoxKeyboardLogFile";
-            this.textBoxKeyboardLogFile.Size = new System.Drawing.Size(413, 26);
-            this.textBoxKeyboardLogFile.TabIndex = 13;
+            this.textBoxKeyboardLogDirectory.Location = new System.Drawing.Point(219, 38);
+            this.textBoxKeyboardLogDirectory.Name = "textBoxKeyboardLogDirectory";
+            this.textBoxKeyboardLogDirectory.Size = new System.Drawing.Size(413, 26);
+            this.textBoxKeyboardLogDirectory.TabIndex = 13;
             // 
             // labelConfigurationFile
             // 
@@ -431,14 +440,14 @@
             this.labelConfigurationFile.TabIndex = 11;
             this.labelConfigurationFile.Text = "Current Configuration File :";
             // 
-            // labelKeyoardLogFile
+            // labelKeyoardLogDirectory
             // 
-            this.labelKeyoardLogFile.AutoSize = true;
-            this.labelKeyoardLogFile.Location = new System.Drawing.Point(15, 41);
-            this.labelKeyoardLogFile.Name = "labelKeyoardLogFile";
-            this.labelKeyoardLogFile.Size = new System.Drawing.Size(144, 20);
-            this.labelKeyoardLogFile.TabIndex = 10;
-            this.labelKeyoardLogFile.Text = "Keyboard Log File :";
+            this.labelKeyoardLogDirectory.AutoSize = true;
+            this.labelKeyoardLogDirectory.Location = new System.Drawing.Point(15, 41);
+            this.labelKeyoardLogDirectory.Name = "labelKeyoardLogDirectory";
+            this.labelKeyoardLogDirectory.Size = new System.Drawing.Size(182, 20);
+            this.labelKeyoardLogDirectory.TabIndex = 10;
+            this.labelKeyoardLogDirectory.Text = "Keyboard Log Directory :";
             // 
             // textBoxCurretConfFile
             // 
@@ -448,21 +457,21 @@
             this.textBoxCurretConfFile.Size = new System.Drawing.Size(413, 26);
             this.textBoxCurretConfFile.TabIndex = 9;
             // 
-            // labelGloveLogFile
+            // labelGloveLogDirectory
             // 
-            this.labelGloveLogFile.AutoSize = true;
-            this.labelGloveLogFile.Location = new System.Drawing.Point(15, 79);
-            this.labelGloveLogFile.Name = "labelGloveLogFile";
-            this.labelGloveLogFile.Size = new System.Drawing.Size(118, 20);
-            this.labelGloveLogFile.TabIndex = 8;
-            this.labelGloveLogFile.Text = "Glove Log File :";
+            this.labelGloveLogDirectory.AutoSize = true;
+            this.labelGloveLogDirectory.Location = new System.Drawing.Point(15, 79);
+            this.labelGloveLogDirectory.Name = "labelGloveLogDirectory";
+            this.labelGloveLogDirectory.Size = new System.Drawing.Size(156, 20);
+            this.labelGloveLogDirectory.TabIndex = 8;
+            this.labelGloveLogDirectory.Text = "Glove Log Directory :";
             // 
-            // textBoxGloveLogFile
+            // textBoxGloveLogDirectory
             // 
-            this.textBoxGloveLogFile.Location = new System.Drawing.Point(219, 73);
-            this.textBoxGloveLogFile.Name = "textBoxGloveLogFile";
-            this.textBoxGloveLogFile.Size = new System.Drawing.Size(413, 26);
-            this.textBoxGloveLogFile.TabIndex = 2;
+            this.textBoxGloveLogDirectory.Location = new System.Drawing.Point(219, 73);
+            this.textBoxGloveLogDirectory.Name = "textBoxGloveLogDirectory";
+            this.textBoxGloveLogDirectory.Size = new System.Drawing.Size(413, 26);
+            this.textBoxGloveLogDirectory.TabIndex = 2;
             // 
             // saveFileDialog
             // 
@@ -473,14 +482,6 @@
             // 
             this.openFileDialog.FileName = "file";
             this.openFileDialog.Filter = "XML File| *.xml";
-            // 
-            // subRunEditorControl
-            // 
-            this.subRunEditorControl.ConfigurationObject = null;
-            this.subRunEditorControl.Location = new System.Drawing.Point(20, 123);
-            this.subRunEditorControl.Name = "subRunEditorControl";
-            this.subRunEditorControl.Size = new System.Drawing.Size(658, 365);
-            this.subRunEditorControl.TabIndex = 11;
             // 
             // vrHandEditorControl
             // 
@@ -536,12 +537,12 @@
         private System.Windows.Forms.GroupBox groupBoxExperimentParams;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.GroupBox groupBoxFileLocations;
-        private System.Windows.Forms.TextBox textBoxKeyboardLogFile;
+        private System.Windows.Forms.TextBox textBoxKeyboardLogDirectory;
         private System.Windows.Forms.Label labelConfigurationFile;
-        private System.Windows.Forms.Label labelKeyoardLogFile;
+        private System.Windows.Forms.Label labelKeyoardLogDirectory;
         private System.Windows.Forms.TextBox textBoxCurretConfFile;
-        private System.Windows.Forms.Label labelGloveLogFile;
-        private System.Windows.Forms.TextBox textBoxGloveLogFile;
+        private System.Windows.Forms.Label labelGloveLogDirectory;
+        private System.Windows.Forms.TextBox textBoxGloveLogDirectory;
         private SubRunEditorControl subRunEditorControl;
         private System.Windows.Forms.Button buttonBrowseGloveFile;
         private System.Windows.Forms.Button buttonBrowseKeyboardFile;
@@ -557,5 +558,6 @@
         private System.Windows.Forms.Label labelPressFreq;
         private System.Windows.Forms.TextBox textBoxPressesFreq;
         private VRHandEditorControl vrHandEditorControl;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
     }
 }

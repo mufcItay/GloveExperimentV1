@@ -15,7 +15,7 @@ namespace JasHandExperiment.Configuration
     {
         #region Constants
 
-        public const string DEFAULT_MAIN_DIR = @"D:\UnityWS\TestGame\";
+        public const string DEFAULT_MAIN_DIR = @"C:\GloveExperimentV1\";
 
         /// <summary>
         /// the path to the runtime configuration file
@@ -30,12 +30,12 @@ namespace JasHandExperiment.Configuration
         /// <summary>
         /// the name of the path to folder to store user presses logs at
         /// </summary>
-        public const string DEFAULT_USER_PRESSES_FOLDER = DEFAULT_MAIN_DIR + @"UserPresses\";
+        public const string DEFAULT_USER_PRESSES_FOLDER = DEFAULT_MAIN_DIR;
 
         /// <summary>
         /// the name of the path to folder to store glove movements logs at
         /// </summary>
-        public const string DEFAULT_GLOVE_MOVEMENTS_FOLDER = DEFAULT_MAIN_DIR + @"GloveMovements\";
+        public const string DEFAULT_GLOVE_MOVEMENTS_FOLDER = DEFAULT_MAIN_DIR;
 
         #endregion
 

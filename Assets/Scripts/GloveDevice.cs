@@ -77,7 +77,7 @@ namespace JasHandExperiment
             }
             mCoordinates = new HandCoordinatesData();
             mWriteFile = new CSVFile();
-            string path = ConfigurationManager.Instance.Configuration.OutputFilesConfiguration.GloveMovementLogPath;
+            string path = CommonUtilities.GetParticipantCSVFileName(ConfigurationManager.Instance.Configuration.OutputFilesConfiguration.GloveMovementLogPath);
             var columns = CommonUtilities.CreateGlovesDataFileColumns(ConfigurationManager.Instance.Configuration.ExperimentType);
             var settings = new BatchCSVRWSettings();
             settings.WriteBatchSize = 1000;

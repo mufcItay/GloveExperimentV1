@@ -140,8 +140,10 @@ namespace JasHandExperiment.UI
             // sub runs
             subRunEditorControl.ConfigurationObject = exp.SubRuns;
             // file paths
-            textBoxGloveLogFile.Text = exp.OutputFilesConfiguration.GloveMovementLogPath;
-            textBoxKeyboardLogFile.Text = exp.OutputFilesConfiguration.UserPressesLogPath;
+            textBoxGloveLogDirectory.Text = exp.OutputFilesConfiguration.GloveMovementLogPath;
+            textBoxKeyboardLogDirectory.Text = exp.OutputFilesConfiguration.UserPressesLogPath;
+
+            folderBrowserDialog.SelectedPath = Environment.CurrentDirectory;
 
             string subjectId = exp.ParticipantConfiguration.Number.ToString();
             int confFileSessionId = DEFAULT_NEW_SESSION_ID;
@@ -398,8 +400,8 @@ namespace JasHandExperiment.UI
             }
 
             // file paths
-            mExpConfiguration.OutputFilesConfiguration.GloveMovementLogPath = textBoxGloveLogFile.Text;
-            mExpConfiguration.OutputFilesConfiguration.UserPressesLogPath = textBoxKeyboardLogFile.Text;
+            mExpConfiguration.OutputFilesConfiguration.GloveMovementLogPath = textBoxGloveLogDirectory.Text;
+            mExpConfiguration.OutputFilesConfiguration.UserPressesLogPath = textBoxKeyboardLogDirectory.Text;
             string fileName = GetConfigurationFilePath(comboBoxSubjectNumber.Text, comboBoxGroupNumber.Text, textBoxSessionNumber.Text);
             textBoxCurretConfFile.Text = fileName;
             mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath = textBoxCurretConfFile.Text;
@@ -496,12 +498,12 @@ namespace JasHandExperiment.UI
 
         private void buttonBrowseKeyboardFile_Click(object sender, EventArgs e)
         {
-            GetFilePath(textBoxKeyboardLogFile, CSV_FILTER);
+            GetFolderPath(textBoxKeyboardLogDirectory);
         }
 
         private void buttonBrowseGloveFile_Click(object sender, EventArgs e)
         {
-            GetFilePath(textBoxGloveLogFile, CSV_FILTER);
+            GetFolderPath(textBoxGloveLogDirectory);
         }
 
         /// <summary>
@@ -515,6 +517,19 @@ namespace JasHandExperiment.UI
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 tBoxToSet.Text = saveFileDialog.FileName;
+            }
+        }
+
+
+        /// <summary>
+        /// the function connects given folder dialog to a text box
+        /// </summary>
+        /// <param name="tBoxToSet">the text box to set according to selected folder path </param>
+        private void GetFolderPath(TextBox tBoxToSet)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                tBoxToSet.Text = folderBrowserDialog.SelectedPath;
             }
         }
 

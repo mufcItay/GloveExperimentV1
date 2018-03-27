@@ -98,6 +98,9 @@ namespace JasHandExperiment
         internal const string USB_PORT_NAME_PREFIX = "USB";
         internal const string DT_GLOVE_PRODUCT = "5DT Glove";
         internal const string DT_GLOVE_INSTANCE_ID_PREFIX = "DG14U";
+
+        // csv file extension
+        internal const string CSV_EXTENSION = ".csv";
     }
 
 
@@ -121,6 +124,21 @@ namespace JasHandExperiment
             }
 
             return CommonConstants.MALE_HAND_PREFAB;
+        }
+
+        /// <summary>
+        /// The functino returns path 
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        /// <returns></returns>
+        public static string GetParticipantCSVFileName(string directoryPath)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(directoryPath);
+            sb.Append(ConfigurationManager.Instance.Configuration.ParticipantConfiguration.Number + @"\");
+            sb.Append(ExperimentRuntime.Instance.TrialNumber);
+            sb.Append(CommonConstants.CSV_EXTENSION);
+            return sb.ToString();
         }
 
         /// <summary>
