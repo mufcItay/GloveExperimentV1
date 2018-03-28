@@ -28,7 +28,6 @@ namespace ConfigurationUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             // init form and configuration object of it
-            Object confObj = null;
             Form confForm = null;
             Type expConfigurationObjectType = null;
 
