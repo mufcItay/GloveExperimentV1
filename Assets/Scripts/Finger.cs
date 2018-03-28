@@ -28,6 +28,10 @@ namespace JasHandExperiment
         /// </summary>
         private Transform[] mBones;
 
+        /// <summary>
+        /// needed?
+        /// </summary>
+        private Vector3 mMovementDirection;
         #endregion
 
         #region Properties
@@ -47,6 +51,7 @@ namespace JasHandExperiment
         /// <param name="fingerType">the type of the finger</param>
         public Finger(Transform handController, FingerType fingerType)
         {
+            mMovementDirection = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == Configuration.HandType.Left ? Vector3.left : Vector3.right;
             mFingerType = fingerType;
             // fill bones
             int numOfBoneSections = Enum.GetValues(typeof(BoneSection)).Length;
@@ -60,9 +65,9 @@ namespace JasHandExperiment
             mBones[(int)BoneSection.Inter] = mBones[(int)BoneSection.Near].GetChild(0);
             // get dist bone
             mBones[(int)BoneSection.Far] = mBones[(int)BoneSection.Inter].GetChild(0);
-
             // remember initial state
-            SetInitialRotation(numOfBoneSections);
+            SetInitialRotation(mBones.Length);
+
         }
         #endregion
 
@@ -95,7 +100,10 @@ namespace JasHandExperiment
             {
                 // calculate angle according to 5DT glove documentation
                 float angle = -90 * coordinates[mFingerType][i];
-                mBones[i].Rotate(Vector3.right, angle);
+                //if (Math.Abs(angle) > 10)
+                {
+                    mBones[i].Rotate(mMovementDirection, angle);
+                }
             }
         }
 

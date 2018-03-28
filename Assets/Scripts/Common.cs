@@ -97,7 +97,7 @@ namespace JasHandExperiment
 
         // glove consts
         internal const string USB_PORT_NAME_PREFIX = "USB";
-        internal const string DT_GLOVE_PRODUCT = "5DT Glove";
+        internal const string DT_GLOVE_MANUFACTURER = "5DT";
         internal const string DT_GLOVE_INSTANCE_ID_PREFIX = "DG14U";
 
         // csv file extension
@@ -169,7 +169,7 @@ namespace JasHandExperiment
             {
                 case ExperimentType.Active:
                 case ExperimentType.PassiveWatchingReplay:
-                    cols = new string[] { "Thumb Near", "Thumb Far", "Thumb/Index", "Index Near ", "Index Far", "Index/Middle", " Middle Near", "Middle Far", "Middle/Ring", "Ring Near", "Ring Far", " Ring/Little", "Little Near", "Little Far" };
+                    cols = new string[] { "Time","Thumb Near", "Thumb Far", "Thumb/Index", "Index Near ", "Index Far", "Index/Middle", " Middle Near", "Middle Far", "Middle/Ring", "Ring Near", "Ring Far", " Ring/Little", "Little Near", "Little Far" };
                     break;
                 case ExperimentType.PassiveSimulation:
                     cols = new string[] { KeyPressedColumn.Time.ToString(), KeyPressedColumn.Key.ToString() };
@@ -193,9 +193,9 @@ namespace JasHandExperiment
             for (int i=0; i< usbDevs.Count; i++)
             {
                 // search for glove device
-                if (usbDevs[i].Product.Equals(CommonConstants.DT_GLOVE_PRODUCT))
+                if (usbDevs[i].Manufacturer.Equals(CommonConstants.DT_GLOVE_MANUFACTURER))
                 {
-                    if (usbDevs[i].InstanceID.StartsWith(CommonConstants.DT_GLOVE_INSTANCE_ID_PREFIX))
+                    if (usbDevs[i].InstanceID.Contains(CommonConstants.DT_GLOVE_INSTANCE_ID_PREFIX))
                     {
                         // return first suitable usb port
                         portNumber = i.ToString();

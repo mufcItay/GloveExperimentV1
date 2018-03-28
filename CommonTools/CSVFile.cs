@@ -403,28 +403,13 @@ namespace CommonTools
 
             return true;
         }
-
-        /// <summary>
-        /// helper function that convers floats to strings for given line
-        /// </summary>
-        /// <param name="floatLine">float array to be converted into string array (a line to be in a CSV File)</param>
-        /// <returns>string array, each element is a parse of a float in original floatLine</returns>
-        private string[] floatToStringArray(float[] floatLine)
-        {
-            string[] strArr = new string[floatLine.Length];
-            for (int i =0; i < floatLine.Length; ++i)
-            {
-                strArr[i] = floatLine[i].ToString();
-            }
-            return strArr;
-        }
-
+        
         /// <summary>
         /// refer to the interface for documentation
         /// </summary>
         public bool WriteLine(float[] valuePerColumn)
         {
-            return WriteLine(floatToStringArray(valuePerColumn));
+            return WriteLine(StringUtilities.FloatToStringArray(valuePerColumn));
         }
 
         /// <summary>

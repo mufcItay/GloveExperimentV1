@@ -14,11 +14,25 @@ namespace JasHandExperiment
     /// </summary>
     public class HandCoordinatesData : Dictionary<FingerType, float[]>, IHandData
     {
+        #region Constants
+
+        /// <summary>
+        /// offset for where data starts in a csv line of simulated hand coordinates data
+        /// </summary>
+        private readonly int FILE_DATA_OFFSET = 0;
+
+        #endregion
+
         #region Data Members
         /// <summary>
         /// current sensors information
         /// </summary>
         float[] mCurrentSensorsScaled;
+
+        /// <summary>
+        /// The time stamp of current coordinates
+        /// </summary>
+        public string TimeStamp { get; internal set; }
         #endregion
 
         #region Ctors
@@ -28,6 +42,7 @@ namespace JasHandExperiment
         public HandCoordinatesData()
         {
             float[] sensors = new float[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+            TimeStamp = DateTime.Now.ToLongTimeString();
             InitDict(sensors);
         }
 
@@ -37,6 +52,7 @@ namespace JasHandExperiment
         /// <param name="scaledSensors">the initial hand data</param>
         public HandCoordinatesData(float[] scaledSensors)
         {
+            TimeStamp = DateTime.Now.ToLongTimeString();
             InitDict(scaledSensors);
         }
 
@@ -46,6 +62,7 @@ namespace JasHandExperiment
         /// <param name="scaledSensors">the initial hand data - string flavour</param>
         public HandCoordinatesData(string[] scaledSensors)
         {
+            TimeStamp = DateTime.Now.ToLongTimeString();
             // cast and launch
             float[] scaledSensorsFloat = StringArrayToFloatArray(scaledSensors);
             InitDict(scaledSensorsFloat);
@@ -128,6 +145,7 @@ namespace JasHandExperiment
         public object Clone()
         {
             HandCoordinatesData copy = new HandCoordinatesData(mCurrentSensorsScaled);
+            copy.TimeStamp = this.TimeStamp;
             return copy;
         }
 
