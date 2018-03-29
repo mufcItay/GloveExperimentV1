@@ -105,7 +105,7 @@ namespace JasHandExperiment
                 Debug.Log(ex.Message);
                 return false;
             }
-            // subscribe to lines ready
+             // subscribe to lines ready
             mCSVFile.OnLinesReady += OnLinesReady;
             // start reading from file
             mCSVFile.ReadLines();

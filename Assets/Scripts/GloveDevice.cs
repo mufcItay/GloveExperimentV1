@@ -92,8 +92,8 @@ namespace JasHandExperiment
             try
             {
                 // check for connected USBS and search for the glove port
-                mGlove.Open(CommonUtilities.GetGloveUSBPort());
-                CalibrateGlove();
+                mGlove.Open("USB0");//CommonUtilities.GetGloveUSBPort());
+                //CalibrateGlove();
             }
             catch (System.Exception ex)
             {

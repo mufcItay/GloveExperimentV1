@@ -198,7 +198,7 @@ namespace JasHandExperiment
                     if (usbDevs[i].InstanceID.Contains(CommonConstants.DT_GLOVE_INSTANCE_ID_PREFIX))
                     {
                         // return first suitable usb port
-                        portNumber = i.ToString();
+                        portNumber = usbDevs[i].PortNumber.ToString();//i.ToString();
                         break;
                     }
                 }

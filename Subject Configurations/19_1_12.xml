@@ -4,7 +4,7 @@
   <SubRuns>
     <SubRunConfiguration>
       <BlocksAmount>9</BlocksAmount>
-      <InterBlockTimeout>30</InterBlockTimeout>
+      <InterBlockTimeout>5</InterBlockTimeout>
       <BlockDuration>1</BlockDuration>
     </SubRunConfiguration>
     <SubRunConfiguration>
@@ -175,7 +175,7 @@
     <GloveMovementLogPath>GloveMovements\</GloveMovementLogPath>
   </OutputFilesConfiguration>
   <VRHandConfiguration>
-    <HandToAnimate>Left</HandToAnimate>
+    <HandToAnimate>Right</HandToAnimate>
     <HandColor>
       <r>141</r>
       <g>85</g>
@@ -185,7 +185,7 @@
     <HandGender>Male</HandGender>
     <HandModel>hand_ModelM.obj</HandModel>
   </VRHandConfiguration>
-  <ExperimentType>Active</ExperimentType>
+  <ExperimentType>PassiveWatchingReplay</ExperimentType>
   <ReplayFilePath>ExampleGloveMovement.csv</ReplayFilePath>
   <PressFrequency>50</PressFrequency>
 </ExperimentConfiguration>
