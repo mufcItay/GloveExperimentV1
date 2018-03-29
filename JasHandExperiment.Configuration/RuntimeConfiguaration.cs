@@ -30,12 +30,12 @@ namespace JasHandExperiment.Configuration
         /// <summary>
         /// the name of the path to folder to store user presses logs at
         /// </summary>
-        public const string DEFAULT_USER_PRESSES_FOLDER = DEFAULT_MAIN_DIR;
+        public const string DEFAULT_USER_PRESSES_FOLDER = DEFAULT_MAIN_DIR + @"\UserPresses\";
 
         /// <summary>
         /// the name of the path to folder to store glove movements logs at
         /// </summary>
-        public const string DEFAULT_GLOVE_MOVEMENTS_FOLDER = DEFAULT_MAIN_DIR;
+        public const string DEFAULT_GLOVE_MOVEMENTS_FOLDER = DEFAULT_MAIN_DIR + @"\GloveMovements\";
 
         #endregion
 

@@ -235,7 +235,7 @@ namespace CommonTools
         /// </summary>
         void Init(string fileName, string seperator = ",", IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
         {
-            Init(new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite), seperator, csvColumns, settings);
+            Init(new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite), seperator, csvColumns, settings);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace CommonTools
         /// </summary>
         public void Init(string fileName, char seperator = ',', IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
         {
-           Init(new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite), seperator, csvColumns, settings);
+           Init(new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite), seperator, csvColumns, settings);
         }
 
         /// <summary>

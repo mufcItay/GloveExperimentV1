@@ -26,15 +26,13 @@ namespace JasHandExperiment
         {
             return ConfigurationManager.Instance.Configuration.ReplayFilePath;
         }
-
-
+        
         /// <summary>
         /// override to add tiem stampe
         /// </summary>
         /// <param name="lines">the lines read from file</param>
         protected override void OnCoordinatesUpdate(string[] lines)
         {
-            
             // trim off the date time
             string[] trimmedLines = new string[lines.Length - 1];
             Array.Copy(lines, CommonConstants.TIME_COL_INDEX + 1, trimmedLines, 0,trimmedLines.Length);
@@ -44,7 +42,7 @@ namespace JasHandExperiment
             var coordinatesData = mData as HandCoordinatesData;
             if (coordinatesData != null)
             {
-                coordinatesData.TimeStamp = lines[CommonConstants.TIME_COL_INDEX] = DateTime.Now.ToLongTimeString();
+                coordinatesData.TimeStamp = lines[CommonConstants.TIME_COL_INDEX]; ;
             }
             else
             {

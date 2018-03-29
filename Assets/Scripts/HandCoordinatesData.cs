@@ -14,15 +14,6 @@ namespace JasHandExperiment
     /// </summary>
     public class HandCoordinatesData : Dictionary<FingerType, float[]>, IHandData
     {
-        #region Constants
-
-        /// <summary>
-        /// offset for where data starts in a csv line of simulated hand coordinates data
-        /// </summary>
-        private readonly int FILE_DATA_OFFSET = 0;
-
-        #endregion
-
         #region Data Members
         /// <summary>
         /// current sensors information
