@@ -57,6 +57,7 @@ namespace JasHandExperiment
         {
             float[] scaledSensors = new float[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
             mGlove.GetSensorScaledAll(ref scaledSensors);
+
             // set current state
             mCoordinates.TimeStamp = DateTime.Now.ToLongTimeString();
             mCoordinates.SetHandMovementData(scaledSensors);
@@ -106,7 +107,7 @@ namespace JasHandExperiment
             var settings = new BatchCSVRWSettings();
             settings.WriteBatchSize = 1000;
             // interval?
-            settings.WriteBatchDelayMsec = 1000 * 20;
+            settings.WriteBatchDelayMsec = 1000 * 5;
             // init the file to write to
             mWriteFile.Init(path, ',', columns, settings);
             return false;
