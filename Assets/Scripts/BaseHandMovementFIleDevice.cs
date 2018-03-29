@@ -58,7 +58,7 @@ namespace JasHandExperiment
         /// <summary>
         /// see interface for documentation
         /// </summary>
-        public IHandData GetHandData()
+        public virtual IHandData GetHandData()
         {
             lock (mLock)
             {
@@ -93,25 +93,32 @@ namespace JasHandExperiment
             mFileName = GetFileName();
             mData = CreateHandMovementData();
             mCSVFile = new CSVFile();
-            BatchCSVRWSettings settings = new BatchCSVRWSettings();
-            settings.ReadBatchDelayMsec = (uint)((1.0 / ConfigurationManager.Instance.Configuration.PressFrequency) * 1000); // ????
-            settings.ReadBatchSize = 1;
+            BatchCSVRWSettings settings = GetReadSettings();
             try
             {
-                mCSVFile.Init(mFileName, CommonConstants.CSV_SEPERATOR, CommonUtilities.CreateGlovesDataFileColumns(ConfigurationManager.Instance.Configuration.ExperimentType), settings);
+                mCSVFile.Init(mFileName, FileMode.Open, CommonConstants.CSV_SEPERATOR, CommonUtilities.CreateGlovesDataFileColumns(ConfigurationManager.Instance.Configuration.ExperimentType), settings);
             }
             catch (Exception ex)
             {
                 Debug.Log(ex.Message);
                 return false;
             }
-             // subscribe to lines ready
-            mCSVFile.OnLinesReady += OnLinesReady;
-            // start reading from file
-            mCSVFile.ReadLines();
+            if (settings.ReadBatchDelayMsec != BatchCSVRWSettings.DEFAULT_READ_DELAY_MSEC)
+            {
+                // subscribe to lines ready
+                mCSVFile.OnLinesReady += OnLinesReady;
+                // start reading from file
+                mCSVFile.ReadLines();
+            }
 
             return false;
         }
+
+        /// <summary>
+        /// The function returns the settings for CSV file read.
+        /// </summary>
+        /// <returns></returns>
+        public abstract BatchCSVRWSettings GetReadSettings();
 
         /// <summary>
         /// handler for lines ready event
@@ -131,11 +138,7 @@ namespace JasHandExperiment
         /// virutal function with basic lines ready reaction
         /// </summary>
         /// <param name="lines">the lines read from file</param>
-        protected virtual void OnCoordinatesUpdate(string[] lines)
-        {
-            // invoke data handler
-            mData.SetHandMovementData(lines);
-        } 
+        protected abstract void OnCoordinatesUpdate(string[] lines);
         #endregion
     }
 }

@@ -51,7 +51,14 @@ namespace JasHandExperiment
         /// <param name="fingerType">the type of the finger</param>
         public Finger(Transform handController, FingerType fingerType)
         {
-            mMovementDirection = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == Configuration.HandType.Left ? Vector3.left : Vector3.right;
+            if (fingerType == FingerType.Thumb)
+            {
+                mMovementDirection = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == Configuration.HandType.Left ? Vector3.forward : Vector3.back;
+            }
+            else
+            {
+                mMovementDirection = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == Configuration.HandType.Left ? Vector3.left : Vector3.right;
+            }
             mFingerType = fingerType;
             // fill bones
             int numOfBoneSections = Enum.GetValues(typeof(BoneSection)).Length;

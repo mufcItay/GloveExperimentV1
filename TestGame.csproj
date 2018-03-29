@@ -334,7 +334,7 @@
     <Compile Include="Assets\Scripts\redButtonText.cs" />
     <Compile Include="Assets\Scripts\ReplayFileDevice.cs" />
     <Compile Include="Assets\Scripts\SimulationFileDevice.cs" />
-    <Compile Include="Assets\Scripts\switchScenes.cs" />
+    <Compile Include="Assets\Scripts\switchScene.cs" />
     <Compile Include="Assets\Scripts\textManager.cs" />
     <Compile Include="Assets\Scripts\yellowButtonText.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />

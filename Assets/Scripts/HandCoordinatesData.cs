@@ -71,7 +71,11 @@ namespace JasHandExperiment
             float[] scaledSensorsFloat = new float[scaledSensors.Length];
             for (int i = 0; i < scaledSensors.Length; i++)
             {
-                scaledSensorsFloat[i] = float.Parse(scaledSensors[i]);
+                if (!float.TryParse(scaledSensors[i], out scaledSensorsFloat[i]))
+                {
+                    scaledSensorsFloat[i] = 0;
+                    UnityEngine.Debug.Log("float not parsed well => " + scaledSensors[i]);
+                }
             }
 
             return scaledSensorsFloat;

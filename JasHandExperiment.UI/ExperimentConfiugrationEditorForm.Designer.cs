@@ -253,9 +253,10 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(1221, 25);
+            this.buttonCancel.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.buttonCancel.Location = new System.Drawing.Point(1292, 40);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(128, 98);
+            this.buttonCancel.Size = new System.Drawing.Size(164, 98);
             this.buttonCancel.TabIndex = 12;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -376,9 +377,10 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(1042, 25);
+            this.buttonSave.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.buttonSave.Location = new System.Drawing.Point(1076, 41);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(128, 98);
+            this.buttonSave.Size = new System.Drawing.Size(164, 98);
             this.buttonSave.TabIndex = 12;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -397,16 +399,16 @@
             this.groupBoxFileLocations.Controls.Add(this.labelGloveLogDirectory);
             this.groupBoxFileLocations.Controls.Add(this.textBoxGloveLogDirectory);
             this.groupBoxFileLocations.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxFileLocations.Location = new System.Drawing.Point(0, 715);
+            this.groupBoxFileLocations.Location = new System.Drawing.Point(0, 780);
             this.groupBoxFileLocations.Name = "groupBoxFileLocations";
-            this.groupBoxFileLocations.Size = new System.Drawing.Size(1361, 146);
+            this.groupBoxFileLocations.Size = new System.Drawing.Size(1463, 182);
             this.groupBoxFileLocations.TabIndex = 13;
             this.groupBoxFileLocations.TabStop = false;
             this.groupBoxFileLocations.Text = "Files";
             // 
             // buttonBrowseGloveFile
             // 
-            this.buttonBrowseGloveFile.Location = new System.Drawing.Point(638, 72);
+            this.buttonBrowseGloveFile.Location = new System.Drawing.Point(702, 96);
             this.buttonBrowseGloveFile.Name = "buttonBrowseGloveFile";
             this.buttonBrowseGloveFile.Size = new System.Drawing.Size(35, 29);
             this.buttonBrowseGloveFile.TabIndex = 16;
@@ -416,7 +418,7 @@
             // 
             // buttonBrowseKeyboardFile
             // 
-            this.buttonBrowseKeyboardFile.Location = new System.Drawing.Point(638, 36);
+            this.buttonBrowseKeyboardFile.Location = new System.Drawing.Point(702, 45);
             this.buttonBrowseKeyboardFile.Name = "buttonBrowseKeyboardFile";
             this.buttonBrowseKeyboardFile.Size = new System.Drawing.Size(35, 29);
             this.buttonBrowseKeyboardFile.TabIndex = 14;
@@ -426,51 +428,57 @@
             // 
             // textBoxKeyboardLogDirectory
             // 
-            this.textBoxKeyboardLogDirectory.Location = new System.Drawing.Point(219, 38);
+            this.textBoxKeyboardLogDirectory.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxKeyboardLogDirectory.Location = new System.Drawing.Point(276, 40);
             this.textBoxKeyboardLogDirectory.Name = "textBoxKeyboardLogDirectory";
-            this.textBoxKeyboardLogDirectory.Size = new System.Drawing.Size(413, 26);
+            this.textBoxKeyboardLogDirectory.Size = new System.Drawing.Size(413, 34);
             this.textBoxKeyboardLogDirectory.TabIndex = 13;
             // 
             // labelConfigurationFile
             // 
             this.labelConfigurationFile.AutoSize = true;
-            this.labelConfigurationFile.Location = new System.Drawing.Point(15, 113);
+            this.labelConfigurationFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelConfigurationFile.Location = new System.Drawing.Point(14, 142);
             this.labelConfigurationFile.Name = "labelConfigurationFile";
-            this.labelConfigurationFile.Size = new System.Drawing.Size(198, 20);
+            this.labelConfigurationFile.Size = new System.Drawing.Size(259, 27);
             this.labelConfigurationFile.TabIndex = 11;
             this.labelConfigurationFile.Text = "Current Configuration File :";
             // 
             // labelKeyoardLogDirectory
             // 
             this.labelKeyoardLogDirectory.AutoSize = true;
-            this.labelKeyoardLogDirectory.Location = new System.Drawing.Point(15, 41);
+            this.labelKeyoardLogDirectory.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelKeyoardLogDirectory.Location = new System.Drawing.Point(14, 41);
             this.labelKeyoardLogDirectory.Name = "labelKeyoardLogDirectory";
-            this.labelKeyoardLogDirectory.Size = new System.Drawing.Size(182, 20);
+            this.labelKeyoardLogDirectory.Size = new System.Drawing.Size(235, 27);
             this.labelKeyoardLogDirectory.TabIndex = 10;
             this.labelKeyoardLogDirectory.Text = "Keyboard Log Directory :";
             // 
             // textBoxCurretConfFile
             // 
-            this.textBoxCurretConfFile.Location = new System.Drawing.Point(219, 110);
+            this.textBoxCurretConfFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxCurretConfFile.Location = new System.Drawing.Point(276, 139);
             this.textBoxCurretConfFile.Name = "textBoxCurretConfFile";
             this.textBoxCurretConfFile.ReadOnly = true;
-            this.textBoxCurretConfFile.Size = new System.Drawing.Size(413, 26);
+            this.textBoxCurretConfFile.Size = new System.Drawing.Size(413, 34);
             this.textBoxCurretConfFile.TabIndex = 9;
             // 
             // labelGloveLogDirectory
             // 
             this.labelGloveLogDirectory.AutoSize = true;
-            this.labelGloveLogDirectory.Location = new System.Drawing.Point(15, 79);
+            this.labelGloveLogDirectory.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelGloveLogDirectory.Location = new System.Drawing.Point(14, 94);
             this.labelGloveLogDirectory.Name = "labelGloveLogDirectory";
-            this.labelGloveLogDirectory.Size = new System.Drawing.Size(156, 20);
+            this.labelGloveLogDirectory.Size = new System.Drawing.Size(200, 27);
             this.labelGloveLogDirectory.TabIndex = 8;
             this.labelGloveLogDirectory.Text = "Glove Log Directory :";
             // 
             // textBoxGloveLogDirectory
             // 
-            this.textBoxGloveLogDirectory.Location = new System.Drawing.Point(219, 73);
+            this.textBoxGloveLogDirectory.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxGloveLogDirectory.Location = new System.Drawing.Point(276, 91);
             this.textBoxGloveLogDirectory.Name = "textBoxGloveLogDirectory";
-            this.textBoxGloveLogDirectory.Size = new System.Drawing.Size(413, 26);
+            this.textBoxGloveLogDirectory.Size = new System.Drawing.Size(413, 34);
             this.textBoxGloveLogDirectory.TabIndex = 2;
             // 
             // saveFileDialog
@@ -495,7 +503,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1361, 861);
+            this.ClientSize = new System.Drawing.Size(1463, 962);
             this.Controls.Add(this.vrHandEditorControl);
             this.Controls.Add(this.groupBoxFileLocations);
             this.Controls.Add(this.groupBoxExperimentParams);

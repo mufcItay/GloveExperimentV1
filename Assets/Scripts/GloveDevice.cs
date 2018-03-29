@@ -1,6 +1,7 @@
 ﻿using CommonTools;
 using FDTGloveUltraCSharpWrapper;
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace JasHandExperiment
@@ -109,7 +110,7 @@ namespace JasHandExperiment
             // interval?
             settings.WriteBatchDelayMsec = 1000 * 5;
             // init the file to write to
-            mWriteFile.Init(path, ',', columns, settings);
+            mWriteFile.Init(path, FileMode.Create,',', columns, settings);
             return false;
         }
 

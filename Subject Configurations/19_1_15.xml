@@ -4,7 +4,7 @@
   <SubRuns>
     <SubRunConfiguration>
       <BlocksAmount>9</BlocksAmount>
-      <InterBlockTimeout>5</InterBlockTimeout>
+      <InterBlockTimeout>30</InterBlockTimeout>
       <BlockDuration>1</BlockDuration>
     </SubRunConfiguration>
     <SubRunConfiguration>
@@ -168,14 +168,46 @@
       <Number>12</Number>
       <SleepHours>0</SleepHours>
     </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>13</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>14</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>15</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>16</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>17</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>17</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>18</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
+    <SessionConfiguration>
+      <Number>19</Number>
+      <SleepHours>0</SleepHours>
+    </SessionConfiguration>
   </SessionsConfiguration>
   <OutputFilesConfiguration>
     <UserPressesLogPath>UserPresses\</UserPressesLogPath>
-    <ConfigurationFilePath>Subject Configurations\19_1_12.xml</ConfigurationFilePath>
+    <ConfigurationFilePath>Subject Configurations\19_1_19.xml</ConfigurationFilePath>
     <GloveMovementLogPath>GloveMovements\</GloveMovementLogPath>
   </OutputFilesConfiguration>
   <VRHandConfiguration>
-    <HandToAnimate>Right</HandToAnimate>
+    <HandToAnimate>Left</HandToAnimate>
     <HandColor>
       <r>141</r>
       <g>85</g>
