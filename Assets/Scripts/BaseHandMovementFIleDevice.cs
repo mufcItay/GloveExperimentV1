@@ -81,6 +81,14 @@ namespace JasHandExperiment
         public abstract IHandData CreateHandMovementData();
 
         /// <summary>
+        /// the function performs initialization bedore starting the device
+        /// </summary>
+        public virtual void Init()
+        {
+
+        }
+
+        /// <summary>
         /// see interface for documentation
         /// </summary>
         public bool Open()
@@ -111,7 +119,9 @@ namespace JasHandExperiment
                 mCSVFile.ReadLines();
             }
 
-            return false;
+            Init();
+
+            return true;
         }
 
         /// <summary>

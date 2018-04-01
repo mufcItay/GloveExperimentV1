@@ -57,6 +57,7 @@
     <Compile Include="Configuration\IValidatable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringUtilities.cs" />
+    <Compile Include="TimedCSVReader.cs" />
     <Compile Include="USBUtilities.cs" />
     <Compile Include="Configuration\ValidatorAttribute.cs" />
   </ItemGroup>

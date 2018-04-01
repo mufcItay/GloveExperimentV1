@@ -217,7 +217,7 @@
     <HandGender>Male</HandGender>
     <HandModel>hand_ModelM.obj</HandModel>
   </VRHandConfiguration>
-  <ExperimentType>Active</ExperimentType>
+  <ExperimentType>PassiveWatchingReplay</ExperimentType>
   <ReplayFilePath>ExampleGloveMovement.csv</ReplayFilePath>
   <ReplayUserPressesFilePath>ExampleGloveMovement.csv</ReplayUserPressesFilePath>
   <PressFrequency>50</PressFrequency>

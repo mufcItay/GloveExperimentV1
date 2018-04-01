@@ -1,5 +1,6 @@
 ﻿using CommonTools;
 using System;
+using UnityEngine;
 
 namespace JasHandExperiment
 {
@@ -9,27 +10,10 @@ namespace JasHandExperiment
     public class ReplayFileDevice : BaseHandMovementFileDevice
     {
         #region Data Members
-
         /// <summary>
-        /// saves last datetime of updated coordinates to stay insync with file
+        /// reader for the file to read in sync with file
         /// </summary>
-        DateTime mLastCoordinatesUpdated = DateTime.MinValue;
-
-        /// <summary>
-        /// how many milli seconds to wait for applying line read to hand coordinates
-        /// </summary>
-        double mTimeToWaitTillApplyingUpdateMsec = 0;
-
-        /// <summary>
-        /// stores next line to be read when time is right and update coordinates
-        /// </summary>
-        string[] mNextLineToUpdate;
-
-        /// <summary>
-        /// stores the datetime for the next update of coordinates
-        /// </summary>
-        DateTime mNextLineDateTime;
-
+        TimedCSVReader mTimedReader;
         #endregion
 
         #region Functions
@@ -74,28 +58,27 @@ namespace JasHandExperiment
             }
         }
 
+        public override void Init()
+        {
+            base.Init();
+
+            mTimedReader = new TimedCSVReader(mCSVFile, CommonConstants.TIME_COL_INDEX);
+        }
+
         public override IHandData GetHandData()
         {
-            DateTime lastDT;
-            string[] currentLine;
-            // calculate if it's time for new read line
-            double timeSinceLastUpdateMsec = (DateTime.Now - mLastCoordinatesUpdated).TotalMilliseconds;
-            if (timeSinceLastUpdateMsec > mTimeToWaitTillApplyingUpdateMsec)
+            string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
+                                            System.Globalization.CultureInfo.InvariantCulture);
+            Debug.Log(time + " :Enterd GetHandData");
+            string[] line = mTimedReader.ReadLine();
+            if (line != null)
             {
-                // if first read, actually read otherwise get next line the was previously read
-                currentLine = (mNextLineToUpdate == null) ? mCSVFile.ReadLine() : mNextLineToUpdate;
-                // if end of file
-                if (currentLine == null)
-                {
-                    base.GetHandData();
-                }
-                lastDT = DateTime.Parse(currentLine[CommonConstants.TIME_COL_INDEX]);
-                OnCoordinatesUpdate(currentLine);
-                mNextLineToUpdate = mCSVFile.ReadLine();
-                mNextLineDateTime = DateTime.Parse(mNextLineToUpdate[CommonConstants.TIME_COL_INDEX]);
-                mTimeToWaitTillApplyingUpdateMsec = (mNextLineDateTime - lastDT).TotalMilliseconds;
-                mLastCoordinatesUpdated = DateTime.Now;
+                OnCoordinatesUpdate(line);
+                time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
+                                            System.Globalization.CultureInfo.InvariantCulture);
+                Debug.Log(time + " : New line - update coordinated orginal time - " + line[0]);
             }
+
             return base.GetHandData();
         }
 
