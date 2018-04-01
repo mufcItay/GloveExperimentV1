@@ -98,7 +98,8 @@ namespace JasHandExperiment
         // glove consts
         internal const string USB_PORT_NAME_PREFIX = "USB";
         internal const string DT_GLOVE_MANUFACTURER = "5DT";
-        internal const string DT_GLOVE_INSTANCE_ID_PREFIX = "DG14U";
+        internal const string DT_RIGHT_GLOVE_INSTANCE_ID_PREFIX = "DG14UR";
+        internal const string DT_LEFT_GLOVE_INSTANCE_ID_PREFIX = "DG14UL";
 
         // csv file extension
         internal const string CSV_EXTENSION = ".csv";
@@ -182,34 +183,33 @@ namespace JasHandExperiment
         }
 
         /// <summary>
-        /// The function wrapps usb utilities use to get glove usb port
+        /// The function wrapps usb utilities use to get glove side
         /// </summary>
-        /// <returns>string of the port name of relevant usb port that the glove is connected to. if to gloves are connected the first one will be picked</returns>
-        public static string GetGloveUSBPort()
+        /// <returns>the side of the glove that is connected None if no glove is connected</returns>
+        public static HandType GetGloveSide()
         {
             // get reqiuered usb dev id
-            string portNumber = string.Empty;
+            HandType gloveSide = HandType.None;
             var usbDevs = USBUtilities.GetConnectedDevices();
             for (int i=0; i< usbDevs.Count; i++)
             {
                 // search for glove device
                 if (usbDevs[i].Manufacturer.Equals(CommonConstants.DT_GLOVE_MANUFACTURER))
                 {
-                    if (usbDevs[i].InstanceID.Contains(CommonConstants.DT_GLOVE_INSTANCE_ID_PREFIX))
+                    if (usbDevs[i].InstanceID.Contains(CommonConstants.DT_RIGHT_GLOVE_INSTANCE_ID_PREFIX))
                     {
-                        // return first suitable usb port
-                        portNumber = usbDevs[i].PortNumber.ToString();//i.ToString();
-                        break;
+                        gloveSide = HandType.Right;
                     }
+                    else if (usbDevs[i].InstanceID.Contains(CommonConstants.DT_LEFT_GLOVE_INSTANCE_ID_PREFIX))
+                    {
+                        gloveSide = HandType.Left;
+                    }
+
+                   break;
                 }
             }
             
-            // build port name string
-            StringBuilder sb = new StringBuilder();
-            sb.Append(CommonConstants.USB_PORT_NAME_PREFIX);
-            sb.Append(portNumber);
-
-            return sb.ToString();
+            return gloveSide;
         }
 
         /// <summary>

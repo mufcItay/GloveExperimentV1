@@ -207,7 +207,7 @@
     <GloveMovementLogPath>GloveMovements\</GloveMovementLogPath>
   </OutputFilesConfiguration>
   <VRHandConfiguration>
-    <HandToAnimate>Left</HandToAnimate>
+    <HandToAnimate>Right</HandToAnimate>
     <HandColor>
       <r>141</r>
       <g>85</g>
@@ -217,7 +217,8 @@
     <HandGender>Male</HandGender>
     <HandModel>hand_ModelM.obj</HandModel>
   </VRHandConfiguration>
-  <ExperimentType>PassiveWatchingReplay</ExperimentType>
+  <ExperimentType>Active</ExperimentType>
   <ReplayFilePath>ExampleGloveMovement.csv</ReplayFilePath>
+  <ReplayUserPressesFilePath>ExampleGloveMovement.csv</ReplayUserPressesFilePath>
   <PressFrequency>50</PressFrequency>
 </ExperimentConfiguration>

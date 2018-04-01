@@ -1,5 +1,6 @@
 ﻿using CommonTools;
 using FDTGloveUltraCSharpWrapper;
+using JasHandExperiment.Configuration;
 using System;
 using System.Globalization;
 using System.IO;
@@ -14,14 +15,20 @@ namespace JasHandExperiment
     public class GlovesDevice : IHandMovementDevice
     {
         #region Constants
+        
+        /// <summary>
+        /// the name of the port glove port to connect to.
+        /// </summary>
+        private const string GLOVE_PORT_NAME = "USB0";
 
-        //commented out old calibratino values
-        // dfault calibration values, taken from GloveManager app came with 5DT gloves
-        //private readonly ushort[] CALIB_UPPER_VALS = { 3261, 2933, 3237, 3120, 3005, 3503, 3444, 3376, 3618, 3126, 3702, 3880, 3884, 3762, 0, 0, 2048, 2048 };
-        //private readonly ushort[] CALIB_LOWER_VALS = { 3255, 2924, 3221, 3110, 2996, 3474, 63429, 3367, 3607, 3119, 3696, 3877, 3881, 3758, 0, 0, 2048, 2048 };
-        private readonly ushort[] CALIB_UPPER_VALS = { 3334, 3014, 3375, 3135, 3292, 3576, 3449, 3490, 3598, 3126, 3828, 3902, 3778, 3677, 0, 0, 2048, 2048 };
-        private readonly ushort[] CALIB_LOWER_VALS = { 3164, 2851, 3146, 3021, 2874, 3277, 3347, 3309, 3333, 3065, 3477, 3828, 3756, 3534, 0, 0, 2048, 2048 };
-
+        // right hand calibration values
+        private readonly ushort[] RIGHT_CALIB_UPPER_VALS = { 3386, 3173, 3538, 3661, 3758, 3944, 3839, 3778, 3561, 3277, 3848, 3933, 3530, 3733, 0, 0, 2048, 2048 };
+        private readonly ushort[] RIGHT_CALIB_LOWER_VALS = { 3274, 3100, 3294, 3524, 3237, 3847, 3774, 3505, 3406, 3217, 3531, 3882, 3454, 3497, 0, 0, 2048, 2048 };
+        
+        // left glove calibration values
+        private readonly ushort[] LEFT_CALIB_UPPER_VALS = { 3689, 3380, 3705, 3347, 3964, 3857, 3779, 3716, 3920, 3278, 3964, 3931, 3637, 3350, 0, 0, 2048, 2048 };
+        private readonly ushort[] LEFT_CALIB_LOWER_VALS = { 3487, 3146, 3370, 3114, 3451, 3449, 3628, 3222, 3789, 3096, 3559, 3759, 3390, 3200, 0, 0, 2048, 2048 };
+        
         #endregion
 
         #region Data Members
@@ -95,8 +102,8 @@ namespace JasHandExperiment
             try
             {
                 // check for connected USBS and search for the glove port
-                mGlove.Open("USB0");//CommonUtilities.GetGloveUSBPort());
-                //CalibrateGlove();
+                mGlove.Open(GLOVE_PORT_NAME);
+                CalibrateGlove(CommonUtilities.GetGloveSide());
             }
             catch (System.Exception ex)
             {
@@ -119,10 +126,17 @@ namespace JasHandExperiment
         /// <summary>
         /// The function sets aclibration values to glove
         /// </summary>
-        private void CalibrateGlove()
+        private void CalibrateGlove(HandType gloveSide)
         {
-            mGlove.SetCalibrationAll(CALIB_UPPER_VALS, CALIB_LOWER_VALS);
+            if (gloveSide == HandType.Left)
+            {
+                mGlove.SetCalibrationAll(LEFT_CALIB_UPPER_VALS, LEFT_CALIB_LOWER_VALS);
+            }
+            else
+            {
+                mGlove.SetCalibrationAll(RIGHT_CALIB_UPPER_VALS, RIGHT_CALIB_LOWER_VALS);
+            }
         }
-        #endregion
-    }
+    #endregion
+}
 }

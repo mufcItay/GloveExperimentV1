@@ -43,7 +43,6 @@
             this.radioButtonMale = new System.Windows.Forms.RadioButton();
             this.labelSubjectNumber = new System.Windows.Forms.Label();
             this.groupBoxSessionInfo = new System.Windows.Forms.GroupBox();
-            this.subRunEditorControl = new JasHandExperiment.UI.SubRunEditorControl();
             this.labelSessionNumber = new System.Windows.Forms.Label();
             this.textBoxSessionNumber = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -69,8 +68,12 @@
             this.textBoxGloveLogDirectory = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.vrHandEditorControl = new JasHandExperiment.UI.VRHandEditorControl();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.button_ReplayUserPressesFileBrowse = new System.Windows.Forms.Button();
+            this.labelReplayUserPressesFile = new System.Windows.Forms.Label();
+            this.textBoxReplayUserPressesFile = new System.Windows.Forms.TextBox();
+            this.vrHandEditorControl = new JasHandExperiment.UI.VRHandEditorControl();
+            this.subRunEditorControl = new JasHandExperiment.UI.SubRunEditorControl();
             this.groupBoxParticipant.SuspendLayout();
             this.groupBoxSessionInfo.SuspendLayout();
             this.groupBoxExperimentParams.SuspendLayout();
@@ -79,67 +82,75 @@
             // 
             // textBoxAge
             // 
-            this.textBoxAge.Location = new System.Drawing.Point(166, 112);
+            this.textBoxAge.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxAge.Location = new System.Drawing.Point(197, 123);
             this.textBoxAge.Name = "textBoxAge";
-            this.textBoxAge.Size = new System.Drawing.Size(171, 26);
+            this.textBoxAge.Size = new System.Drawing.Size(171, 34);
             this.textBoxAge.TabIndex = 0;
             // 
             // textBoxSleepHours
             // 
-            this.textBoxSleepHours.Location = new System.Drawing.Point(166, 73);
+            this.textBoxSleepHours.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxSleepHours.Location = new System.Drawing.Point(197, 85);
             this.textBoxSleepHours.Name = "textBoxSleepHours";
-            this.textBoxSleepHours.Size = new System.Drawing.Size(171, 26);
+            this.textBoxSleepHours.Size = new System.Drawing.Size(171, 34);
             this.textBoxSleepHours.TabIndex = 2;
             // 
             // textBoxSequence
             // 
-            this.textBoxSequence.Location = new System.Drawing.Point(92, 44);
+            this.textBoxSequence.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxSequence.Location = new System.Drawing.Point(134, 44);
             this.textBoxSequence.Name = "textBoxSequence";
-            this.textBoxSequence.Size = new System.Drawing.Size(206, 26);
+            this.textBoxSequence.Size = new System.Drawing.Size(375, 34);
             this.textBoxSequence.TabIndex = 3;
             // 
             // labelGroupNumber
             // 
             this.labelGroupNumber.AutoSize = true;
-            this.labelGroupNumber.Location = new System.Drawing.Point(15, 79);
+            this.labelGroupNumber.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelGroupNumber.Location = new System.Drawing.Point(15, 82);
             this.labelGroupNumber.Name = "labelGroupNumber";
-            this.labelGroupNumber.Size = new System.Drawing.Size(118, 20);
+            this.labelGroupNumber.Size = new System.Drawing.Size(156, 27);
             this.labelGroupNumber.TabIndex = 4;
             this.labelGroupNumber.Text = "Group Number:";
             // 
             // labelAge
             // 
             this.labelAge.AutoSize = true;
-            this.labelAge.Location = new System.Drawing.Point(16, 115);
+            this.labelAge.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelAge.Location = new System.Drawing.Point(16, 121);
             this.labelAge.Name = "labelAge";
-            this.labelAge.Size = new System.Drawing.Size(42, 20);
+            this.labelAge.Size = new System.Drawing.Size(52, 27);
             this.labelAge.TabIndex = 6;
             this.labelAge.Text = "Age:";
             // 
             // labelGender
             // 
             this.labelGender.AutoSize = true;
-            this.labelGender.Location = new System.Drawing.Point(16, 151);
+            this.labelGender.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelGender.Location = new System.Drawing.Point(16, 168);
             this.labelGender.Name = "labelGender";
-            this.labelGender.Size = new System.Drawing.Size(67, 20);
+            this.labelGender.Size = new System.Drawing.Size(86, 27);
             this.labelGender.TabIndex = 9;
             this.labelGender.Text = "Gender:";
             // 
             // labelSleepHours
             // 
             this.labelSleepHours.AutoSize = true;
-            this.labelSleepHours.Location = new System.Drawing.Point(15, 79);
+            this.labelSleepHours.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelSleepHours.Location = new System.Drawing.Point(15, 88);
             this.labelSleepHours.Name = "labelSleepHours";
-            this.labelSleepHours.Size = new System.Drawing.Size(101, 20);
+            this.labelSleepHours.Size = new System.Drawing.Size(127, 27);
             this.labelSleepHours.TabIndex = 8;
             this.labelSleepHours.Text = "Sleep Hours:";
             // 
             // labelSequence
             // 
             this.labelSequence.AutoSize = true;
+            this.labelSequence.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelSequence.Location = new System.Drawing.Point(9, 47);
             this.labelSequence.Name = "labelSequence";
-            this.labelSequence.Size = new System.Drawing.Size(77, 20);
+            this.labelSequence.Size = new System.Drawing.Size(95, 27);
             this.labelSequence.TabIndex = 7;
             this.labelSequence.Text = "Squence:";
             // 
@@ -154,28 +165,30 @@
             this.groupBoxParticipant.Controls.Add(this.labelGender);
             this.groupBoxParticipant.Controls.Add(this.labelGroupNumber);
             this.groupBoxParticipant.Controls.Add(this.labelSubjectNumber);
-            this.groupBoxParticipant.Location = new System.Drawing.Point(679, 15);
+            this.groupBoxParticipant.Location = new System.Drawing.Point(772, 14);
             this.groupBoxParticipant.Name = "groupBoxParticipant";
-            this.groupBoxParticipant.Size = new System.Drawing.Size(678, 200);
+            this.groupBoxParticipant.Size = new System.Drawing.Size(658, 200);
             this.groupBoxParticipant.TabIndex = 10;
             this.groupBoxParticipant.TabStop = false;
             this.groupBoxParticipant.Text = "Participant Info";
             // 
             // comboBoxGroupNumber
             // 
+            this.comboBoxGroupNumber.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.comboBoxGroupNumber.FormattingEnabled = true;
-            this.comboBoxGroupNumber.Location = new System.Drawing.Point(166, 76);
+            this.comboBoxGroupNumber.Location = new System.Drawing.Point(197, 79);
             this.comboBoxGroupNumber.Name = "comboBoxGroupNumber";
-            this.comboBoxGroupNumber.Size = new System.Drawing.Size(323, 28);
+            this.comboBoxGroupNumber.Size = new System.Drawing.Size(323, 35);
             this.comboBoxGroupNumber.TabIndex = 11;
             this.comboBoxGroupNumber.SelectedIndexChanged += new System.EventHandler(this.comboBoxGroupNumber_SelectedIndexChanged);
             // 
             // comboBoxSubjectNumber
             // 
+            this.comboBoxSubjectNumber.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.comboBoxSubjectNumber.FormattingEnabled = true;
-            this.comboBoxSubjectNumber.Location = new System.Drawing.Point(166, 37);
+            this.comboBoxSubjectNumber.Location = new System.Drawing.Point(197, 37);
             this.comboBoxSubjectNumber.Name = "comboBoxSubjectNumber";
-            this.comboBoxSubjectNumber.Size = new System.Drawing.Size(323, 28);
+            this.comboBoxSubjectNumber.Size = new System.Drawing.Size(323, 35);
             this.comboBoxSubjectNumber.TabIndex = 11;
             this.comboBoxSubjectNumber.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubjectNumber_SelectedIndexChanged);
             this.comboBoxSubjectNumber.Leave += new System.EventHandler(this.comboBoxSubjectNumber_Leave);
@@ -183,9 +196,10 @@
             // radioButtonFemale
             // 
             this.radioButtonFemale.AutoSize = true;
-            this.radioButtonFemale.Location = new System.Drawing.Point(250, 147);
+            this.radioButtonFemale.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonFemale.Location = new System.Drawing.Point(281, 166);
             this.radioButtonFemale.Name = "radioButtonFemale";
-            this.radioButtonFemale.Size = new System.Drawing.Size(87, 24);
+            this.radioButtonFemale.Size = new System.Drawing.Size(103, 31);
             this.radioButtonFemale.TabIndex = 10;
             this.radioButtonFemale.TabStop = true;
             this.radioButtonFemale.Text = "Female";
@@ -194,9 +208,10 @@
             // radioButtonMale
             // 
             this.radioButtonMale.AutoSize = true;
-            this.radioButtonMale.Location = new System.Drawing.Point(166, 147);
+            this.radioButtonMale.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonMale.Location = new System.Drawing.Point(197, 166);
             this.radioButtonMale.Name = "radioButtonMale";
-            this.radioButtonMale.Size = new System.Drawing.Size(68, 24);
+            this.radioButtonMale.Size = new System.Drawing.Size(83, 31);
             this.radioButtonMale.TabIndex = 10;
             this.radioButtonMale.TabStop = true;
             this.radioButtonMale.Text = "Male";
@@ -206,9 +221,10 @@
             // labelSubjectNumber
             // 
             this.labelSubjectNumber.AutoSize = true;
+            this.labelSubjectNumber.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelSubjectNumber.Location = new System.Drawing.Point(16, 40);
             this.labelSubjectNumber.Name = "labelSubjectNumber";
-            this.labelSubjectNumber.Size = new System.Drawing.Size(127, 20);
+            this.labelSubjectNumber.Size = new System.Drawing.Size(164, 27);
             this.labelSubjectNumber.TabIndex = 7;
             this.labelSubjectNumber.Text = "Subject Number:";
             // 
@@ -219,36 +235,30 @@
             this.groupBoxSessionInfo.Controls.Add(this.textBoxSessionNumber);
             this.groupBoxSessionInfo.Controls.Add(this.labelSleepHours);
             this.groupBoxSessionInfo.Controls.Add(this.textBoxSleepHours);
-            this.groupBoxSessionInfo.Location = new System.Drawing.Point(679, 221);
+            this.groupBoxSessionInfo.Location = new System.Drawing.Point(772, 233);
             this.groupBoxSessionInfo.Name = "groupBoxSessionInfo";
-            this.groupBoxSessionInfo.Size = new System.Drawing.Size(684, 477);
+            this.groupBoxSessionInfo.Size = new System.Drawing.Size(684, 464);
             this.groupBoxSessionInfo.TabIndex = 11;
             this.groupBoxSessionInfo.TabStop = false;
             this.groupBoxSessionInfo.Text = "Session Info";
             // 
-            // subRunEditorControl
-            // 
-            this.subRunEditorControl.ConfigurationObject = null;
-            this.subRunEditorControl.Location = new System.Drawing.Point(20, 123);
-            this.subRunEditorControl.Name = "subRunEditorControl";
-            this.subRunEditorControl.Size = new System.Drawing.Size(658, 365);
-            this.subRunEditorControl.TabIndex = 11;
-            // 
             // labelSessionNumber
             // 
             this.labelSessionNumber.AutoSize = true;
-            this.labelSessionNumber.Location = new System.Drawing.Point(15, 41);
+            this.labelSessionNumber.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelSessionNumber.Location = new System.Drawing.Point(15, 50);
             this.labelSessionNumber.Name = "labelSessionNumber";
-            this.labelSessionNumber.Size = new System.Drawing.Size(130, 20);
+            this.labelSessionNumber.Size = new System.Drawing.Size(166, 27);
             this.labelSessionNumber.TabIndex = 10;
             this.labelSessionNumber.Text = "Session Number:";
             // 
             // textBoxSessionNumber
             // 
-            this.textBoxSessionNumber.Location = new System.Drawing.Point(166, 35);
+            this.textBoxSessionNumber.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxSessionNumber.Location = new System.Drawing.Point(197, 47);
             this.textBoxSessionNumber.Name = "textBoxSessionNumber";
             this.textBoxSessionNumber.ReadOnly = true;
-            this.textBoxSessionNumber.Size = new System.Drawing.Size(171, 26);
+            this.textBoxSessionNumber.Size = new System.Drawing.Size(171, 34);
             this.textBoxSessionNumber.TabIndex = 9;
             // 
             // buttonCancel
@@ -264,6 +274,9 @@
             // 
             // groupBoxExperimentParams
             // 
+            this.groupBoxExperimentParams.Controls.Add(this.button_ReplayUserPressesFileBrowse);
+            this.groupBoxExperimentParams.Controls.Add(this.labelReplayUserPressesFile);
+            this.groupBoxExperimentParams.Controls.Add(this.textBoxReplayUserPressesFile);
             this.groupBoxExperimentParams.Controls.Add(this.labelPressFreq);
             this.groupBoxExperimentParams.Controls.Add(this.textBoxPressesFreq);
             this.groupBoxExperimentParams.Controls.Add(this.buttonBrowseReplayFile);
@@ -277,7 +290,7 @@
             this.groupBoxExperimentParams.Controls.Add(this.textBoxSequence);
             this.groupBoxExperimentParams.Location = new System.Drawing.Point(12, 12);
             this.groupBoxExperimentParams.Name = "groupBoxExperimentParams";
-            this.groupBoxExperimentParams.Size = new System.Drawing.Size(661, 203);
+            this.groupBoxExperimentParams.Size = new System.Drawing.Size(754, 255);
             this.groupBoxExperimentParams.TabIndex = 12;
             this.groupBoxExperimentParams.TabStop = false;
             this.groupBoxExperimentParams.Text = "Experiment Parameters:";
@@ -285,26 +298,29 @@
             // labelPressFreq
             // 
             this.labelPressFreq.AutoSize = true;
-            this.labelPressFreq.Location = new System.Drawing.Point(6, 175);
+            this.labelPressFreq.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelPressFreq.Location = new System.Drawing.Point(9, 193);
             this.labelPressFreq.Name = "labelPressFreq";
-            this.labelPressFreq.Size = new System.Drawing.Size(149, 20);
+            this.labelPressFreq.Size = new System.Drawing.Size(186, 27);
             this.labelPressFreq.TabIndex = 18;
             this.labelPressFreq.Text = "Presses Frequency:";
             this.labelPressFreq.Visible = false;
             // 
             // textBoxPressesFreq
             // 
-            this.textBoxPressesFreq.Location = new System.Drawing.Point(161, 172);
+            this.textBoxPressesFreq.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxPressesFreq.Location = new System.Drawing.Point(199, 190);
             this.textBoxPressesFreq.Name = "textBoxPressesFreq";
-            this.textBoxPressesFreq.Size = new System.Drawing.Size(310, 26);
+            this.textBoxPressesFreq.Size = new System.Drawing.Size(310, 34);
             this.textBoxPressesFreq.TabIndex = 17;
             this.textBoxPressesFreq.Visible = false;
             // 
             // buttonBrowseReplayFile
             // 
-            this.buttonBrowseReplayFile.Location = new System.Drawing.Point(475, 131);
+            this.buttonBrowseReplayFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.buttonBrowseReplayFile.Location = new System.Drawing.Point(527, 142);
             this.buttonBrowseReplayFile.Name = "buttonBrowseReplayFile";
-            this.buttonBrowseReplayFile.Size = new System.Drawing.Size(34, 26);
+            this.buttonBrowseReplayFile.Size = new System.Drawing.Size(33, 36);
             this.buttonBrowseReplayFile.TabIndex = 16;
             this.buttonBrowseReplayFile.Text = "...";
             this.buttonBrowseReplayFile.UseVisualStyleBackColor = true;
@@ -314,9 +330,10 @@
             // radioButtonTypePWS
             // 
             this.radioButtonTypePWS.AutoSize = true;
-            this.radioButtonTypePWS.Location = new System.Drawing.Point(393, 85);
+            this.radioButtonTypePWS.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonTypePWS.Location = new System.Drawing.Point(458, 95);
             this.radioButtonTypePWS.Name = "radioButtonTypePWS";
-            this.radioButtonTypePWS.Size = new System.Drawing.Size(234, 24);
+            this.radioButtonTypePWS.Size = new System.Drawing.Size(290, 31);
             this.radioButtonTypePWS.TabIndex = 15;
             this.radioButtonTypePWS.TabStop = true;
             this.radioButtonTypePWS.Text = "Passive Watchng Simulation";
@@ -326,9 +343,10 @@
             // radioButtonTypePWR
             // 
             this.radioButtonTypePWR.AutoSize = true;
-            this.radioButtonTypePWR.Location = new System.Drawing.Point(177, 85);
+            this.radioButtonTypePWR.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonTypePWR.Location = new System.Drawing.Point(193, 93);
             this.radioButtonTypePWR.Name = "radioButtonTypePWR";
-            this.radioButtonTypePWR.Size = new System.Drawing.Size(212, 24);
+            this.radioButtonTypePWR.Size = new System.Drawing.Size(259, 31);
             this.radioButtonTypePWR.TabIndex = 14;
             this.radioButtonTypePWR.TabStop = true;
             this.radioButtonTypePWR.Text = "Passive Watching Replay";
@@ -339,9 +357,10 @@
             // 
             this.radioButtonTypeA.AutoSize = true;
             this.radioButtonTypeA.Checked = true;
-            this.radioButtonTypeA.Location = new System.Drawing.Point(96, 85);
+            this.radioButtonTypeA.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonTypeA.Location = new System.Drawing.Point(95, 92);
             this.radioButtonTypeA.Name = "radioButtonTypeA";
-            this.radioButtonTypeA.Size = new System.Drawing.Size(77, 24);
+            this.radioButtonTypeA.Size = new System.Drawing.Size(92, 31);
             this.radioButtonTypeA.TabIndex = 13;
             this.radioButtonTypeA.TabStop = true;
             this.radioButtonTypeA.Text = "Active";
@@ -351,9 +370,10 @@
             // labelTypeAdditionalParam
             // 
             this.labelTypeAdditionalParam.AutoSize = true;
-            this.labelTypeAdditionalParam.Location = new System.Drawing.Point(6, 137);
+            this.labelTypeAdditionalParam.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelTypeAdditionalParam.Location = new System.Drawing.Point(9, 147);
             this.labelTypeAdditionalParam.Name = "labelTypeAdditionalParam";
-            this.labelTypeAdditionalParam.Size = new System.Drawing.Size(91, 20);
+            this.labelTypeAdditionalParam.Size = new System.Drawing.Size(115, 27);
             this.labelTypeAdditionalParam.TabIndex = 7;
             this.labelTypeAdditionalParam.Text = "Replay File:";
             this.labelTypeAdditionalParam.Visible = false;
@@ -361,17 +381,19 @@
             // labelExperimentType
             // 
             this.labelExperimentType.AutoSize = true;
-            this.labelExperimentType.Location = new System.Drawing.Point(9, 85);
+            this.labelExperimentType.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelExperimentType.Location = new System.Drawing.Point(9, 95);
             this.labelExperimentType.Name = "labelExperimentType";
-            this.labelExperimentType.Size = new System.Drawing.Size(47, 20);
+            this.labelExperimentType.Size = new System.Drawing.Size(61, 27);
             this.labelExperimentType.TabIndex = 12;
             this.labelExperimentType.Text = "Type:";
             // 
             // textBoxReplayFile
             // 
-            this.textBoxReplayFile.Location = new System.Drawing.Point(106, 131);
+            this.textBoxReplayFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxReplayFile.Location = new System.Drawing.Point(136, 141);
             this.textBoxReplayFile.Name = "textBoxReplayFile";
-            this.textBoxReplayFile.Size = new System.Drawing.Size(363, 26);
+            this.textBoxReplayFile.Size = new System.Drawing.Size(373, 34);
             this.textBoxReplayFile.TabIndex = 3;
             this.textBoxReplayFile.Visible = false;
             // 
@@ -399,7 +421,7 @@
             this.groupBoxFileLocations.Controls.Add(this.labelGloveLogDirectory);
             this.groupBoxFileLocations.Controls.Add(this.textBoxGloveLogDirectory);
             this.groupBoxFileLocations.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBoxFileLocations.Location = new System.Drawing.Point(0, 780);
+            this.groupBoxFileLocations.Location = new System.Drawing.Point(0, 692);
             this.groupBoxFileLocations.Name = "groupBoxFileLocations";
             this.groupBoxFileLocations.Size = new System.Drawing.Size(1463, 182);
             this.groupBoxFileLocations.TabIndex = 13;
@@ -408,9 +430,9 @@
             // 
             // buttonBrowseGloveFile
             // 
-            this.buttonBrowseGloveFile.Location = new System.Drawing.Point(702, 96);
+            this.buttonBrowseGloveFile.Location = new System.Drawing.Point(752, 95);
             this.buttonBrowseGloveFile.Name = "buttonBrowseGloveFile";
-            this.buttonBrowseGloveFile.Size = new System.Drawing.Size(35, 29);
+            this.buttonBrowseGloveFile.Size = new System.Drawing.Size(33, 36);
             this.buttonBrowseGloveFile.TabIndex = 16;
             this.buttonBrowseGloveFile.Text = "...";
             this.buttonBrowseGloveFile.UseVisualStyleBackColor = true;
@@ -418,9 +440,9 @@
             // 
             // buttonBrowseKeyboardFile
             // 
-            this.buttonBrowseKeyboardFile.Location = new System.Drawing.Point(702, 45);
+            this.buttonBrowseKeyboardFile.Location = new System.Drawing.Point(752, 44);
             this.buttonBrowseKeyboardFile.Name = "buttonBrowseKeyboardFile";
-            this.buttonBrowseKeyboardFile.Size = new System.Drawing.Size(35, 29);
+            this.buttonBrowseKeyboardFile.Size = new System.Drawing.Size(33, 36);
             this.buttonBrowseKeyboardFile.TabIndex = 14;
             this.buttonBrowseKeyboardFile.Text = "...";
             this.buttonBrowseKeyboardFile.UseVisualStyleBackColor = true;
@@ -431,7 +453,7 @@
             this.textBoxKeyboardLogDirectory.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.textBoxKeyboardLogDirectory.Location = new System.Drawing.Point(276, 40);
             this.textBoxKeyboardLogDirectory.Name = "textBoxKeyboardLogDirectory";
-            this.textBoxKeyboardLogDirectory.Size = new System.Drawing.Size(413, 34);
+            this.textBoxKeyboardLogDirectory.Size = new System.Drawing.Size(461, 34);
             this.textBoxKeyboardLogDirectory.TabIndex = 13;
             // 
             // labelConfigurationFile
@@ -460,7 +482,7 @@
             this.textBoxCurretConfFile.Location = new System.Drawing.Point(276, 139);
             this.textBoxCurretConfFile.Name = "textBoxCurretConfFile";
             this.textBoxCurretConfFile.ReadOnly = true;
-            this.textBoxCurretConfFile.Size = new System.Drawing.Size(413, 34);
+            this.textBoxCurretConfFile.Size = new System.Drawing.Size(461, 34);
             this.textBoxCurretConfFile.TabIndex = 9;
             // 
             // labelGloveLogDirectory
@@ -478,7 +500,7 @@
             this.textBoxGloveLogDirectory.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.textBoxGloveLogDirectory.Location = new System.Drawing.Point(276, 91);
             this.textBoxGloveLogDirectory.Name = "textBoxGloveLogDirectory";
-            this.textBoxGloveLogDirectory.Size = new System.Drawing.Size(413, 34);
+            this.textBoxGloveLogDirectory.Size = new System.Drawing.Size(461, 34);
             this.textBoxGloveLogDirectory.TabIndex = 2;
             // 
             // saveFileDialog
@@ -491,19 +513,56 @@
             this.openFileDialog.FileName = "file";
             this.openFileDialog.Filter = "XML File| *.xml";
             // 
+            // button_ReplayUserPressesFileBrowse
+            // 
+            this.button_ReplayUserPressesFileBrowse.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.button_ReplayUserPressesFileBrowse.Location = new System.Drawing.Point(527, 192);
+            this.button_ReplayUserPressesFileBrowse.Name = "button_ReplayUserPressesFileBrowse";
+            this.button_ReplayUserPressesFileBrowse.Size = new System.Drawing.Size(33, 36);
+            this.button_ReplayUserPressesFileBrowse.TabIndex = 21;
+            this.button_ReplayUserPressesFileBrowse.Text = "...";
+            this.button_ReplayUserPressesFileBrowse.UseVisualStyleBackColor = true;
+            this.button_ReplayUserPressesFileBrowse.Click += new System.EventHandler(this.button_ReplayUserPressesFileBrowse_Click);
+            // 
+            // labelReplayUserPressesFile
+            // 
+            this.labelReplayUserPressesFile.AutoSize = true;
+            this.labelReplayUserPressesFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelReplayUserPressesFile.Location = new System.Drawing.Point(9, 197);
+            this.labelReplayUserPressesFile.Name = "labelReplayUserPressesFile";
+            this.labelReplayUserPressesFile.Size = new System.Drawing.Size(169, 27);
+            this.labelReplayUserPressesFile.TabIndex = 20;
+            this.labelReplayUserPressesFile.Text = "User Presses File:";
+            // 
+            // textBoxReplayUserPressesFile
+            // 
+            this.textBoxReplayUserPressesFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxReplayUserPressesFile.Location = new System.Drawing.Point(184, 191);
+            this.textBoxReplayUserPressesFile.Name = "textBoxReplayUserPressesFile";
+            this.textBoxReplayUserPressesFile.Size = new System.Drawing.Size(325, 34);
+            this.textBoxReplayUserPressesFile.TabIndex = 19;
+            // 
             // vrHandEditorControl
             // 
             this.vrHandEditorControl.ConfigurationObject = null;
-            this.vrHandEditorControl.Location = new System.Drawing.Point(18, 234);
+            this.vrHandEditorControl.Location = new System.Drawing.Point(18, 273);
             this.vrHandEditorControl.Name = "vrHandEditorControl";
-            this.vrHandEditorControl.Size = new System.Drawing.Size(655, 473);
+            this.vrHandEditorControl.Size = new System.Drawing.Size(748, 424);
             this.vrHandEditorControl.TabIndex = 15;
+            // 
+            // subRunEditorControl
+            // 
+            this.subRunEditorControl.ConfigurationObject = null;
+            this.subRunEditorControl.Location = new System.Drawing.Point(20, 177);
+            this.subRunEditorControl.Name = "subRunEditorControl";
+            this.subRunEditorControl.Size = new System.Drawing.Size(658, 387);
+            this.subRunEditorControl.TabIndex = 11;
             // 
             // ExperimentConfiugrationEditorForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1463, 962);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1463, 874);
             this.Controls.Add(this.vrHandEditorControl);
             this.Controls.Add(this.groupBoxFileLocations);
             this.Controls.Add(this.groupBoxExperimentParams);
@@ -567,5 +626,8 @@
         private System.Windows.Forms.TextBox textBoxPressesFreq;
         private VRHandEditorControl vrHandEditorControl;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.Button button_ReplayUserPressesFileBrowse;
+        private System.Windows.Forms.Label labelReplayUserPressesFile;
+        private System.Windows.Forms.TextBox textBoxReplayUserPressesFile;
     }
 }

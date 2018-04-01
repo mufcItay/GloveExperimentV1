@@ -47,6 +47,7 @@ namespace JasHandExperiment.UI
         public SubRunEditorControl()
         {
             InitializeComponent();
+            ConfiguartionUtilities.SetPropertyGridRowHeight(propertyGrid_Collection, 25);
         }
         #endregion
 

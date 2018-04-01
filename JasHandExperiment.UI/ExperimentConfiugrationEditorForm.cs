@@ -88,30 +88,10 @@ namespace JasHandExperiment.UI
             FillComboboxes();
             FillGUIData(mExpConfiguration);
             subRunEditorControl.XMLHandlingVisible(false);
-
-
-
-            FontSetter(this, 9);
         }
         #endregion
 
         #region Functions
-
-        private void FontSetter(Control c, float size)
-        {
-            if (c == null)
-            {
-                return;
-            }
-            foreach (Control childC in c.Controls)
-            {
-                if (childC.GetType().Equals(typeof(Label)) || childC.GetType().Equals(typeof(TextBox)) || childC.GetType().Equals(typeof(RadioButton)) || childC.GetType().Equals(typeof(Button)))
-                {
-                    childC.Font = new Font(childC.Name,size);
-                }
-                FontSetter(childC, size);
-            }
-        }
 
         /// <summary>
         /// The functions creates output files directories if they havn't been created
@@ -419,6 +399,7 @@ namespace JasHandExperiment.UI
             else if (mExpConfiguration.ExperimentType == ExperimentType.PassiveWatchingReplay)
             {
                 mExpConfiguration.ReplayFilePath = textBoxReplayFile.Text;
+                mExpConfiguration.ReplayUserPressesFilePath = textBoxReplayUserPressesFile.Text;
             }
 
             // file paths
@@ -596,6 +577,7 @@ namespace JasHandExperiment.UI
         {
             textBoxPressesFreq.Text = exp.PressFrequency.ToString();
             textBoxReplayFile.Text = exp.ReplayFilePath;
+            textBoxReplayUserPressesFile.Text = exp.ReplayUserPressesFilePath;
             switch (exp.ExperimentType)
             {
                 case ExperimentType.Active:
@@ -606,6 +588,9 @@ namespace JasHandExperiment.UI
                     buttonBrowseReplayFile.Visible = false;
                     textBoxPressesFreq.Visible = false;
                     labelPressFreq.Visible = false;
+                    labelReplayUserPressesFile.Visible = false;
+                    textBoxReplayUserPressesFile.Visible = false;
+                    buttonBrowseReplayFile.Visible = false;
 
                     radioButtonTypeA.Checked = true;
                     break;
@@ -615,6 +600,9 @@ namespace JasHandExperiment.UI
                     buttonBrowseReplayFile.Visible = true;
                     textBoxPressesFreq.Visible = false;
                     labelPressFreq.Visible = false;
+                    labelReplayUserPressesFile.Visible = true;
+                    textBoxReplayUserPressesFile.Visible = true;
+                    buttonBrowseReplayFile.Visible = true;
                     
                     radioButtonTypePWR.Checked = true;
                     break;
@@ -624,7 +612,9 @@ namespace JasHandExperiment.UI
                     buttonBrowseReplayFile.Visible = true;
                     textBoxPressesFreq.Visible = true;
                     labelPressFreq.Visible = true;
-
+                    labelReplayUserPressesFile.Visible = false;
+                    textBoxReplayUserPressesFile.Visible = false;
+                    buttonBrowseReplayFile.Visible = false;
 
                     radioButtonTypePWS.Checked = true;
                     break;
@@ -640,7 +630,17 @@ namespace JasHandExperiment.UI
             {
                 textBoxReplayFile.Text = openFileDialog.FileName;
             }
-        } 
+        }
+        
+        private void button_ReplayUserPressesFileBrowse_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = CSV_FILTER;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxReplayUserPressesFile.Text = openFileDialog.FileName;
+            }
+        }
         #endregion
+
     }
 }

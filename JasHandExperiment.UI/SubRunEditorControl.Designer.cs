@@ -63,6 +63,7 @@
             // propertyGrid_Collection
             // 
             this.propertyGrid_Collection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid_Collection.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.propertyGrid_Collection.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid_Collection.Name = "propertyGrid_Collection";
             this.propertyGrid_Collection.Size = new System.Drawing.Size(354, 324);
@@ -84,9 +85,10 @@
             // 
             // button_Remove
             // 
-            this.button_Remove.Location = new System.Drawing.Point(6, 98);
+            this.button_Remove.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.button_Remove.Location = new System.Drawing.Point(6, 105);
             this.button_Remove.Name = "button_Remove";
-            this.button_Remove.Size = new System.Drawing.Size(123, 39);
+            this.button_Remove.Size = new System.Drawing.Size(135, 54);
             this.button_Remove.TabIndex = 7;
             this.button_Remove.Text = "Remove";
             this.button_Remove.UseVisualStyleBackColor = true;
@@ -94,9 +96,10 @@
             // 
             // button_Add
             // 
+            this.button_Add.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.button_Add.Location = new System.Drawing.Point(6, 42);
             this.button_Add.Name = "button_Add";
-            this.button_Add.Size = new System.Drawing.Size(123, 39);
+            this.button_Add.Size = new System.Drawing.Size(135, 54);
             this.button_Add.TabIndex = 6;
             this.button_Add.Text = "Add";
             this.button_Add.UseVisualStyleBackColor = true;
@@ -104,6 +107,7 @@
             // 
             // button_Load
             // 
+            this.button_Load.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.button_Load.Location = new System.Drawing.Point(6, 234);
             this.button_Load.Name = "button_Load";
             this.button_Load.Size = new System.Drawing.Size(123, 39);
@@ -114,6 +118,7 @@
             // 
             // button_Save
             // 
+            this.button_Save.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.button_Save.Location = new System.Drawing.Point(6, 178);
             this.button_Save.Name = "button_Save";
             this.button_Save.Size = new System.Drawing.Size(123, 39);
@@ -124,8 +129,8 @@
             // 
             // SubRunEditorControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.splitContainerMain);
             this.Name = "SubRunEditorControl";
             this.Size = new System.Drawing.Size(505, 324);

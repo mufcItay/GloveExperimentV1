@@ -60,7 +60,7 @@
             this.groupBoxVRHandEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxVRHandEditor.Location = new System.Drawing.Point(0, 0);
             this.groupBoxVRHandEditor.Name = "groupBoxVRHandEditor";
-            this.groupBoxVRHandEditor.Size = new System.Drawing.Size(504, 398);
+            this.groupBoxVRHandEditor.Size = new System.Drawing.Size(614, 438);
             this.groupBoxVRHandEditor.TabIndex = 6;
             this.groupBoxVRHandEditor.TabStop = false;
             this.groupBoxVRHandEditor.Text = "VR Hand Editor";
@@ -87,22 +87,23 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.elementHost_Hands);
-            this.splitContainerMain.Size = new System.Drawing.Size(498, 373);
-            this.splitContainerMain.SplitterDistance = 161;
+            this.splitContainerMain.Size = new System.Drawing.Size(608, 413);
+            this.splitContainerMain.SplitterDistance = 196;
             this.splitContainerMain.TabIndex = 3;
             // 
             // labelTone
             // 
             this.labelTone.AutoSize = true;
-            this.labelTone.Location = new System.Drawing.Point(25, 128);
+            this.labelTone.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelTone.Location = new System.Drawing.Point(15, 134);
             this.labelTone.Name = "labelTone";
-            this.labelTone.Size = new System.Drawing.Size(49, 20);
+            this.labelTone.Size = new System.Drawing.Size(62, 27);
             this.labelTone.TabIndex = 21;
             this.labelTone.Text = "Tone:";
             // 
             // trackBarTone
             // 
-            this.trackBarTone.Location = new System.Drawing.Point(14, 165);
+            this.trackBarTone.Location = new System.Drawing.Point(14, 170);
             this.trackBarTone.Maximum = 5;
             this.trackBarTone.Minimum = 1;
             this.trackBarTone.Name = "trackBarTone";
@@ -115,9 +116,10 @@
             // 
             this.radioButtonNone.AutoSize = true;
             this.radioButtonNone.Checked = true;
-            this.radioButtonNone.Location = new System.Drawing.Point(11, 334);
+            this.radioButtonNone.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonNone.Location = new System.Drawing.Point(11, 341);
             this.radioButtonNone.Name = "radioButtonNone";
-            this.radioButtonNone.Size = new System.Drawing.Size(72, 24);
+            this.radioButtonNone.Size = new System.Drawing.Size(86, 31);
             this.radioButtonNone.TabIndex = 19;
             this.radioButtonNone.TabStop = true;
             this.radioButtonNone.Text = "None";
@@ -126,27 +128,30 @@
             // labelHandColor
             // 
             this.labelHandColor.AutoSize = true;
-            this.labelHandColor.Location = new System.Drawing.Point(15, 50);
+            this.labelHandColor.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelHandColor.Location = new System.Drawing.Point(15, 47);
             this.labelHandColor.Name = "labelHandColor";
-            this.labelHandColor.Size = new System.Drawing.Size(93, 20);
+            this.labelHandColor.Size = new System.Drawing.Size(121, 27);
             this.labelHandColor.TabIndex = 8;
             this.labelHandColor.Text = "Hand Color:";
             // 
             // radioButtonLeftHand
             // 
             this.radioButtonLeftHand.AutoSize = true;
-            this.radioButtonLeftHand.Location = new System.Drawing.Point(11, 304);
+            this.radioButtonLeftHand.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonLeftHand.Location = new System.Drawing.Point(11, 311);
             this.radioButtonLeftHand.Name = "radioButtonLeftHand";
-            this.radioButtonLeftHand.Size = new System.Drawing.Size(62, 24);
+            this.radioButtonLeftHand.Size = new System.Drawing.Size(71, 31);
             this.radioButtonLeftHand.TabIndex = 18;
             this.radioButtonLeftHand.Text = "Left";
             this.radioButtonLeftHand.UseVisualStyleBackColor = true;
             // 
             // button_ColorDialog
             // 
-            this.button_ColorDialog.Location = new System.Drawing.Point(11, 79);
+            this.button_ColorDialog.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.button_ColorDialog.Location = new System.Drawing.Point(11, 77);
             this.button_ColorDialog.Name = "button_ColorDialog";
-            this.button_ColorDialog.Size = new System.Drawing.Size(129, 35);
+            this.button_ColorDialog.Size = new System.Drawing.Size(171, 46);
             this.button_ColorDialog.TabIndex = 7;
             this.button_ColorDialog.Text = "Manual";
             this.button_ColorDialog.UseVisualStyleBackColor = true;
@@ -155,9 +160,10 @@
             // radioButtonRightHand
             // 
             this.radioButtonRightHand.AutoSize = true;
-            this.radioButtonRightHand.Location = new System.Drawing.Point(11, 274);
+            this.radioButtonRightHand.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.radioButtonRightHand.Location = new System.Drawing.Point(11, 281);
             this.radioButtonRightHand.Name = "radioButtonRightHand";
-            this.radioButtonRightHand.Size = new System.Drawing.Size(72, 24);
+            this.radioButtonRightHand.Size = new System.Drawing.Size(83, 31);
             this.radioButtonRightHand.TabIndex = 17;
             this.radioButtonRightHand.Text = "Right";
             this.radioButtonRightHand.UseVisualStyleBackColor = true;
@@ -176,9 +182,10 @@
             // labelHandToAnimate
             // 
             this.labelHandToAnimate.AutoSize = true;
-            this.labelHandToAnimate.Location = new System.Drawing.Point(7, 237);
+            this.labelHandToAnimate.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelHandToAnimate.Location = new System.Drawing.Point(15, 241);
             this.labelHandToAnimate.Name = "labelHandToAnimate";
-            this.labelHandToAnimate.Size = new System.Drawing.Size(137, 20);
+            this.labelHandToAnimate.Size = new System.Drawing.Size(175, 27);
             this.labelHandToAnimate.TabIndex = 16;
             this.labelHandToAnimate.Text = "Hand To Animate:";
             // 
@@ -187,18 +194,18 @@
             this.elementHost_Hands.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost_Hands.Location = new System.Drawing.Point(0, 0);
             this.elementHost_Hands.Name = "elementHost_Hands";
-            this.elementHost_Hands.Size = new System.Drawing.Size(333, 373);
+            this.elementHost_Hands.Size = new System.Drawing.Size(408, 413);
             this.elementHost_Hands.TabIndex = 1;
             this.elementHost_Hands.Text = "Hand Editor";
             this.elementHost_Hands.Child = null;
             // 
             // VRHandEditorControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.groupBoxVRHandEditor);
             this.Name = "VRHandEditorControl";
-            this.Size = new System.Drawing.Size(504, 398);
+            this.Size = new System.Drawing.Size(614, 438);
             this.groupBoxVRHandEditor.ResumeLayout(false);
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel1.PerformLayout();

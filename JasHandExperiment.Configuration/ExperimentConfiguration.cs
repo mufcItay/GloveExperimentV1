@@ -86,6 +86,13 @@ namespace JasHandExperiment.Configuration
         public string ReplayFilePath { get; set; }
 
         /// <summary>
+        /// replay file path, relevant for passive experiment types
+        /// </summary>
+        [ConfigurationProperty("Replay User Presses File Path", DefaultValue = DEFAULT_REPLAY_FILE)]
+        public string ReplayUserPressesFilePath { get; set; }
+
+
+        /// <summary>
         /// the frequency of key presses in simlatino experiment type
         /// </summary>
         [ConfigurationProperty("Replay File Path", DefaultValue = DEFAULT_PRESS_FREQ)]
