@@ -1,6 +1,8 @@
 ﻿using CommonTools;
 using FDTGloveUltraCSharpWrapper;
 using System;
+using System.Globalization;
+using System.IO;
 using UnityEngine;
 
 namespace JasHandExperiment
@@ -59,12 +61,13 @@ namespace JasHandExperiment
             mGlove.GetSensorScaledAll(ref scaledSensors);
 
             // set current state
-            mCoordinates.TimeStamp = DateTime.Now.ToLongTimeString();
+            mCoordinates.TimeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
+                                            CultureInfo.InvariantCulture);
             mCoordinates.SetHandMovementData(scaledSensors);
             // attach time stampt to sensors
             string[] fullLine = new string[scaledSensors.Length + 1];
             int valueIndex = 0;
-            fullLine[valueIndex] = DateTime.Now.ToLongTimeString();
+            fullLine[valueIndex] = mCoordinates.TimeStamp;
             foreach (var sensorValue in scaledSensors)
             {
                 valueIndex++;
@@ -92,8 +95,8 @@ namespace JasHandExperiment
             try
             {
                 // check for connected USBS and search for the glove port
-                mGlove.Open(CommonUtilities.GetGloveUSBPort());
-                CalibrateGlove();
+                mGlove.Open("USB0");//CommonUtilities.GetGloveUSBPort());
+                //CalibrateGlove();
             }
             catch (System.Exception ex)
             {
@@ -109,7 +112,7 @@ namespace JasHandExperiment
             // interval?
             settings.WriteBatchDelayMsec = 1000 * 5;
             // init the file to write to
-            mWriteFile.Init(path, ',', columns, settings);
+            mWriteFile.Init(path, FileMode.Create,',', columns, settings);
             return false;
         }
 

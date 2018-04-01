@@ -47,10 +47,11 @@ namespace CommonTools
         /// The function initializes the CSV file according to parameters. the function MUST be called after allocating an instance of CSVFile.
         /// </summary>
         /// <param name="fileName">the name of the CSV file (path to it)</param>
+        /// <param name="mode">the mode of the file - open/create for read/write</param>
         /// <param name="seperator">the seperator between items of the same line in the csv file</param>
         /// <param name="csvColumns">the columns in the top of the csv file</param>
         /// <param name="settings">a structure that supply settings for how the CSV fiel will be written and how to read from it</param>
-        void Init(string fileName, string seperator = ",", IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null);
+        void Init(string fileName, FileMode mode, string seperator = ",", IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null);
 
         /// <summary>
         /// function that MUST be called after you finished using the file.
@@ -89,11 +90,11 @@ namespace CommonTools
     public class BatchCSVRWSettings : IBaseCSVRWSettings
     {
         #region Constants
-        internal const uint DEFAULT_READ_BATCH_SIZE = 1;
-        internal const uint DEFAULT_WRITE_BATCH_SIZE = 1;
+        public const uint DEFAULT_READ_BATCH_SIZE = 1;
+        public const uint DEFAULT_WRITE_BATCH_SIZE = 1;
 
-        internal const uint DEFAULT_WRITE_DELAY_MSEC = 0;
-        internal const uint DEFAULT_READ_DELAY_MSEC = 0;
+        public const uint DEFAULT_WRITE_DELAY_MSEC = 0;
+        public const uint DEFAULT_READ_DELAY_MSEC = 0;
         #endregion
 
         #region Propreties
@@ -124,6 +125,9 @@ namespace CommonTools
         {
             ReadBatchSize = DEFAULT_READ_BATCH_SIZE;
             WriteBatchSize = DEFAULT_WRITE_BATCH_SIZE;
+
+            ReadBatchDelayMsec = DEFAULT_READ_DELAY_MSEC;
+            WriteBatchDelayMsec = DEFAULT_WRITE_DELAY_MSEC;
         } 
         #endregion
     }
@@ -225,17 +229,17 @@ namespace CommonTools
         /// <summary>
         /// Refer to the interface Init function for documentation. 
         /// </summary>
-        void ICSVFile.Init(string fileName, string seperator, IEnumerable<string> csvColumns, IBaseCSVRWSettings settings)
+        void ICSVFile.Init(string fileName, FileMode mode, string seperator, IEnumerable<string> csvColumns, IBaseCSVRWSettings settings)
         {
-            Init(fileName, seperator, csvColumns, settings);
+            Init(fileName, mode,seperator, csvColumns, settings);
         }
 
         /// <summary>
         /// Refer to the interface Init function for documentation. 
         /// </summary>
-        void Init(string fileName, string seperator = ",", IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
+        void Init(string fileName, FileMode mode, string seperator = ",", IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
         {
-            Init(new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite), seperator, csvColumns, settings);
+            Init(new FileStream(fileName, mode, FileAccess.ReadWrite), seperator, csvColumns, settings);
         }
 
         /// <summary>
@@ -249,9 +253,9 @@ namespace CommonTools
         /// <summary>
         /// Refer to the interface Init function for documentation. 
         /// </summary>
-        public void Init(string fileName, char seperator = ',', IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
+        public void Init(string fileName, FileMode mode, char seperator = ',', IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
         {
-           Init(new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite), seperator, csvColumns, settings);
+           Init(new FileStream(fileName, mode, FileAccess.ReadWrite), seperator, csvColumns, settings);
         }
 
         /// <summary>

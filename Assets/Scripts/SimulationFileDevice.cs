@@ -39,6 +39,18 @@ namespace JasHandExperiment
             string keyPressed = coordinatesLine[CommonConstants.KEY_PRESS_COL_INDEX];
             mData.SetHandMovementData(keyPressed);
         }
+
+        /// <summary>
+        /// see abstract class for documentation
+        /// </summary>
+        /// <returns>the read settings for the file</returns>
+        public override BatchCSVRWSettings GetReadSettings()
+        {
+            BatchCSVRWSettings settings = new BatchCSVRWSettings();
+            settings.ReadBatchDelayMsec = (uint)((1.0 / ConfigurationManager.Instance.Configuration.PressFrequency) * 1000); // ????
+            settings.ReadBatchSize = 1;
+            return settings;
+        }
         
     }
 }

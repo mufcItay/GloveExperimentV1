@@ -14,15 +14,6 @@ namespace JasHandExperiment
     /// </summary>
     public class HandCoordinatesData : Dictionary<FingerType, float[]>, IHandData
     {
-        #region Constants
-
-        /// <summary>
-        /// offset for where data starts in a csv line of simulated hand coordinates data
-        /// </summary>
-        private readonly int FILE_DATA_OFFSET = 0;
-
-        #endregion
-
         #region Data Members
         /// <summary>
         /// current sensors information
@@ -80,7 +71,11 @@ namespace JasHandExperiment
             float[] scaledSensorsFloat = new float[scaledSensors.Length];
             for (int i = 0; i < scaledSensors.Length; i++)
             {
-                scaledSensorsFloat[i] = float.Parse(scaledSensors[i]);
+                if (!float.TryParse(scaledSensors[i], out scaledSensorsFloat[i]))
+                {
+                    scaledSensorsFloat[i] = 0;
+                    UnityEngine.Debug.Log("float not parsed well => " + scaledSensors[i]);
+                }
             }
 
             return scaledSensorsFloat;

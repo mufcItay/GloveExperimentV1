@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -87,10 +88,31 @@ namespace JasHandExperiment.UI
             FillComboboxes();
             FillGUIData(mExpConfiguration);
             subRunEditorControl.XMLHandlingVisible(false);
+
+
+
+            FontSetter(this, 9);
         }
         #endregion
 
         #region Functions
+
+        private void FontSetter(Control c, float size)
+        {
+            if (c == null)
+            {
+                return;
+            }
+            foreach (Control childC in c.Controls)
+            {
+                if (childC.GetType().Equals(typeof(Label)) || childC.GetType().Equals(typeof(TextBox)) || childC.GetType().Equals(typeof(RadioButton)) || childC.GetType().Equals(typeof(Button)))
+                {
+                    childC.Font = new Font(childC.Name,size);
+                }
+                FontSetter(childC, size);
+            }
+        }
+
         /// <summary>
         /// The functions creates output files directories if they havn't been created
         /// </summary>
