@@ -35,6 +35,11 @@ namespace JasHandExperiment
         /// saves current hand data
         /// </summary>
         protected IHandData mData;
+
+        /// <summary>
+        /// the columns of the CSVFile.
+        /// </summary>
+        protected IEnumerable<string> mColumns;
         #endregion
 
         #region Ctors
@@ -62,9 +67,11 @@ namespace JasHandExperiment
         {
             lock (mLock)
             {
+                var clone = mData.Clone() as IHandData;
                 // clone to avoid conflicts with other threads
-                return mData.Clone() as IHandData;
+                return clone;
             }
+
         }
 
         /// <summary>
@@ -89,6 +96,15 @@ namespace JasHandExperiment
         }
 
         /// <summary>
+        /// the function performs initialization bedore starting the device
+        /// </summary>
+        public virtual IEnumerable<string> GetCSVColumns()
+        {
+            return CommonUtilities.CreateGlovesDataFileColumns(ConfigurationManager.Instance.Configuration.ExperimentType);
+        }
+        
+
+        /// <summary>
         /// see interface for documentation
         /// </summary>
         public bool Open()
@@ -104,7 +120,7 @@ namespace JasHandExperiment
             BatchCSVRWSettings settings = GetReadSettings();
             try
             {
-                mCSVFile.Init(mFileName, FileMode.Open, CommonConstants.CSV_SEPERATOR, CommonUtilities.CreateGlovesDataFileColumns(ConfigurationManager.Instance.Configuration.ExperimentType), settings);
+                mCSVFile.Init(mFileName, FileMode.Open, CommonConstants.CSV_SEPERATOR, GetCSVColumns(), settings);
             }
             catch (Exception ex)
             {

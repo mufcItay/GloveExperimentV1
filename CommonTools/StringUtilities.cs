@@ -22,5 +22,20 @@ namespace CommonTools
             }
             return strArr;
         }
+
+        public static float[] StringArrayToFloatArray(string[] scaledSensors)
+        {
+            float[] scaledSensorsFloat = new float[scaledSensors.Length];
+            for (int i = 0; i < scaledSensors.Length; i++)
+            {
+                if (!float.TryParse(scaledSensors[i], out scaledSensorsFloat[i]))
+                {
+                    scaledSensorsFloat[i] = 0;
+                    UnityEngine.Debug.Log("float not parsed well => " + scaledSensors[i]);
+                }
+            }
+
+            return scaledSensorsFloat;
+        }
     }
 }

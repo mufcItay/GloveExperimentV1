@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace JasHandExperiment
 {
@@ -16,6 +18,11 @@ namespace JasHandExperiment
         /// current key pressed
         /// </summary>
         private string mKeyPressed;
+
+        /// <summary>
+        /// the time samp of the key press.
+        /// </summary>
+        private string mTimeStamp;
         #endregion
 
         #region Properties
@@ -24,6 +31,10 @@ namespace JasHandExperiment
         /// </summary>
         public string KeyPressed { get { return mKeyPressed; } }
 
+        /// <summary>
+        /// property for the time stamp of the key the was pressed
+        /// </summary>
+        public string TimeStamp { get { return mTimeStamp; } }
         #endregion
 
         #region Ctors
@@ -39,9 +50,10 @@ namespace JasHandExperiment
         /// creates an instance with initial key pressed
         /// </summary>
         /// <param name="keyPressed">the initial key pressed</param>
-        public KeyPressedData(string keyPressed)
+        public KeyPressedData(string keyPressed, string timeStamp)
         {
             mKeyPressed = keyPressed;
+            mTimeStamp = timeStamp;
         }
         #endregion
 
@@ -53,7 +65,7 @@ namespace JasHandExperiment
         /// <returns>a clone f the instnace</returns>
         public object Clone()
         {
-            KeyPressedData clone = new KeyPressedData(mKeyPressed);
+            KeyPressedData clone = new KeyPressedData(mKeyPressed,mTimeStamp);
             return clone;
         }
 
@@ -63,8 +75,14 @@ namespace JasHandExperiment
         /// <param name="data">the data from which to determine which key was pressed</param>
         public void SetHandMovementData(object data)
         {
-            mKeyPressed = data.ToString();
-        } 
+            Tuple<string, string> timeKey = data as Tuple<string, string>;
+            if (timeKey == null)
+            {
+                Debug.Log("Error casting KeyPressedData data to a Tuple of string,string (time,key)");
+            }
+            mTimeStamp = timeKey.Item1;
+            mKeyPressed = timeKey.Item2;
+        }
         #endregion
     }
 }

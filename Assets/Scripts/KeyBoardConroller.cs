@@ -14,7 +14,7 @@ public class KeyBoardConroller : MonoBehaviour {
     HandType handSide;
 
     //itay
-    SimulationFileDevice mDevice;
+    BaseHandMovementFileDevice mDevice;
 	// Use this for initialization
 	void Start () {
 
@@ -25,7 +25,12 @@ public class KeyBoardConroller : MonoBehaviour {
             mDevice = HandMovemventDeviceFactory.GetOrCreate(exType) as SimulationFileDevice;
             mDevice.Open();
         }
-        
+        if (exType == ExperimentType.PassiveWatchingReplay)
+        {
+            mDevice = new KeyBoardSimulationFileDevice();
+            mDevice.Open();
+        }
+
 
         ///////////////ADVA//////////////// remove the comeent after sinchronize with itays code
         // check wich animated hand we would like to move
@@ -41,9 +46,17 @@ public class KeyBoardConroller : MonoBehaviour {
         //{
         //    keyBoard.SetInteger("pressedButton", -1);
         //}
-        if (ConfigurationManager.Instance.Configuration.ExperimentType == ExperimentType.PassiveSimulation)
+        if (ConfigurationManager.Instance.Configuration.ExperimentType != ExperimentType.Active)
         {
             KeyPressedData key = mDevice.GetHandData() as KeyPressedData;
+            if (key == null || string.IsNullOrEmpty(key.KeyPressed))
+            {
+                lastPressedInput = 0;
+                keyBoard.SetInteger("pressedButton", 0);
+
+                // no data to update according to
+                return;
+            }
             int pressedInput = int.Parse(key.KeyPressed);
             if (handSide.Equals(HandType.Right))
             {
@@ -52,14 +65,14 @@ public class KeyBoardConroller : MonoBehaviour {
                 keyBoard.SetInteger("pressedButton", pressedInput);
                 lastPressedInput = pressedInput;
 
-                Debug.Log(DateTime.Now.Second + ":" + DateTime.Now.Millisecond + " KEYBOARD");
+             //   Debug.Log(DateTime.Now.Second + ":" + DateTime.Now.Millisecond + " KEYBOARD");
             }
             else if (handSide.Equals(HandType.Left)) // just to avoid the 'none' hand type case
             {
                 keyBoard.SetInteger("pressedButton", pressedInput);
                 lastPressedInput = pressedInput;
 
-                Debug.Log(DateTime.Now.Second + ":" + DateTime.Now.Millisecond + " KEYBOARD");
+               // Debug.Log(DateTime.Now.Second + ":" + DateTime.Now.Millisecond + " KEYBOARD");
             }
             return;
         }

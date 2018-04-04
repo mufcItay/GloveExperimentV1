@@ -1,6 +1,7 @@
 ﻿using CommonTools;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace JasHandExperiment
 {
@@ -17,8 +18,7 @@ namespace JasHandExperiment
         {
             return new KeyPressedData();
         }
-
-
+        
         /// <summary>
         /// the simulation confguration element to read from
         /// </summary>
@@ -37,7 +37,10 @@ namespace JasHandExperiment
         {
             // get the field of key press
             string keyPressed = coordinatesLine[CommonConstants.KEY_PRESS_COL_INDEX];
-            mData.SetHandMovementData(keyPressed);
+            string timeStamp = coordinatesLine[CommonConstants.TIME_COL_INDEX];
+            // fist the time and then key (order is imporatant)
+            Tuple<string, string> lineData = new Tuple<string, string>(timeStamp, keyPressed);
+            mData.SetHandMovementData(lineData);
         }
 
         /// <summary>

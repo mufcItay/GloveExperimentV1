@@ -330,6 +330,7 @@
     <Compile Include="Assets\Scripts\IHandData.cs" />
     <Compile Include="Assets\Scripts\IHandMovementDevice.cs" />
     <Compile Include="Assets\Scripts\KeyBoardConroller.cs" />
+    <Compile Include="Assets\Scripts\KeyBoardSimulationFileDevice.cs" />
     <Compile Include="Assets\Scripts\KeyPressedData.cs" />
     <Compile Include="Assets\Scripts\redButtonText.cs" />
     <Compile Include="Assets\Scripts\ReplayFileDevice.cs" />

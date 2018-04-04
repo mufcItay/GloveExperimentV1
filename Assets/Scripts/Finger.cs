@@ -101,6 +101,11 @@ namespace JasHandExperiment
         /// <param name="coordinates"></param>
         public void Rotate(HandCoordinatesData coordinates)
         {
+            if (coordinates == null)
+            {
+                //ERROR
+                return;
+            }
             // set initial state before rotating
             ResetRotation();
             for (int i = 0; i < mBones.Length; i++)

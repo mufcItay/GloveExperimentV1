@@ -82,8 +82,7 @@ namespace JasHandExperiment
         {
             // not obligatory
         }
-
-
+        
         /// <summary>
         /// The function is responsible for hand movement. can be overriten
         /// </summary>
@@ -174,7 +173,6 @@ namespace JasHandExperiment
         /// </summary>
         public override void MoveHand()
         {
-            Debug.Log(DateTime.Now.Second +":" + DateTime.Now.Millisecond + " HAND");
             var keyPressedData = mDevice.GetHandData() as KeyPressedData;
             mAnimationManager.RespondExclusivleyToTrigger(keyPressedData.KeyPressed);
         }

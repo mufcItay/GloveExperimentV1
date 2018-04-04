@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonTools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,7 +56,7 @@ namespace JasHandExperiment
         {
             TimeStamp = DateTime.Now.ToLongTimeString();
             // cast and launch
-            float[] scaledSensorsFloat = StringArrayToFloatArray(scaledSensors);
+            float[] scaledSensorsFloat = StringUtilities.StringArrayToFloatArray(scaledSensors);
             InitDict(scaledSensorsFloat);
         } 
         #endregion
@@ -66,21 +67,7 @@ namespace JasHandExperiment
         /// </summary>
         /// <param name="scaledSensors"></param>
         /// <returns></returns>
-        private float[] StringArrayToFloatArray(string[] scaledSensors)
-        {
-            float[] scaledSensorsFloat = new float[scaledSensors.Length];
-            for (int i = 0; i < scaledSensors.Length; i++)
-            {
-                if (!float.TryParse(scaledSensors[i], out scaledSensorsFloat[i]))
-                {
-                    scaledSensorsFloat[i] = 0;
-                    UnityEngine.Debug.Log("float not parsed well => " + scaledSensors[i]);
-                }
-            }
-
-            return scaledSensorsFloat;
-        }
-
+        
         /// <summary>
         /// the fucntino initialzied the inner dictionary by given params
         /// </summary>
@@ -103,7 +90,7 @@ namespace JasHandExperiment
         private void UpdateValues(string[] scaledSensors)
         {
             // cast and launch
-            float[] scaledSensorsFloat = StringArrayToFloatArray(scaledSensors);
+            float[] scaledSensorsFloat = StringUtilities.StringArrayToFloatArray(scaledSensors);
             UpdateValues(scaledSensorsFloat);
         }
 

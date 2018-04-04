@@ -62,26 +62,39 @@ namespace JasHandExperiment
         {
             base.Init();
 
-            mTimedReader = new TimedCSVReader(mCSVFile, CommonConstants.TIME_COL_INDEX);
+            mTimedReader = new TimedCSVReader(mCSVFile, CommonConstants.TIME_COL_INDEX, 50);
         }
+
+        DateTime firstDT = DateTime.MinValue;
+        DateTime firstFileDT = DateTime.MinValue;
 
         public override IHandData GetHandData()
         {
-            string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
-                                            System.Globalization.CultureInfo.InvariantCulture);
-            Debug.Log(time + " :Enterd GetHandData");
             string[] line = mTimedReader.ReadLine();
             if (line != null)
             {
+                if (firstDT == DateTime.MinValue)
+                {
+                    firstDT = DateTime.Now;
+                }
+                if (firstFileDT == DateTime.MinValue)
+                {
+                    firstFileDT = DateTime.Parse(line[0]);
+                }
                 OnCoordinatesUpdate(line);
-                time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
-                                            System.Globalization.CultureInfo.InvariantCulture);
-                Debug.Log(time + " : New line - update coordinated orginal time - " + line[0]);
             }
+
+            //if (mTimedReader.mCsvLines.Count == mTimedReader.mCurrentLineIndex && diff.Equals(string.Empty))
+            //{
+            //        double real = (DateTime.Now - firstDT).TotalMilliseconds;
+            //        double file = (DateTime.Parse((mData as HandCoordinatesData).TimeStamp) - firstFileDT).TotalMilliseconds;
+            //        diff = (real - file).ToString();
+            //    Debug.Log("END Time difference (msec) from beginnig REAL - " + diff);
+            //}
 
             return base.GetHandData();
         }
-
+        string diff = string.Empty;
 
         /// <summary>
         /// see abstract class for documentation
