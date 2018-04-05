@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ExperimentConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Squence>34</Squence>
+  <Squence>12321</Squence>
   <SubRuns>
     <SubRunConfiguration>
       <BlocksAmount>12</BlocksAmount>
       <InterBlockTimeout>30</InterBlockTimeout>
-      <BlockDuration>1</BlockDuration>
+      <BlockDuration>120</BlockDuration>
     </SubRunConfiguration>
   </SubRuns>
   <ParticipantConfiguration>

@@ -40,6 +40,8 @@ namespace JasHandExperiment
         /// the columns of the CSVFile.
         /// </summary>
         protected IEnumerable<string> mColumns;
+
+        private bool isUpdated;
         #endregion
 
         #region Ctors

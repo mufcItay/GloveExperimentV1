@@ -71,6 +71,10 @@ namespace JasHandExperiment
     /// </summary>
     public static class CommonConstants
     {
+        public static int TrialNumber = 1;
+        public static bool FirstRun = true;
+        public static bool EndOfExperement = false;
+
         // file relevant consts
         public const char CSV_SEPERATOR = ',';
         public const int SCALED_SESORS_ARRAY_LENGTH = 20;
@@ -138,7 +142,7 @@ namespace JasHandExperiment
             StringBuilder sb = new StringBuilder();
             sb.Append(directoryPath);
             sb.Append(ConfigurationManager.Instance.Configuration.ParticipantConfiguration.Number + @"\");
-            sb.Append(ExperimentRuntime.Instance.TrialNumber);
+            sb.Append(CommonConstants.TrialNumber);
             sb.Append(CommonConstants.CSV_EXTENSION);
             return sb.ToString();
         }

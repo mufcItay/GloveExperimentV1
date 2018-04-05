@@ -68,7 +68,7 @@ public class HandController : MonoBehaviour {
     {
         // get hand model
         var handModel = CommonUtilities.FindObjectWithName(transform, CommonUtilities.GetRendererParentObjectName(HandGender));
-        // get renderer of hand
+        // get renderer of hand 
         Renderer rend = handModel.GetComponent<Renderer>();
         // set hand color
         rend.material.color = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandColor;

@@ -3,14 +3,14 @@
   <Squence>41324</Squence>
   <SubRuns>
     <SubRunConfiguration>
-      <BlocksAmount>6</BlocksAmount>
-      <InterBlockTimeout>30</InterBlockTimeout>
-      <BlockDuration>1</BlockDuration>
+      <BlocksAmount>2</BlocksAmount>
+      <InterBlockTimeout>3</InterBlockTimeout>
+      <BlockDuration>17</BlockDuration>
     </SubRunConfiguration>
     <SubRunConfiguration>
       <BlocksAmount>12</BlocksAmount>
       <InterBlockTimeout>30</InterBlockTimeout>
-      <BlockDuration>1</BlockDuration>
+      <BlockDuration>20</BlockDuration>
     </SubRunConfiguration>
   </SubRuns>
   <ParticipantConfiguration>

@@ -42,22 +42,27 @@ namespace JasHandExperiment
             }
         }
 
-        public uint TrialNumber { get; set; }
+		public uint TrialNumber { get; set; }
         
+
+		public bool FirstRun { get; set; }
+
+		public bool EndOfExperement { get; set; }
         #endregion
 
         #region Ctors
 
         // singletone implementation
         static ExperimentRuntime()
-        {
-        }
+        {}
 
         private ExperimentRuntime()
-        {
+        { 
+			
             mConfigurationObject = ConfigurationManager.Instance.Configuration;
             TrialNumber = 1;
-
+			FirstRun = false;
+			EndOfExperement = false;
             CreatOutputFilesDirectories();
         }
 

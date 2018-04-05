@@ -10,6 +10,7 @@ namespace JasHandExperiment
     /// </summary>
     public class SimulationFileDevice : BaseHandMovementFileDevice
     {
+ 
         /// <summary>
         /// created the IHandData relevant to keyPress data
         /// </summary>

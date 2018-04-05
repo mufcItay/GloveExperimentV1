@@ -56,6 +56,7 @@ namespace JasHandExperiment
         public void Close()
         {
             mGlove.Close();
+            mGlove = null;
             mWriteFile.Close();
         }
 

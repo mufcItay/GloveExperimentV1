@@ -145,6 +145,7 @@ namespace JasHandExperiment
         // manages animation of the hand for simulation experiment type
         private AnimationManager mAnimationManager;
 
+        string mLastDTUpdated;
         #endregion
 
         #region Properties
@@ -165,15 +166,21 @@ namespace JasHandExperiment
         /// </summary>
         public override void InnerInit()
         {
+            mLastDTUpdated = DateTime.MinValue.ToLongTimeString();
             InitHandAnimator();
         }
 
         /// <summary>
-        /// the fucntino app;ies anumation manager reactins accordign to device's output
+        /// the fucntino applies anumation manager reactins accordign to device's output
         /// </summary>
         public override void MoveHand()
         {
             var keyPressedData = mDevice.GetHandData() as KeyPressedData;
+            if (keyPressedData.TimeStamp.Equals(mLastDTUpdated))
+            {
+                return;
+            }
+            mLastDTUpdated = keyPressedData.TimeStamp;
             mAnimationManager.RespondExclusivleyToTrigger(keyPressedData.KeyPressed);
         }
 
