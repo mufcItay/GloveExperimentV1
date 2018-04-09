@@ -80,7 +80,8 @@ namespace JasHandExperiment
         public const int SCALED_SESORS_ARRAY_LENGTH = 20;
         public const int TIME_COL_INDEX = 0;
         public const int KEY_PRESS_COL_INDEX = 1;
-
+        public const char SESSION_TRIAL_SEPERATOR = '-';
+        
         // hand prefab names
         internal const string MALE_HAND_RENDERER_CONTAINING_OBJECT_NAME = "fp_male_hand";
         internal  const string FEMALE_HAND_RENDERER_CONTAINING_OBJECT_NAME = "fp_female_hand";
@@ -142,6 +143,8 @@ namespace JasHandExperiment
             StringBuilder sb = new StringBuilder();
             sb.Append(directoryPath);
             sb.Append(ConfigurationManager.Instance.Configuration.ParticipantConfiguration.Number + @"\");
+            sb.Append(ConfigurationManager.Instance.Configuration.SessionsConfiguration[ConfigurationManager.Instance.Configuration.SessionsConfiguration.Count -1]);
+            sb.Append(CommonConstants.SESSION_TRIAL_SEPERATOR);
             sb.Append(CommonConstants.TrialNumber);
             sb.Append(CommonConstants.CSV_EXTENSION);
             return sb.ToString();

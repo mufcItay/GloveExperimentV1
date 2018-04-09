@@ -11,11 +11,11 @@ namespace JasHandExperiment.Configuration
     /// </summary>
     [Serializable]
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    public partial class RuntimeConfiguration
+    public partial class RuntimeConfiguration : ICloneable
     {
         #region Constants
 
-        public const string DEFAULT_MAIN_DIR = "";//@"C:\GloveExperimentV1\";
+        public const string DEFAULT_MAIN_DIR = "";
 
         /// <summary>
         /// the path to the runtime configuration file
@@ -60,5 +60,13 @@ namespace JasHandExperiment.Configuration
         }
 
         #endregion
+
+        public object Clone()
+        {
+            RuntimeConfiguration clone = new RuntimeConfiguration();
+            clone.PathToConfigurationFile = this.PathToConfigurationFile;
+            clone.PathToSubjectDir = this.PathToSubjectDir;
+            return clone;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace ConfigurationUI
 
         #endregion
 
-        #region Ctors``
+        #region Ctors
         public EditorForm(Type expConfigurationObjectType)
         {
             InitializeComponent();

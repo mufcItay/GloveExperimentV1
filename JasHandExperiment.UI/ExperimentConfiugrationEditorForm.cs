@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -28,6 +29,7 @@ namespace JasHandExperiment.UI
         private const string XML_FILTER = "XML Files |*.xml"; 
         private const string CSV_FILTER = "CSV Files |*.csv";
 
+        private const string RELATIVE_EXECUTION_PATH = "pathToRuntimeConfiguration";
         #endregion
 
         #region Data Members
@@ -59,10 +61,22 @@ namespace JasHandExperiment.UI
 
 
         /// <summary>
-        /// The runtime confgiruation loaded from runtime repositroy
+        /// The runtime confgiruation loaded from runtime repositroy, 
+        /// inidicated where are we running the experiment from
         /// </summary>
         private RuntimeConfiguration mRuntimeConfiguration;
 
+
+        /// <summary>
+        /// The runtime confgiruation loaded from runtime repositroy, 
+        /// inidicated where are we running the experiment from relative to editor path
+        /// </summary>
+        private RuntimeConfiguration mEditorRelativeRuntimeConfiguration;
+
+        /// <summary>
+        /// Path to the execution folder where runtime configuration is located at
+        /// </summary>
+        private string mExecutionFloderPath;
         #endregion
 
 
@@ -71,12 +85,21 @@ namespace JasHandExperiment.UI
         public ExperimentConfiugrationEditorForm()
         {
             InitializeComponent();
+            mExecutionFloderPath = string.Empty;
+            if (ConfigurationManager.AppSettings.Get(RELATIVE_EXECUTION_PATH) != null)
+            {
+                mExecutionFloderPath = ConfigurationManager.AppSettings[RELATIVE_EXECUTION_PATH];
+            }
             // create outputfiles directories
             mExpConfiguration = new ExperimentConfiguration();
             mRuntimeRepository = new FileRepository();
 
-            mRuntimeRepository.Connect(RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
+            //mRuntimeRepository.Connect(RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
+            mRuntimeRepository.Connect(mExecutionFloderPath + RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
             mRuntimeConfiguration = mRuntimeRepository.GetObject<RuntimeConfiguration>();
+            mEditorRelativeRuntimeConfiguration = mRuntimeConfiguration.Clone() as RuntimeConfiguration;
+            mEditorRelativeRuntimeConfiguration.PathToConfigurationFile = mExecutionFloderPath + mRuntimeConfiguration.PathToConfigurationFile;
+            mEditorRelativeRuntimeConfiguration.PathToSubjectDir = mExecutionFloderPath + mRuntimeConfiguration.PathToSubjectDir;
 
             CreateFolders();
 
@@ -98,17 +121,17 @@ namespace JasHandExperiment.UI
         /// </summary>
         private void CreateFolders()
         {
-            if (!Directory.Exists(mRuntimeConfiguration.PathToSubjectDir))
+            if (!Directory.Exists(mEditorRelativeRuntimeConfiguration.PathToSubjectDir))
             {
-                Directory.CreateDirectory(mRuntimeConfiguration.PathToSubjectDir);
+                Directory.CreateDirectory(mEditorRelativeRuntimeConfiguration.PathToSubjectDir);
             }
-            if (!Directory.Exists(RuntimeConfiguration.DEFAULT_GLOVE_MOVEMENTS_FOLDER))
+            if (!Directory.Exists(mExecutionFloderPath + RuntimeConfiguration.DEFAULT_GLOVE_MOVEMENTS_FOLDER))
             {
-                Directory.CreateDirectory(RuntimeConfiguration.DEFAULT_GLOVE_MOVEMENTS_FOLDER);
+                Directory.CreateDirectory(mExecutionFloderPath + RuntimeConfiguration.DEFAULT_GLOVE_MOVEMENTS_FOLDER);
             }
-            if (!Directory.Exists(RuntimeConfiguration.DEFAULT_USER_PRESSES_FOLDER))
+            if (!Directory.Exists(mExecutionFloderPath + RuntimeConfiguration.DEFAULT_USER_PRESSES_FOLDER))
             {
-                Directory.CreateDirectory(RuntimeConfiguration.DEFAULT_USER_PRESSES_FOLDER);
+                Directory.CreateDirectory(mExecutionFloderPath + RuntimeConfiguration.DEFAULT_USER_PRESSES_FOLDER);
             }
         }
 
@@ -169,7 +192,7 @@ namespace JasHandExperiment.UI
             comboBoxSubjectNumber.Text = string.Empty;
             List<String> groupNumbersList = new List<string>();
             List<String> subjectNumbersList = new List<string>();
-            mSavedConfFiles = Directory.GetFiles(mRuntimeConfiguration.PathToSubjectDir, "*.xml", SearchOption.TopDirectoryOnly).ToList();
+            mSavedConfFiles = Directory.GetFiles(mEditorRelativeRuntimeConfiguration.PathToSubjectDir, "*.xml", SearchOption.TopDirectoryOnly).ToList();
             // learn how to fill vomoboxes according to ptten of file names in saved configuration files list
             foreach (var file in mSavedConfFiles)
             {
@@ -289,18 +312,15 @@ namespace JasHandExperiment.UI
 
             try
             {
-                var s = mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath.Split('\\');
-                mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath = mRuntimeConfiguration.PathToSubjectDir + s.Last();
-
                 // save the configuration
-                repository.Save(mExpConfiguration, conf.OutputFilesConfiguration.ConfigurationFilePath);
+                repository.Save(mExpConfiguration, mExecutionFloderPath + conf.OutputFilesConfiguration.ConfigurationFilePath);
                 // if not first session
                 if (mSubjectToSessionIDDict.ContainsKey(subjectId) && mSubjectToSessionIDDict[subjectId] != 1)
                 {
                     // delete older session file
                     string sessionIdToDelete = (mSubjectToSessionIDDict[subjectId] - 1).ToString();
                     // delete old session
-                    string oldFilePath = GetConfigurationFilePath(subjectId, conf.ParticipantConfiguration.GroupNumber.ToString(), sessionIdToDelete);
+                    string oldFilePath = GetConfigurationFilePath(subjectId, conf.ParticipantConfiguration.GroupNumber.ToString(), sessionIdToDelete, mEditorRelativeRuntimeConfiguration.PathToSubjectDir);
                     // if the file exists means we creating new session, not updating it, so old file exists
                     if (File.Exists(oldFilePath))
                     {
@@ -310,12 +330,7 @@ namespace JasHandExperiment.UI
 
                 // save the path to conifguration file to runtime conf
                 mRuntimeConfiguration.PathToConfigurationFile = conf.OutputFilesConfiguration.ConfigurationFilePath;
-                mRuntimeRepository.Save(mRuntimeConfiguration, RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
-                // patch for now when editor is not ready
-                mRuntimeConfiguration.PathToSubjectDir = RuntimeConfiguration.DEFAULT_SUBJECTS_CONFIGURATIONS_FOLDER_PATH;
-                var ss = mRuntimeConfiguration.PathToConfigurationFile.Split('\\');
-                mRuntimeConfiguration.PathToConfigurationFile = mRuntimeConfiguration.PathToSubjectDir + ss.Last();
-                mRuntimeRepository.Save(mRuntimeConfiguration, @"..\..\..\" +RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
+                mRuntimeRepository.Save(mRuntimeConfiguration, mExecutionFloderPath + RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
                 mRuntimeRepository.Close();
             }
             catch (Exception ex)
@@ -432,11 +447,20 @@ namespace JasHandExperiment.UI
         /// <param name="groupId">group number</param>
         /// <param name="sessionID">sessino number</param>
         /// <returns>the file name relevant to arguments according to the configration file name pattern needed</returns>
-        private string GetConfigurationFilePath(string participantID, string groupId, string sessionID)
+        private string GetConfigurationFilePath(string participantID, string groupId, string sessionID, string pathToSubjectDir = null)
         {
             StringBuilder sb = new StringBuilder();
+            // if path to subject dir still null, we want the returned path to be relative to execution, 
+            // otherwise we set it accordint to param
+            if (pathToSubjectDir  != null)
+            {
+                sb.Append(pathToSubjectDir);
+            }
+            else
+            {
+                sb.Append(mRuntimeConfiguration.PathToSubjectDir);
+            }
             // participant id
-            sb.Append(mRuntimeConfiguration.PathToSubjectDir);
             sb.Append(participantID);
             // group id
             sb.Append(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER);
@@ -599,6 +623,7 @@ namespace JasHandExperiment.UI
                     labelReplayUserPressesFile.Visible = false;
                     textBoxReplayUserPressesFile.Visible = false;
                     buttonBrowseReplayFile.Visible = false;
+                    buttonReplayUserPressesFileBrowse.Visible = false;
 
                     radioButtonTypeA.Checked = true;
                     break;
@@ -611,7 +636,8 @@ namespace JasHandExperiment.UI
                     labelReplayUserPressesFile.Visible = true;
                     textBoxReplayUserPressesFile.Visible = true;
                     buttonBrowseReplayFile.Visible = true;
-                    
+                    buttonReplayUserPressesFileBrowse.Visible = true;
+
                     radioButtonTypePWR.Checked = true;
                     break;
                 case ExperimentType.PassiveSimulation:
@@ -622,7 +648,8 @@ namespace JasHandExperiment.UI
                     labelPressFreq.Visible = true;
                     labelReplayUserPressesFile.Visible = false;
                     textBoxReplayUserPressesFile.Visible = false;
-                    buttonBrowseReplayFile.Visible = false;
+                    buttonBrowseReplayFile.Visible = true;
+                    buttonReplayUserPressesFileBrowse.Visible = false;
 
                     radioButtonTypePWS.Checked = true;
                     break;

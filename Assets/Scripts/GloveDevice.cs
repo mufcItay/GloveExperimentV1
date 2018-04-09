@@ -2,6 +2,7 @@
 using FDTGloveUltraCSharpWrapper;
 using JasHandExperiment.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using UnityEngine;
@@ -129,14 +130,33 @@ namespace JasHandExperiment
         /// </summary>
         private void CalibrateGlove(HandType gloveSide)
         {
-            if (gloveSide == HandType.Left)
+            /// debug
+            CSVFile calibFile = new CSVFile();
+            calibFile.Init(new FileStream("calib.cal", FileMode.Open), ':');
+            var lines = calibFile.ReadLines();
+            List<ushort> upperVals = new List<ushort>();
+            List<ushort> lowerVals = new List<ushort>();
+            foreach (var line in lines)
             {
-                mGlove.SetCalibrationAll(LEFT_CALIB_UPPER_VALS, LEFT_CALIB_LOWER_VALS);
+                int indexOfMaxSpave = line[line.Length - 2].IndexOf(" ");
+                string upperStr = line[line.Length - 2].Substring(0, indexOfMaxSpave);
+                ushort upper = ushort.Parse(upperStr);
+                ushort lower = ushort.Parse(line[line.Length - 1]);
+
+                upperVals.Add(upper);
+                lowerVals.Add(lower);
             }
-            else
-            {
-                mGlove.SetCalibrationAll(RIGHT_CALIB_UPPER_VALS, RIGHT_CALIB_LOWER_VALS);
-            }
+            mGlove.SetCalibrationAll(upperVals.ToArray(), lowerVals.ToArray());
+
+
+            //if (gloveSide == HandType.Left)
+            //{
+            //    mGlove.SetCalibrationAll(LEFT_CALIB_UPPER_VALS, LEFT_CALIB_LOWER_VALS);
+            //}
+            //else
+            //{
+            //    mGlove.SetCalibrationAll(RIGHT_CALIB_UPPER_VALS, RIGHT_CALIB_LOWER_VALS);
+            //}
         }
     #endregion
 }

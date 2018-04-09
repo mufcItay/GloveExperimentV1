@@ -36,7 +36,7 @@ namespace JasHandExperiment
         // Use this for initialization
         void Start() {
             mExperimentRuntime = ExperimentRuntime.Instance;
-
+            
             // create and init hand creator
             mDynamicHandCreator = new BaseConditionedDynamicObjectCreator<GenderType>(MaleHandPrefab, FemaleHandPrefab);
             GenderType gender = ConfigurationManager.Instance.Configuration.ParticipantConfiguration.Gender;

@@ -43,10 +43,14 @@
             this.radioButtonMale = new System.Windows.Forms.RadioButton();
             this.labelSubjectNumber = new System.Windows.Forms.Label();
             this.groupBoxSessionInfo = new System.Windows.Forms.GroupBox();
+            this.subRunEditorControl = new JasHandExperiment.UI.SubRunEditorControl();
             this.labelSessionNumber = new System.Windows.Forms.Label();
             this.textBoxSessionNumber = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.groupBoxExperimentParams = new System.Windows.Forms.GroupBox();
+            this.buttonReplayUserPressesFileBrowse = new System.Windows.Forms.Button();
+            this.labelReplayUserPressesFile = new System.Windows.Forms.Label();
+            this.textBoxReplayUserPressesFile = new System.Windows.Forms.TextBox();
             this.labelPressFreq = new System.Windows.Forms.Label();
             this.textBoxPressesFreq = new System.Windows.Forms.TextBox();
             this.buttonBrowseReplayFile = new System.Windows.Forms.Button();
@@ -69,11 +73,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.button_ReplayUserPressesFileBrowse = new System.Windows.Forms.Button();
-            this.labelReplayUserPressesFile = new System.Windows.Forms.Label();
-            this.textBoxReplayUserPressesFile = new System.Windows.Forms.TextBox();
             this.vrHandEditorControl = new JasHandExperiment.UI.VRHandEditorControl();
-            this.subRunEditorControl = new JasHandExperiment.UI.SubRunEditorControl();
             this.groupBoxParticipant.SuspendLayout();
             this.groupBoxSessionInfo.SuspendLayout();
             this.groupBoxExperimentParams.SuspendLayout();
@@ -237,10 +237,18 @@
             this.groupBoxSessionInfo.Controls.Add(this.textBoxSleepHours);
             this.groupBoxSessionInfo.Location = new System.Drawing.Point(772, 233);
             this.groupBoxSessionInfo.Name = "groupBoxSessionInfo";
-            this.groupBoxSessionInfo.Size = new System.Drawing.Size(684, 464);
+            this.groupBoxSessionInfo.Size = new System.Drawing.Size(684, 467);
             this.groupBoxSessionInfo.TabIndex = 11;
             this.groupBoxSessionInfo.TabStop = false;
             this.groupBoxSessionInfo.Text = "Session Info";
+            // 
+            // subRunEditorControl
+            // 
+            this.subRunEditorControl.ConfigurationObject = null;
+            this.subRunEditorControl.Location = new System.Drawing.Point(20, 177);
+            this.subRunEditorControl.Name = "subRunEditorControl";
+            this.subRunEditorControl.Size = new System.Drawing.Size(658, 387);
+            this.subRunEditorControl.TabIndex = 11;
             // 
             // labelSessionNumber
             // 
@@ -274,7 +282,7 @@
             // 
             // groupBoxExperimentParams
             // 
-            this.groupBoxExperimentParams.Controls.Add(this.button_ReplayUserPressesFileBrowse);
+            this.groupBoxExperimentParams.Controls.Add(this.buttonReplayUserPressesFileBrowse);
             this.groupBoxExperimentParams.Controls.Add(this.labelReplayUserPressesFile);
             this.groupBoxExperimentParams.Controls.Add(this.textBoxReplayUserPressesFile);
             this.groupBoxExperimentParams.Controls.Add(this.labelPressFreq);
@@ -294,6 +302,35 @@
             this.groupBoxExperimentParams.TabIndex = 12;
             this.groupBoxExperimentParams.TabStop = false;
             this.groupBoxExperimentParams.Text = "Experiment Parameters:";
+            // 
+            // buttonReplayUserPressesFileBrowse
+            // 
+            this.buttonReplayUserPressesFileBrowse.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.buttonReplayUserPressesFileBrowse.Location = new System.Drawing.Point(563, 197);
+            this.buttonReplayUserPressesFileBrowse.Name = "buttonReplayUserPressesFileBrowse";
+            this.buttonReplayUserPressesFileBrowse.Size = new System.Drawing.Size(33, 31);
+            this.buttonReplayUserPressesFileBrowse.TabIndex = 21;
+            this.buttonReplayUserPressesFileBrowse.Text = "...";
+            this.buttonReplayUserPressesFileBrowse.UseVisualStyleBackColor = true;
+            this.buttonReplayUserPressesFileBrowse.Click += new System.EventHandler(this.button_ReplayUserPressesFileBrowse_Click);
+            // 
+            // labelReplayUserPressesFile
+            // 
+            this.labelReplayUserPressesFile.AutoSize = true;
+            this.labelReplayUserPressesFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelReplayUserPressesFile.Location = new System.Drawing.Point(9, 197);
+            this.labelReplayUserPressesFile.Name = "labelReplayUserPressesFile";
+            this.labelReplayUserPressesFile.Size = new System.Drawing.Size(169, 27);
+            this.labelReplayUserPressesFile.TabIndex = 20;
+            this.labelReplayUserPressesFile.Text = "User Presses File:";
+            // 
+            // textBoxReplayUserPressesFile
+            // 
+            this.textBoxReplayUserPressesFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.textBoxReplayUserPressesFile.Location = new System.Drawing.Point(184, 194);
+            this.textBoxReplayUserPressesFile.Name = "textBoxReplayUserPressesFile";
+            this.textBoxReplayUserPressesFile.Size = new System.Drawing.Size(373, 34);
+            this.textBoxReplayUserPressesFile.TabIndex = 19;
             // 
             // labelPressFreq
             // 
@@ -318,9 +355,9 @@
             // buttonBrowseReplayFile
             // 
             this.buttonBrowseReplayFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.buttonBrowseReplayFile.Location = new System.Drawing.Point(527, 142);
+            this.buttonBrowseReplayFile.Location = new System.Drawing.Point(563, 149);
             this.buttonBrowseReplayFile.Name = "buttonBrowseReplayFile";
-            this.buttonBrowseReplayFile.Size = new System.Drawing.Size(33, 36);
+            this.buttonBrowseReplayFile.Size = new System.Drawing.Size(33, 31);
             this.buttonBrowseReplayFile.TabIndex = 16;
             this.buttonBrowseReplayFile.Text = "...";
             this.buttonBrowseReplayFile.UseVisualStyleBackColor = true;
@@ -391,7 +428,7 @@
             // textBoxReplayFile
             // 
             this.textBoxReplayFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.textBoxReplayFile.Location = new System.Drawing.Point(136, 141);
+            this.textBoxReplayFile.Location = new System.Drawing.Point(184, 146);
             this.textBoxReplayFile.Name = "textBoxReplayFile";
             this.textBoxReplayFile.Size = new System.Drawing.Size(373, 34);
             this.textBoxReplayFile.TabIndex = 3;
@@ -513,35 +550,6 @@
             this.openFileDialog.FileName = "file";
             this.openFileDialog.Filter = "XML File| *.xml";
             // 
-            // button_ReplayUserPressesFileBrowse
-            // 
-            this.button_ReplayUserPressesFileBrowse.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.button_ReplayUserPressesFileBrowse.Location = new System.Drawing.Point(527, 192);
-            this.button_ReplayUserPressesFileBrowse.Name = "button_ReplayUserPressesFileBrowse";
-            this.button_ReplayUserPressesFileBrowse.Size = new System.Drawing.Size(33, 36);
-            this.button_ReplayUserPressesFileBrowse.TabIndex = 21;
-            this.button_ReplayUserPressesFileBrowse.Text = "...";
-            this.button_ReplayUserPressesFileBrowse.UseVisualStyleBackColor = true;
-            this.button_ReplayUserPressesFileBrowse.Click += new System.EventHandler(this.button_ReplayUserPressesFileBrowse_Click);
-            // 
-            // labelReplayUserPressesFile
-            // 
-            this.labelReplayUserPressesFile.AutoSize = true;
-            this.labelReplayUserPressesFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.labelReplayUserPressesFile.Location = new System.Drawing.Point(9, 197);
-            this.labelReplayUserPressesFile.Name = "labelReplayUserPressesFile";
-            this.labelReplayUserPressesFile.Size = new System.Drawing.Size(169, 27);
-            this.labelReplayUserPressesFile.TabIndex = 20;
-            this.labelReplayUserPressesFile.Text = "User Presses File:";
-            // 
-            // textBoxReplayUserPressesFile
-            // 
-            this.textBoxReplayUserPressesFile.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.textBoxReplayUserPressesFile.Location = new System.Drawing.Point(184, 191);
-            this.textBoxReplayUserPressesFile.Name = "textBoxReplayUserPressesFile";
-            this.textBoxReplayUserPressesFile.Size = new System.Drawing.Size(325, 34);
-            this.textBoxReplayUserPressesFile.TabIndex = 19;
-            // 
             // vrHandEditorControl
             // 
             this.vrHandEditorControl.ConfigurationObject = null;
@@ -549,14 +557,6 @@
             this.vrHandEditorControl.Name = "vrHandEditorControl";
             this.vrHandEditorControl.Size = new System.Drawing.Size(748, 424);
             this.vrHandEditorControl.TabIndex = 15;
-            // 
-            // subRunEditorControl
-            // 
-            this.subRunEditorControl.ConfigurationObject = null;
-            this.subRunEditorControl.Location = new System.Drawing.Point(20, 177);
-            this.subRunEditorControl.Name = "subRunEditorControl";
-            this.subRunEditorControl.Size = new System.Drawing.Size(658, 387);
-            this.subRunEditorControl.TabIndex = 11;
             // 
             // ExperimentConfiugrationEditorForm
             // 
@@ -626,7 +626,7 @@
         private System.Windows.Forms.TextBox textBoxPressesFreq;
         private VRHandEditorControl vrHandEditorControl;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.Button button_ReplayUserPressesFileBrowse;
+        private System.Windows.Forms.Button buttonReplayUserPressesFileBrowse;
         private System.Windows.Forms.Label labelReplayUserPressesFile;
         private System.Windows.Forms.TextBox textBoxReplayUserPressesFile;
     }
