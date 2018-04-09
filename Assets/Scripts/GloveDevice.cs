@@ -130,34 +130,76 @@ namespace JasHandExperiment
         /// </summary>
         private void CalibrateGlove(HandType gloveSide)
         {
-            /// debug
-            CSVFile calibFile = new CSVFile();
-            calibFile.Init(new FileStream("calib.cal", FileMode.Open), ':');
-            var lines = calibFile.ReadLines();
-            List<ushort> upperVals = new List<ushort>();
-            List<ushort> lowerVals = new List<ushort>();
-            foreach (var line in lines)
+            if (gloveSide == HandType.Left)
             {
-                int indexOfMaxSpave = line[line.Length - 2].IndexOf(" ");
-                string upperStr = line[line.Length - 2].Substring(0, indexOfMaxSpave);
-                ushort upper = ushort.Parse(upperStr);
-                ushort lower = ushort.Parse(line[line.Length - 1]);
-
-                upperVals.Add(upper);
-                lowerVals.Add(lower);
+                mGlove.SetCalibrationAll(LEFT_CALIB_UPPER_VALS, LEFT_CALIB_LOWER_VALS);
             }
-            mGlove.SetCalibrationAll(upperVals.ToArray(), lowerVals.ToArray());
-
-
-            //if (gloveSide == HandType.Left)
-            //{
-            //    mGlove.SetCalibrationAll(LEFT_CALIB_UPPER_VALS, LEFT_CALIB_LOWER_VALS);
-            //}
-            //else
-            //{
-            //    mGlove.SetCalibrationAll(RIGHT_CALIB_UPPER_VALS, RIGHT_CALIB_LOWER_VALS);
-            //}
+            else
+            {
+                mGlove.SetCalibrationAll(RIGHT_CALIB_UPPER_VALS, RIGHT_CALIB_LOWER_VALS);
+            }
         }
-    #endregion
-}
+        #region DEBUGGGG CALIB
+
+        public void DEBUG_calib(KeyCode c)
+        {
+            if (c == KeyCode.A)
+            {
+                /// debug
+                CSVFile calibFile = new CSVFile();
+                calibFile.Init(new FileStream("calib.cal", FileMode.Open), ':');
+                var lines = calibFile.ReadLines();
+                List<ushort> upperVals = new List<ushort>();
+                List<ushort> lowerVals = new List<ushort>();
+                foreach (var line in lines)
+                {
+                    int indexOfMaxSpave = line[line.Length - 2].IndexOf(" ");
+                    string upperStr = line[line.Length - 2].Substring(0, indexOfMaxSpave);
+                    ushort upper = ushort.Parse(upperStr);
+                    ushort lower = ushort.Parse(line[line.Length - 1]);
+
+                    upperVals.Add(upper);
+                    lowerVals.Add(lower);
+                }
+                mGlove.SetCalibrationAll(upperVals.ToArray(), lowerVals.ToArray());
+                calibFile.Close();
+            }
+
+            if (c == KeyCode.M || isAuto)
+            {
+                if (!isAuto)
+                {
+                    for (int i = 0; i < MAX.Length; i++)
+                    {
+                        MAX[i] = ushort.MinValue;
+                        MIN[i] = ushort.MaxValue;
+                    }
+                }
+                isAuto = true;
+                ushort[] scaledSensors = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+                mGlove.GetSensorRawAll(ref scaledSensors);
+                for (int i = 0; i <= MAX.Length; i++)
+                {
+                    if (scaledSensors[i] > MAX[i])
+                    {
+                        MAX[i] = scaledSensors[i];
+                    }
+                    if (scaledSensors[i] < MIN[i])
+                    {
+                        MIN[i] = scaledSensors[i];
+                    }
+                }
+            }
+            if (c == KeyCode.S && isAuto)
+            {
+                mGlove.SetCalibrationAll(MAX, MIN);
+            }
+        }
+
+        private static ushort[] MAX = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+        private static ushort[] MIN = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+        private static bool isAuto = false; 
+        #endregion
+        #endregion
+    }
 }

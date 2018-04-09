@@ -14,6 +14,10 @@ namespace JasHandExperiment
     /// </summary>
     public abstract class BaseExperimentStrategy
     {
+        #region DEBUGGGG CALIB
+        private bool DEBUG_CALIB = true;
+        #endregion
+
         #region Data Members
         /// <summary>
         /// list of fingers to activate. relevant for every experiment strategy
@@ -88,6 +92,27 @@ namespace JasHandExperiment
         /// </summary>
         public virtual void MoveHand()
         {
+            if (DEBUG_CALIB)
+            {
+                var dev = mDevice as GlovesDevice;
+                if (dev != null)
+                {
+                    KeyCode pressed = KeyCode.Alpha0;
+                    if (Input.GetButton("M"))
+                    {
+                        pressed = KeyCode.M;
+                    }
+                    else if (Input.GetButton("S"))
+                    {
+                        pressed = KeyCode.S;
+                    }
+                    else if (Input.GetButton("A"))
+                    {
+                        pressed = KeyCode.A;
+                    }
+                    dev.DEBUG_calib(pressed);
+                }
+            }
             // roteate each finger
             foreach (var finger in mFingers)
             {
