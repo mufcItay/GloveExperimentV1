@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using JasHandExperiment.Configuration;
+using JasHandExperiment;
 
 public class blueButtonText : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class blueButtonText : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        handSide = HandType.Right;//ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
+        handSide = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
         string num = "0";
         if (handSide.Equals(HandType.Left))
         {

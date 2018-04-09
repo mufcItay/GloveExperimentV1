@@ -231,6 +231,7 @@ namespace CommonTools
         /// </summary>
         void ICSVFile.Init(string fileName, FileMode mode, string seperator, IEnumerable<string> csvColumns, IBaseCSVRWSettings settings)
         {
+            FileAccess acc = mode == FileMode.Open ? FileAccess.Read : FileAccess.ReadWrite;
             Init(fileName, mode,seperator, csvColumns, settings);
         }
 
@@ -239,6 +240,7 @@ namespace CommonTools
         /// </summary>
         void Init(string fileName, FileMode mode, string seperator = ",", IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
         {
+            FileAccess acc = mode == FileMode.Open ? FileAccess.Read : FileAccess.ReadWrite;
             Init(new FileStream(fileName, mode, FileAccess.ReadWrite), seperator, csvColumns, settings);
         }
 
@@ -255,6 +257,7 @@ namespace CommonTools
         /// </summary>
         public void Init(string fileName, FileMode mode, char seperator = ',', IEnumerable<string> csvColumns = null, IBaseCSVRWSettings settings = null)
         {
+           FileAccess acc = mode == FileMode.Open ? FileAccess.Read : FileAccess.ReadWrite;
            Init(new FileStream(fileName, mode, FileAccess.ReadWrite), seperator, csvColumns, settings);
         }
 

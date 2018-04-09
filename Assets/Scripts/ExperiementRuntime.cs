@@ -69,6 +69,7 @@ namespace JasHandExperiment
         #endregion
 
         #region Functions
+
         /// <summary>
         /// The function creates both user presses and glove movements directories
         /// </summary>

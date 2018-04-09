@@ -169,7 +169,7 @@ namespace JasHandExperiment.UI
             comboBoxSubjectNumber.Text = string.Empty;
             List<String> groupNumbersList = new List<string>();
             List<String> subjectNumbersList = new List<string>();
-            mSavedConfFiles = Directory.GetFiles(RuntimeConfiguration.DEFAULT_SUBJECTS_CONFIGURATIONS_FOLDER_PATH, "*.xml", SearchOption.TopDirectoryOnly).ToList();
+            mSavedConfFiles = Directory.GetFiles(mRuntimeConfiguration.PathToSubjectDir, "*.xml", SearchOption.TopDirectoryOnly).ToList();
             // learn how to fill vomoboxes according to ptten of file names in saved configuration files list
             foreach (var file in mSavedConfFiles)
             {
@@ -289,6 +289,9 @@ namespace JasHandExperiment.UI
 
             try
             {
+                var s = mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath.Split('\\');
+                mExpConfiguration.OutputFilesConfiguration.ConfigurationFilePath = mRuntimeConfiguration.PathToSubjectDir + s.Last();
+
                 // save the configuration
                 repository.Save(mExpConfiguration, conf.OutputFilesConfiguration.ConfigurationFilePath);
                 // if not first session
@@ -308,6 +311,11 @@ namespace JasHandExperiment.UI
                 // save the path to conifguration file to runtime conf
                 mRuntimeConfiguration.PathToConfigurationFile = conf.OutputFilesConfiguration.ConfigurationFilePath;
                 mRuntimeRepository.Save(mRuntimeConfiguration, RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
+                // patch for now when editor is not ready
+                mRuntimeConfiguration.PathToSubjectDir = RuntimeConfiguration.DEFAULT_SUBJECTS_CONFIGURATIONS_FOLDER_PATH;
+                var ss = mRuntimeConfiguration.PathToConfigurationFile.Split('\\');
+                mRuntimeConfiguration.PathToConfigurationFile = mRuntimeConfiguration.PathToSubjectDir + ss.Last();
+                mRuntimeRepository.Save(mRuntimeConfiguration, @"..\..\..\" +RuntimeConfiguration.RUNTIME_CONF_FILE_NAME);
                 mRuntimeRepository.Close();
             }
             catch (Exception ex)
@@ -428,7 +436,7 @@ namespace JasHandExperiment.UI
         {
             StringBuilder sb = new StringBuilder();
             // participant id
-            sb.Append(RuntimeConfiguration.DEFAULT_SUBJECTS_CONFIGURATIONS_FOLDER_PATH);
+            sb.Append(mRuntimeConfiguration.PathToSubjectDir);
             sb.Append(participantID);
             // group id
             sb.Append(CONFIGURATION_FILE_NAME_PATTERN_DELIMITER);

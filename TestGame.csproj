@@ -314,6 +314,7 @@
     <Compile Include="Assets\Scripts\BaseHandMovementFIleDevice.cs" />
     <Compile Include="Assets\Scripts\blueButtonConroller.cs" />
     <Compile Include="Assets\Scripts\blueButtonText.cs" />
+    <Compile Include="Assets\Scripts\ChangeBackground.cs" />
     <Compile Include="Assets\Scripts\Common.cs" />
     <Compile Include="Assets\Scripts\ConfigurationManager.cs" />
     <Compile Include="Assets\Scripts\ExperiementRuntime.cs" />
@@ -335,6 +336,7 @@
     <Compile Include="Assets\Scripts\redButtonText.cs" />
     <Compile Include="Assets\Scripts\ReplayFileDevice.cs" />
     <Compile Include="Assets\Scripts\SimulationFileDevice.cs" />
+    <Compile Include="Assets\Scripts\startExperiment.cs" />
     <Compile Include="Assets\Scripts\switchScene.cs" />
     <Compile Include="Assets\Scripts\textManager.cs" />
     <Compile Include="Assets\Scripts\yellowButtonText.cs" />

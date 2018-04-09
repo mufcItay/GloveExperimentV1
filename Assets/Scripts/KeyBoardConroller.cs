@@ -8,193 +8,127 @@ using System;
 public class KeyBoardConroller : MonoBehaviour {
 
     Animator keyBoard;
-    string input;
-    int pressedInput;
-    int lastPressedInput;
-    HandType handSide;
-
-    //itay
     BaseHandMovementFileDevice mDevice;
+    HandType handSide;
+    int pressedInput;
+
+    //just fot debug:
+    int blue = 0;
+    int green = 0;
+    int yellow = 0;
+    int red = 0;
+   
+
 	// Use this for initialization
 	void Start () {
+        keyBoard = GetComponent<Animator>();
+        handSide = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
 
-        //itay
         var exType = ConfigurationManager.Instance.Configuration.ExperimentType;
         if (exType == ExperimentType.PassiveSimulation)
         {
             mDevice = HandMovemventDeviceFactory.GetOrCreate(exType) as SimulationFileDevice;
             mDevice.Open();
         }
-        if (exType == ExperimentType.PassiveWatchingReplay)
+        else if (exType == ExperimentType.PassiveWatchingReplay)
         {
-            mDevice = new KeyBoardSimulationFileDevice();
+            mDevice = HandMovemventDeviceFactory.GetOrCreate<KeyBoardSimulationFileDevice>();
             mDevice.Open();
         }
-
-
-        ///////////////ADVA//////////////// remove the comeent after sinchronize with itays code
-        // check wich animated hand we would like to move
-        keyBoard = GetComponent<Animator>();
-        handSide = HandType.Left;//ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
-
     }
 
-// Update is called once per frame
-   void Update () {
-        //input = Input.inputString;
-        //if (keyBoard.GetInteger("pressedButton")== lastPressedInput)
-        //{
-        //    keyBoard.SetInteger("pressedButton", -1);
-        //}
-        if (ConfigurationManager.Instance.Configuration.ExperimentType != ExperimentType.Active)
+    public void OnDestroy()
+    {
+        if (mDevice != null)
         {
+            mDevice.Close();
+        }
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        if (ConfigurationManager.Instance.Configuration.ExperimentType != ExperimentType.Active)
+        // getting info from file
+        {
+            //check if there is some key to presse
             KeyPressedData key = mDevice.GetHandData() as KeyPressedData;
             if (key == null || string.IsNullOrEmpty(key.KeyPressed))
             {
-                lastPressedInput = 0;
-                keyBoard.SetInteger("pressedButton", 0);
-
-                // no data to update according to
-                return;
+                SetAllButtonsOf(); // no data to update according to file
             }
-            int pressedInput = int.Parse(key.KeyPressed);
-            if (handSide.Equals(HandType.Right))
+            else
             {
-                //we swiched the numbers on the phisical keyBoard
-                pressedInput = 4 - pressedInput + 1;
-                keyBoard.SetInteger("pressedButton", pressedInput);
-                lastPressedInput = pressedInput;
-
-             //   Debug.Log(DateTime.Now.Second + ":" + DateTime.Now.Millisecond + " KEYBOARD");
-            }
-            else if (handSide.Equals(HandType.Left)) // just to avoid the 'none' hand type case
-            {
-                keyBoard.SetInteger("pressedButton", pressedInput);
-                lastPressedInput = pressedInput;
-
-               // Debug.Log(DateTime.Now.Second + ":" + DateTime.Now.Millisecond + " KEYBOARD");
-            }
-            return;
-        }
-        input = Input.inputString;
-        if (input != "")
-        {
-            int inputNum;
-            if (int.TryParse(input,out inputNum))
-            {
-                pressedInput = inputNum;
-                if (pressedInput >= 1 && pressedInput <= 4)
+                pressedInput = int.Parse(key.KeyPressed);
+                //////////////////ADVA- HAVE TO HANDLE HAND CASES LATER//////////
+                if (handSide.Equals(HandType.Right))
                 {
-                    if (handSide.Equals(HandType.Right))
-                    {
-                        //we swiched the numbers on the phisical keyBoard
-                        pressedInput = 4 - pressedInput + 1;
-                        keyBoard.SetInteger("pressedButton", pressedInput);
-                        lastPressedInput = pressedInput;
-                        Debug.Log("right hand, pressed input = " + pressedInput.ToString());
-                    }
-                    else if (handSide.Equals(HandType.Left)) // just to avoid the 'none' hand type case
-                    {
-                        keyBoard.SetInteger("pressedButton", pressedInput);
-                        lastPressedInput = inputNum;
-
-                        Debug.Log("right hand, pressed input = " + pressedInput.ToString());
-                    }
+                   //we swiched the numbers on the phisical keyBoard
+                   pressedInput = 4 - pressedInput + 1;
+                   SetPressedButton();
+                }
+                else if (handSide.Equals(HandType.Left)) // just to avoid the 'none' hand type case
+                {
+                    SetPressedButton();
                 }
             }
         }
-        //else
-        //{
-        //    pressedInput = -1;
-        //    keyBoard.SetInteger("pressedButton", pressedInput);
-        //    if (lastPressedInput != pressedInput)
-        //    {
+        else if (ConfigurationManager.Instance.Configuration.ExperimentType == ExperimentType.Active)
+        // getting info directly from keyboard
+        {
+            SetPressedButton();
+        }
+    }
 
-        //        Debug.Log("nothink pressed, pressed input = " + pressedInput.ToString());
-        //    }
-        //    lastPressedInput = pressedInput;
-            
-        //}
-        //else
-        //{
-        //    keyBoard.SetInteger("pressedButton", -1);
-        //}
+
+    private void SetPressedButton()
+    {
+        SetUpButtonsOf();
+        if (Input.GetKeyDown(KeyCode.Alpha1) || pressedInput == 1)
+        {
+            keyBoard.SetInteger("bluePressed", 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) || pressedInput == 2)
+        {
+            keyBoard.SetInteger("yellowPressed", 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) || pressedInput == 3)
+        {
+            keyBoard.SetInteger("greenPressed", 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4) || pressedInput ==4)
+        {
+            keyBoard.SetInteger("redPressed", 1);
+        }
+    }
+
+    private void SetUpButtonsOf()
+    {
+        pressedInput = 0;
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            keyBoard.SetInteger("bluePressed", 0);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            keyBoard.SetInteger("yellowPressed", 0);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+            keyBoard.SetInteger("greenPressed", 0);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            keyBoard.SetInteger("redPressed", 0);
+        }
+    }
+
+    private void SetAllButtonsOf()
+    {
+        pressedInput = 0;
+        keyBoard.SetInteger("bluePressed", 0);
+        keyBoard.SetInteger("yellowPressed", 0);   
+        keyBoard.SetInteger("greenPressed", 0);
+        keyBoard.SetInteger("redPressed", 0);
     }
 }
-
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using JasHandExperiment.Configuration;
-//using JasHandExperiment;
-//using System;
-
-//public class KeyBoardConroller : MonoBehaviour {
-
-//    Animator keyBoard;
-//    string input;
-//    int pressedInput;
-//    int lastPressedInput;
-//    HandType handSide;
-
-//    // Use this for initialization
-//	void Start () {
-//        ///////////////ADVA//////////////// remove the comeent after sinchronize with itays code
-//        // check wich animated hand we would like to move
-//        keyBoard = GetComponent<Animator>();
-//        handSide = HandType.Left;//ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
-
-//    }
-
-//// Update is called once per frame
-//   void Update () {
-//        //input = Input.inputString;
-//        //if (keyBoard.GetInteger("pressedButton")== lastPressedInput)
-//        //{
-//        //    keyBoard.SetInteger("pressedButton", -1);
-//        //}
-//        input = Input.inputString;
-//        if (input != "")
-//        {
-//            int inputNum;
-//            if (int.TryParse(input,out inputNum))
-//            {
-//                pressedInput = inputNum;
-//                if (pressedInput >= 1 && pressedInput <= 4)
-//                {
-//                    if (handSide.Equals(HandType.Right))
-//                    {
-//                        //we swiched the numbers on the phisical keyBoard
-//                        pressedInput = 4 - pressedInput + 1;
-//                        keyBoard.SetInteger("pressedButton", pressedInput);
-//                        lastPressedInput = pressedInput;
-//                        Debug.Log("right hand, pressed input = " + pressedInput.ToString());
-//                    }
-//                    else if (handSide.Equals(HandType.Left)) // just to avoid the 'none' hand type case
-//                    {
-//                        keyBoard.SetInteger("pressedButton", pressedInput);
-//                        lastPressedInput = inputNum;
-
-//                        Debug.Log("right hand, pressed input = " + pressedInput.ToString());
-//                    }
-//                }
-//            }
-//        }
-//        //else
-//        //{
-//        //    pressedInput = -1;
-//        //    keyBoard.SetInteger("pressedButton", pressedInput);
-//        //    if (lastPressedInput != pressedInput)
-//        //    {
-
-//        //        Debug.Log("nothink pressed, pressed input = " + pressedInput.ToString());
-//        //    }
-//        //    lastPressedInput = pressedInput;
-            
-//        //}
-//        //else
-//        //{
-//        //    keyBoard.SetInteger("pressedButton", -1);
-//        //}
-//    }
-//}

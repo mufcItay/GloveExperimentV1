@@ -41,7 +41,6 @@ namespace JasHandExperiment
         /// </summary>
         protected IEnumerable<string> mColumns;
 
-        private bool isUpdated;
         #endregion
 
         #region Ctors
@@ -58,8 +57,11 @@ namespace JasHandExperiment
         /// </summary>
         public void Close()
         {
-            mCSVFile.Close();
-            mCSVFile = null;
+            if (mCSVFile != null)
+            {
+                mCSVFile.Close();
+                mCSVFile = null;
+            }
         }
 
         /// <summary>

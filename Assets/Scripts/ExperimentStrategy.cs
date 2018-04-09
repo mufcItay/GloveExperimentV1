@@ -178,6 +178,7 @@ namespace JasHandExperiment
             var keyPressedData = mDevice.GetHandData() as KeyPressedData;
             if (keyPressedData.TimeStamp.Equals(mLastDTUpdated))
             {
+                mAnimationManager.SetFalseToAllProps();
                 return;
             }
             mLastDTUpdated = keyPressedData.TimeStamp;

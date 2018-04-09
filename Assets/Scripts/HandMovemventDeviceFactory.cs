@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommonTools;
 using JasHandExperiment.Configuration;
 
@@ -11,19 +12,19 @@ namespace JasHandExperiment
     {
         #region Data Members
         /// <summary>
-        /// member of gloves device
+        /// dictionary that holds all of the devices
         /// </summary>
-        private static GlovesDevice sGlovesDevice;
-        /// <summary>
-        /// member of simulation device
-        /// </summary>
-        private static SimulationFileDevice sSimulationFIleDevice;
-        
-        /// <summary>
-        /// member of Replay device
-        /// </summary>
-        private static ReplayFileDevice sReplayFileDevice;
+        private static Dictionary<Type, IHandMovementDevice> sTypesDict;
         #endregion
+
+        static HandMovemventDeviceFactory()
+        {
+            sTypesDict = new Dictionary<Type, IHandMovementDevice>();
+            sTypesDict.Add(typeof(GlovesDevice), null);
+            sTypesDict.Add(typeof(KeyBoardSimulationFileDevice), null);
+            sTypesDict.Add(typeof(SimulationFileDevice), null);
+            sTypesDict.Add(typeof(ReplayFileDevice), null);
+        }
 
         #region Functions
 
@@ -40,32 +41,46 @@ namespace JasHandExperiment
             switch (exType)
             {
                 case ExperimentType.Active:
-                    if (sGlovesDevice == null)
-                    {
-                        sGlovesDevice = new GlovesDevice();
-                    }
-                    device = sGlovesDevice;
+                    device = GetOrCreate<GlovesDevice>();
                     break;
                 case ExperimentType.PassiveSimulation:
-                    if (sSimulationFIleDevice == null)
-                    {
-                        sSimulationFIleDevice = new SimulationFileDevice();
-                    }
-                    device = sSimulationFIleDevice;
+                    device = GetOrCreate<SimulationFileDevice>();
                     break;
                 case ExperimentType.PassiveWatchingReplay:
-                    if (sReplayFileDevice == null)
-                    {
-                        sReplayFileDevice = new ReplayFileDevice();
-                    }
-                    device = sReplayFileDevice;
+                    device = GetOrCreate<ReplayFileDevice>();
                     break;
                 default:
                     break;
             }
 
             return device;
-        } 
+        }
+
+        /// <summary>
+        /// The function gets relevant instance of hand movement device,
+        /// if the device wasn't already created it will be created otherwise just returned.
+        /// </summary>
+        /// <param name="T">the type of device to get</param>
+        /// <returns>abstraction of an device according to type of device</returns>
+        static public T GetOrCreate<T>() where T : class,  IHandMovementDevice
+        {
+            Type devType = typeof(T);
+            if (!sTypesDict.ContainsKey(devType))
+            {
+                // ERROR
+            }
+
+            T device = sTypesDict[devType] as T;
+            if (device == null)
+            {
+                device = Activator.CreateInstance(devType) as T;
+                sTypesDict[devType] = device;
+            }
+
+            return device;
+        }
+
+
         #endregion
     }
 }

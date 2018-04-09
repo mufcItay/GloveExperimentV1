@@ -27,6 +27,12 @@ namespace JasHandExperiment
 
         #endregion
 
+
+        void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         // Use this for initialization
         void Start() {
             mExperimentRuntime = ExperimentRuntime.Instance;

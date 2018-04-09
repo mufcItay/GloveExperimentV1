@@ -41,7 +41,7 @@ namespace JasHandExperiment
             }
             if (exType == ExperimentType.PassiveWatchingReplay)
             {
-                mDevice = new KeyBoardSimulationFileDevice();
+                mDevice = HandMovemventDeviceFactory.GetOrCreate<KeyBoardSimulationFileDevice>();
                 mDevice.Open();
             }
         }
@@ -62,6 +62,15 @@ namespace JasHandExperiment
             }
             
         }
+
+        public void OnDestroy()
+        {
+            if (mDevice !=null)
+            {
+                mDevice.Close();
+            }
+        }
+
         bool needToUpdateText()
         {
             switch (ConfigurationManager.Instance.Configuration.ExperimentType)
