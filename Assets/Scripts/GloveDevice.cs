@@ -165,6 +165,28 @@ namespace JasHandExperiment
                 calibFile.Close();
             }
 
+            if (c == KeyCode.R)
+            {
+                for (int i = 0; i < MAX.Length; i++)
+                {
+                    MAX[i] = ushort.MinValue;
+                    MIN[i] = ushort.MaxValue;
+                }
+                mGlove.SetCalibrationAll(MAX, MIN);
+            }
+
+            if (c == KeyCode.G)
+            {
+                CSVFile writeCalib = new CSVFile();
+                string firstLine = string.Format("S0: MIN:{0} MAX:{1}", MIN[0], MAX[0]);
+                writeCalib.Init(new FileStream("WriteCalib.cal", FileMode.Create), " MAX:", new List<string>() { firstLine});
+                for (int i = 1; i < MAX.Length; i++)
+                {
+                    writeCalib.WriteLine(string.Format("S{0}: MIN:{1} MAX:{2}", i, MIN[i],MAX[i]));
+                }
+                writeCalib.Close();
+            }
+            
             if (c == KeyCode.M || isAuto)
             {
                 if (!isAuto)

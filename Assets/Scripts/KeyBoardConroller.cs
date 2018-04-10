@@ -4,11 +4,15 @@ using UnityEngine;
 using JasHandExperiment.Configuration;
 using JasHandExperiment;
 using System;
+using CommonTools;
+using System.IO;
+using System.Globalization;
 
 public class KeyBoardConroller : MonoBehaviour {
 
     Animator keyBoard;
     BaseHandMovementFileDevice mDevice;
+    CSVFile mWriteFile; 
     HandType handSide;
     int pressedInput;
 
@@ -35,10 +39,22 @@ public class KeyBoardConroller : MonoBehaviour {
             mDevice = HandMovemventDeviceFactory.GetOrCreate<KeyBoardSimulationFileDevice>();
             mDevice.Open();
         }
+        else if (exType == ExperimentType.Active)
+        {
+            mWriteFile = new CSVFile();
+            var path = CommonUtilities.GetParticipantCSVFileName(ConfigurationManager.Instance.Configuration.OutputFilesConfiguration.UserPressesLogPath);
+            // passice cause that's the columns of input n passive
+            var columns = CommonUtilities.CreateGlovesDataFileColumns(ExperimentType.PassiveSimulation);
+            mWriteFile.Init(new FileStream(path, FileMode.Create), ',', columns);
+        }
     }
 
     public void OnDestroy()
     {
+        if (mWriteFile != null)
+        {
+            mWriteFile.Close();
+        }
         if (mDevice != null)
         {
             mDevice.Close();
@@ -83,22 +99,35 @@ public class KeyBoardConroller : MonoBehaviour {
 
     private void SetPressedButton()
     {
+        string pressed = string.Empty;
         SetUpButtonsOf();
         if (Input.GetKeyDown(KeyCode.Alpha1) || pressedInput == 1)
         {
+            pressed = "1";
             keyBoard.SetInteger("bluePressed", 1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) || pressedInput == 2)
         {
+            pressed = "2";
             keyBoard.SetInteger("yellowPressed", 1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) || pressedInput == 3)
         {
+            pressed = "3";
             keyBoard.SetInteger("greenPressed", 1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4) || pressedInput ==4)
         {
+            pressed = "4";
             keyBoard.SetInteger("redPressed", 1);
+        }
+
+        if (!string.IsNullOrEmpty(pressed) && ConfigurationManager.Instance.Configuration.ExperimentType == ExperimentType.Active)
+        {
+            string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
+                                            CultureInfo.InvariantCulture);
+            string line = string.Format("{0},{1}", timeStamp,pressed);
+            mWriteFile.WriteLine(line);
         }
     }
 

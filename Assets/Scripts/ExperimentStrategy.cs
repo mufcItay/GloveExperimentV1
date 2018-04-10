@@ -98,17 +98,25 @@ namespace JasHandExperiment
                 if (dev != null)
                 {
                     KeyCode pressed = KeyCode.Alpha0;
-                    if (Input.GetButton("M"))
+                    if (Input.GetKeyDown(KeyCode.M))
                     {
                         pressed = KeyCode.M;
                     }
-                    else if (Input.GetButton("S"))
+                    else if (Input.GetKeyDown(KeyCode.S))
                     {
                         pressed = KeyCode.S;
                     }
-                    else if (Input.GetButton("A"))
+                    else if (Input.GetKeyDown(KeyCode.A))
                     {
                         pressed = KeyCode.A;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.R))
+                    {
+                        pressed = KeyCode.R;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.G))
+                    {
+                        pressed = KeyCode.G;
                     }
                     dev.DEBUG_calib(pressed);
                 }
