@@ -14,7 +14,7 @@ namespace JasHandExperiment
         /// <summary>
         /// The function sets the abstract movement data to the instance of IHandData
         /// </summary>
-        /// <param name="data">abstract data to set inner state from</param>
+        /// <param name="data">abstract data to set inner state from</param>/// <param name="data"></param>
         void SetHandMovementData(object data);
     }
 }

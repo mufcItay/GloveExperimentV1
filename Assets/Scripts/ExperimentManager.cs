@@ -8,6 +8,9 @@ namespace JasHandExperiment
     public class ExperimentManager : MonoBehaviour {
 
         #region Data Members
+
+        private static ExperimentManager sInstance;
+
         /// <summary>
         /// The experiment runtime singletone instance
         /// </summary>
@@ -30,11 +33,20 @@ namespace JasHandExperiment
 
         void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (sInstance != null && sInstance != this)
+            {
+                Destroy(gameObject);
+            }
+            else if (sInstance != null)
+            {
+                sInstance = this;
+                DontDestroyOnLoad(gameObject);
+            }
         }
 
         // Use this for initialization
         void Start() {
+            sInstance = this;
             mExperimentRuntime = ExperimentRuntime.Instance;
             
             // create and init hand creator

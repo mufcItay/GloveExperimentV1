@@ -9,13 +9,19 @@ namespace JasHandExperiment
     /// </summary>
     public class ReplayFileDevice : BaseHandMovementFileDevice
     {
+        #region Constants
+
+        private const int MINIMAL_DELTA_MSEC = 50;
+
+        #endregion
+
         #region Data Members
         /// <summary>
         /// reader for the file to read in sync with file
         /// </summary>
         TimedCSVReader mTimedReader;
         #endregion
-
+        
         #region Functions
         /// <summary>
         /// creates the IHandData relevant to glove data
@@ -51,7 +57,7 @@ namespace JasHandExperiment
             if (coordinatesData != null)
             {
                 coordinatesData.TimeStamp = line[CommonConstants.TIME_COL_INDEX]; ;
-            }
+            }               
             else
             {
                 //error
@@ -61,40 +67,22 @@ namespace JasHandExperiment
         public override void Init()
         {
             base.Init();
-
-            mTimedReader = new TimedCSVReader(mCSVFile, CommonConstants.TIME_COL_INDEX, 50);
+            //CALIBBBB
+            //no glove, just a replay
+            //CalibrationManager.Init(null,HandController.HandPlayMode.Calibration);
+            mTimedReader = new TimedCSVReader(mCSVFile, CommonConstants.TIME_COL_INDEX, MINIMAL_DELTA_MSEC);
         }
-
-        DateTime firstDT = DateTime.MinValue;
-        DateTime firstFileDT = DateTime.MinValue;
 
         public override IHandData GetHandData()
         {
             string[] line = mTimedReader.ReadLine();
             if (line != null)
             {
-                if (firstDT == DateTime.MinValue)
-                {
-                    firstDT = DateTime.Now;
-                }
-                if (firstFileDT == DateTime.MinValue)
-                {
-                    firstFileDT = DateTime.Parse(line[0]);
-                }
                 OnCoordinatesUpdate(line);
             }
 
-            //if (mTimedReader.mCsvLines.Count == mTimedReader.mCurrentLineIndex && diff.Equals(string.Empty))
-            //{
-            //        double real = (DateTime.Now - firstDT).TotalMilliseconds;
-            //        double file = (DateTime.Parse((mData as HandCoordinatesData).TimeStamp) - firstFileDT).TotalMilliseconds;
-            //        diff = (real - file).ToString();
-            //    Debug.Log("END Time difference (msec) from beginnig REAL - " + diff);
-            //}
-
             return base.GetHandData();
         }
-        string diff = string.Empty;
 
         /// <summary>
         /// see abstract class for documentation

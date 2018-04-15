@@ -14,10 +14,6 @@ namespace JasHandExperiment
     /// </summary>
     public abstract class BaseExperimentStrategy
     {
-        #region DEBUGGGG CALIB
-        private bool DEBUG_CALIB = true;
-        #endregion
-
         #region Data Members
         /// <summary>
         /// list of fingers to activate. relevant for every experiment strategy
@@ -32,7 +28,7 @@ namespace JasHandExperiment
         /// <summary>
         /// holds the controller of the hand to associate with fingers
         /// </summary>
-        protected MonoBehaviour mHandController;
+        protected HandController mHandController;
 
         /// <summary>
         /// boolean indicating whether the strategy was initialized
@@ -54,8 +50,41 @@ namespace JasHandExperiment
         /// The fucntion initializaes the experiment  members
         /// </summary>
         /// <param name="handController">the hand controller to apply experiment process to</param>
-        public void Init(MonoBehaviour handController)
+        public void Init(HandController handController)
         {
+            var cols = new string[] { "Time", "Thumb Near", "Thumb Far", "Thumb/Index", "Index Near ", "Index Far", "Index/Middle", " Middle Near", "Middle Far", "Middle/Ring", "Ring Near", "Ring Far", " Ring/Little", "Little Near", "Little Far" };
+
+            CSVFile d = new CSVFile();
+            d.Init(new System.IO.FileStream(@"D:\UnityWS\TestGame\KeybaordShit\NewReal.csv", System.IO.FileMode.Open),",", cols);
+            var line = d.ReadLine();
+            var dt = DateTime.Now;
+            var list = new List<string[]>();
+            bool flag = false;
+            while (line!= null)
+            {
+                if (flag || line[0].Equals("2018-04-12 21:21:27.699"))
+                {
+                    flag = true;
+                    dt = dt.AddMilliseconds(20);
+                    line[0] = dt.ToString("yyyy-MM-dd HH:mm:ss.fff",
+                                            System.Globalization.CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    dt = DateTime.Parse(line[0]);
+                }
+
+                list.Add(line);
+                line = d.ReadLine();
+            }
+            d.Close();
+            CSVFile wr = new CSVFile();
+            wr.Init("NewReal.csv", System.IO.FileMode.Create, ',', cols);
+            foreach (var item in list)
+            {
+                wr.WriteLine(item);
+            }
+            wr.Close();
             if (mIsInitialized)
             {
                 return;
@@ -80,7 +109,8 @@ namespace JasHandExperiment
         }
 
         /// <summary>
-        /// inner init for each specific initialization needs
+        /// inner init for each specific initialization needs.
+        /// being called before opening the device!
         /// </summary>
         public virtual void InnerInit()
         {
@@ -92,35 +122,6 @@ namespace JasHandExperiment
         /// </summary>
         public virtual void MoveHand()
         {
-            if (DEBUG_CALIB)
-            {
-                var dev = mDevice as GlovesDevice;
-                if (dev != null)
-                {
-                    KeyCode pressed = KeyCode.Alpha0;
-                    if (Input.GetKeyDown(KeyCode.M))
-                    {
-                        pressed = KeyCode.M;
-                    }
-                    else if (Input.GetKeyDown(KeyCode.S))
-                    {
-                        pressed = KeyCode.S;
-                    }
-                    else if (Input.GetKeyDown(KeyCode.A))
-                    {
-                        pressed = KeyCode.A;
-                    }
-                    else if (Input.GetKeyDown(KeyCode.R))
-                    {
-                        pressed = KeyCode.R;
-                    }
-                    else if (Input.GetKeyDown(KeyCode.G))
-                    {
-                        pressed = KeyCode.G;
-                    }
-                    dev.DEBUG_calib(pressed);
-                }
-            }
             // roteate each finger
             foreach (var finger in mFingers)
             {
@@ -146,6 +147,8 @@ namespace JasHandExperiment
     /// </summary>
     public class ActiveExperimentStrategy : BaseExperimentStrategy
     {
+        private GlovesDevice mGloveDevice;
+
         public override ExperimentType Type
         {
             get
@@ -153,6 +156,23 @@ namespace JasHandExperiment
                 return ExperimentType.Active;
             }
         }
+
+        public override void InnerInit()
+        {
+            base.InnerInit();
+            mGloveDevice = mDevice as GlovesDevice;
+            mGloveDevice.mMode = mHandController.Mode;
+        }
+
+        public override void MoveHand()
+        {
+            if (mHandController.Mode == HandController.HandPlayMode.Calibration)
+            {
+                CalibrationManager.HandCalibrationUserInput();
+            }
+            base.MoveHand();
+        }
+        
     }
 
     /// <summary>

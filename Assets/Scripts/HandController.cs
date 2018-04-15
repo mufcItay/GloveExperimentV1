@@ -11,8 +11,21 @@ using JasHandExperiment.Configuration;
 /// </summary>
 public class HandController : MonoBehaviour {
 
+    #region Enums
+
+    /// <summary>
+    /// enum to differentiate betweeen calibration mode and realtime regular mode
+    /// </summary>
+    public enum HandPlayMode
+    {
+        RealTime,
+        Calibration
+    }
+
+    #endregion
+
     #region Data Members
-    
+
     /// <summary>
     /// for unity configuration to determine which hand side is this
     /// </summary>
@@ -32,6 +45,11 @@ public class HandController : MonoBehaviour {
     /// The experiment type
     /// </summary>
     private ExperimentType mExperimentType;
+
+    /// <summary>
+    /// indicates if we are in calibration mode or real time running
+    /// </summary>
+    public HandPlayMode Mode;
     #endregion
 
     #region Functions
@@ -50,6 +68,7 @@ public class HandController : MonoBehaviour {
         mExperimentStrategy = ExperimentStrategyFactory.GetOrCreate(mExperimentType);
         mExperimentStrategy.Init(this);
     }
+
 
     // Update is called once per frame
     void Update()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using CommonTools;
 using JasHandExperiment.Configuration;
@@ -140,10 +141,15 @@ namespace JasHandExperiment
         /// <returns></returns>
         public static string GetParticipantCSVFileName(string directoryPath)
         {
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
             StringBuilder sb = new StringBuilder();
             sb.Append(directoryPath);
             sb.Append(ConfigurationManager.Instance.Configuration.ParticipantConfiguration.Number + @"\");
-            sb.Append(ConfigurationManager.Instance.Configuration.SessionsConfiguration[ConfigurationManager.Instance.Configuration.SessionsConfiguration.Count -1]);
+            sb.Append(ConfigurationManager.Instance.Configuration.SessionsConfiguration[ConfigurationManager.Instance.Configuration.SessionsConfiguration.Count -1].Number);
             sb.Append(CommonConstants.SESSION_TRIAL_SEPERATOR);
             sb.Append(CommonConstants.TrialNumber);
             sb.Append(CommonConstants.CSV_EXTENSION);

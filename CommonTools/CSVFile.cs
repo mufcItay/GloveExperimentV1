@@ -285,16 +285,21 @@ namespace CommonTools
                 // no settings given? use default one
                 mSettings = new BatchCSVRWSettings();
             }
-            // a new empty file? write a header of the columns 
-            if (mFile.Length == 0)
+            // file has columns?
+            if (csvColumns!= null)
             {
-                AppendLineToFile(csvColumns.ToArray());
+                // a new empty file? write a header of the columns 
+                if (mFile.Length == 0)
+                {
+                    AppendLineToFile(csvColumns.ToArray());
+                }
+                else if (csvColumns != null)// old file? read the hedaer so users will only get lines of the file
+                {
+                    // read columns line
+                    mReader.ReadLine();
+                }
             }
-            else // old file? read the hedaer so users will only get lines of the file
-            {
-                // read columns line
-                mReader.ReadLine();
-            }
+            
         }
 
         /// <summary>

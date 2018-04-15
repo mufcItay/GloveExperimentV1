@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -66,6 +67,12 @@ namespace CommonTools
 
         #region MyRegion
 
+
+        /// <summary>
+        /// constructs the CSV file reader
+        /// </summary>
+        /// <param name="file">the file to read from</param>
+
         /// <summary>
         /// constructs the CSV file reader
         /// </summary>
@@ -110,8 +117,7 @@ namespace CommonTools
         {
             if (mCurrentLineIndex >= mCsvLines.Count)
             {
-                return mCsvLines.Last();
-                //return null;
+                return null;
             }
 
             // set first date time
@@ -119,7 +125,6 @@ namespace CommonTools
             {
                 mLastCoordinatesUpdated = DateTime.Now;
             }
-
             DateTime lastDT;
             string[] currentLine;
             double timeSinceLastUpdateMsec = (DateTime.Now - mLastCoordinatesUpdated).TotalMilliseconds;
@@ -137,8 +142,7 @@ namespace CommonTools
                 // is end of file?
                 if (++mCurrentLineIndex >= mCsvLines.Count)
                 {
-                    return mCsvLines.Last();
-                //    return null;
+                    return null;
                 }
 
                 // get next line and next line time

@@ -1,0 +1,7 @@
+Calibration Manual
+---------------------
+press A to read calibration from file and apply it
+press R to reset calibration and apply it
+press G to write current calibration to file
+press M to start auto calibrating
+press S to set the auto calibrated values

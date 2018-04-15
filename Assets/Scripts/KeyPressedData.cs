@@ -23,6 +23,11 @@ namespace JasHandExperiment
         /// the time samp of the key press.
         /// </summary>
         private string mTimeStamp;
+
+        /// <summary>
+        /// indicates wheter we need to flip read key pressed.
+        /// </summary>
+        private bool mShouldFlip;
         #endregion
 
         #region Properties
@@ -44,6 +49,8 @@ namespace JasHandExperiment
         public KeyPressedData()
         {
             mKeyPressed = string.Empty;
+            mShouldFlip =  ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == Configuration.HandType.Right &&
+                ConfigurationManager.Instance.Configuration.ExperimentType != Configuration.ExperimentType.Active;
         }
 
         /// <summary>
@@ -52,6 +59,9 @@ namespace JasHandExperiment
         /// <param name="keyPressed">the initial key pressed</param>
         public KeyPressedData(string keyPressed, string timeStamp)
         {
+            mShouldFlip = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == Configuration.HandType.Right &&
+                ConfigurationManager.Instance.Configuration.ExperimentType != Configuration.ExperimentType.Active;
+
             mKeyPressed = keyPressed;
             mTimeStamp = timeStamp;
         }
@@ -80,8 +90,13 @@ namespace JasHandExperiment
             {
                 Debug.Log("Error casting KeyPressedData data to a Tuple of string,string (time,key)");
             }
+
             mTimeStamp = timeKey.Item1;
             mKeyPressed = timeKey.Item2;
+            if (mShouldFlip)
+            {
+                mKeyPressed = (5 - int.Parse(mKeyPressed)).ToString();
+            }
         }
         #endregion
     }

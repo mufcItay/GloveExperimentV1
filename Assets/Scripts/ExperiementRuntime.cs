@@ -12,7 +12,7 @@ namespace JasHandExperiment
     /// <summary>
     /// Singletine class that provides services for reading from congiguration 
     /// </summary>
-    public sealed class ExperimentRuntime
+    public sealed class ExperimentRuntime : UnityEngine.Object
     {
         
         #region Data Members

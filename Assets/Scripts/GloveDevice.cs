@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using UnityEngine;
+using static HandController;
 
 namespace JasHandExperiment
 {
@@ -21,14 +22,6 @@ namespace JasHandExperiment
         /// the name of the port glove port to connect to.
         /// </summary>
         private const string GLOVE_PORT_NAME = "USB0";
-
-        // right hand calibration values
-        private readonly ushort[] RIGHT_CALIB_UPPER_VALS = { 3386, 3173, 3538, 3661, 3758, 3944, 3839, 3778, 3561, 3277, 3848, 3933, 3530, 3733, 0, 0, 2048, 2048 };
-        private readonly ushort[] RIGHT_CALIB_LOWER_VALS = { 3274, 3100, 3294, 3524, 3237, 3847, 3774, 3505, 3406, 3217, 3531, 3882, 3454, 3497, 0, 0, 2048, 2048 };
-        
-        // left glove calibration values
-        private readonly ushort[] LEFT_CALIB_UPPER_VALS = { 3689, 3380, 3705, 3347, 3964, 3857, 3779, 3716, 3920, 3278, 3964, 3931, 3637, 3350, 0, 0, 2048, 2048 };
-        private readonly ushort[] LEFT_CALIB_LOWER_VALS = { 3487, 3146, 3370, 3114, 3451, 3449, 3628, 3222, 3789, 3096, 3559, 3759, 3390, 3200, 0, 0, 2048, 2048 };
         
         #endregion
 
@@ -47,6 +40,11 @@ namespace JasHandExperiment
         /// the file to write the data to
         /// </summary>
         CSVFile mWriteFile;
+
+        /// <summary>
+        /// the mode of the hand : calibration or realtime.
+        /// </summary>
+        internal HandPlayMode mMode;
         #endregion
 
         #region Functions
@@ -58,7 +56,10 @@ namespace JasHandExperiment
         {
             mGlove.Close();
             mGlove = null;
-            mWriteFile.Close();
+            if (mWriteFile != null)
+            {
+                mWriteFile.Close();
+            }
         }
 
         /// <summary>
@@ -69,10 +70,66 @@ namespace JasHandExperiment
             float[] scaledSensors = new float[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
             mGlove.GetSensorScaledAll(ref scaledSensors);
 
+            //CALIBBBB
+            //ushort[] rawSensors = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+            //mGlove.GetSensorRawAll(ref rawSensors);
+            //CalibrationManager.UpdateUpperLowerValues(rawSensors);
+            //scaledSensors = ScaleRawData(rawSensors, CalibrationManager.UpperCalibValues, CalibrationManager.LowerCalibValues);
+
             // set current state
             mCoordinates.TimeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
                                             CultureInfo.InvariantCulture);
             mCoordinates.SetHandMovementData(scaledSensors);
+            if (mMode == HandPlayMode.RealTime)
+            {
+                WriteCoordinatedToFile(scaledSensors, mCoordinates.TimeStamp);
+            }
+            
+            return mCoordinates;
+        }
+
+
+        /// <summary>
+        /// The function performs in place scaling of sensors
+        /// </summary>
+        /// <param name="rawSensors">the raw sensor values</param>
+        /// <param name="max">the maximum sensor value of snsors to scale according to</param>
+        /// <param name="min">the minimum sensor value of snsors to scale according to</param>
+        private float[] ScaleRawData(ushort[] rawSensors, ushort[] max, ushort[] min)
+        {
+            //CALIBBBB
+            //if (min == null || max == null
+            //    || ConfigurationManager.Instance.Configuration.ExperimentType == Configuration.ExperimentType.PassiveWatchingReplay)
+            //{
+            //    sensorsData = ScaleRawData(ushortSensors, max, min);
+            //}
+
+            float[] scaledSensors = new float[rawSensors.Length];
+            for (int i = 0; i < rawSensors.Length; i++)
+            {
+                float denom = (max[i] - min[i]);
+                int nominator = (rawSensors[i] - min[i]);
+                if (denom == 0 || nominator < 0)
+                {
+                    scaledSensors[i] = 0;
+                    continue;
+                }
+
+                scaledSensors[i] = (nominator / denom);
+                //Debug.Log("Scaled sensor number " + i + " is scaled to : " + scaledSensors[i]);
+                //Debug.Log("denom is : " + denom + " nominator is : " + (rawSensors[i] - min[i]));
+
+            }
+            return scaledSensors;
+        }
+
+        /// <summary>
+        /// The function gets timestamp and sensors and writes them to file (by mWriterFile)
+        /// </summary>
+        /// <param name="scaledSensors">the current sensors to write to file</param>
+        /// <param name="timeStamp">the time stamp of these scaled sensors</param>
+        private void WriteCoordinatedToFile(float[] scaledSensors, string timeStamp)
+        {
             // attach time stampt to sensors
             string[] fullLine = new string[scaledSensors.Length + 1];
             int valueIndex = 0;
@@ -84,7 +141,6 @@ namespace JasHandExperiment
             }
             //write to file
             mWriteFile.WriteLine(fullLine);
-            return mCoordinates;
         }
 
         /// <summary>
@@ -97,15 +153,16 @@ namespace JasHandExperiment
             {
                 // error
                 return false;
-            }
-
+            };
             // try to open glove
             mGlove = new CfdGlove();
+            CalibrationManager.Init(mGlove,mMode);
+            // before starting the glove device we need to fill calibration values
             try
             {
                 // check for connected USBS and search for the glove port
                 mGlove.Open(GLOVE_PORT_NAME);
-                CalibrateGlove(CommonUtilities.GetGloveSide());
+                CalibrationManager.SetCalibration();
             }
             catch (System.Exception ex)
             {
@@ -113,115 +170,23 @@ namespace JasHandExperiment
                 return false;
             }
             mCoordinates = new HandCoordinatesData();
-            mWriteFile = new CSVFile();
-            string path = CommonUtilities.GetParticipantCSVFileName(ConfigurationManager.Instance.Configuration.OutputFilesConfiguration.GloveMovementLogPath);
-            var columns = CommonUtilities.CreateGlovesDataFileColumns(ConfigurationManager.Instance.Configuration.ExperimentType);
-            var settings = new BatchCSVRWSettings();
-            settings.WriteBatchSize = 1000;
-            // interval?
-            settings.WriteBatchDelayMsec = 1000 * 5;
-            // init the file to write to
-            mWriteFile.Init(path, FileMode.Create,',', columns, settings);
-            return false;
+            if (mMode == HandPlayMode.RealTime)
+            {
+                // write sensors data to file only on real time
+                mWriteFile = new CSVFile();
+                string path = CommonUtilities.GetParticipantCSVFileName(ConfigurationManager.Instance.Configuration.OutputFilesConfiguration.GloveMovementLogPath);
+                var columns = CommonUtilities.CreateGlovesDataFileColumns(ConfigurationManager.Instance.Configuration.ExperimentType);
+                var settings = new BatchCSVRWSettings();
+                settings.WriteBatchSize = 1000;
+                // interval?
+                settings.WriteBatchDelayMsec = 1000 * 5;
+                // init the file to write to
+                mWriteFile.Init(path, FileMode.Create, ',', columns, settings);
+
+            }
+            return true;
         }
-
-        /// <summary>
-        /// The function sets aclibration values to glove
-        /// </summary>
-        private void CalibrateGlove(HandType gloveSide)
-        {
-            if (gloveSide == HandType.Left)
-            {
-                mGlove.SetCalibrationAll(LEFT_CALIB_UPPER_VALS, LEFT_CALIB_LOWER_VALS);
-            }
-            else
-            {
-                mGlove.SetCalibrationAll(RIGHT_CALIB_UPPER_VALS, RIGHT_CALIB_LOWER_VALS);
-            }
-        }
-        #region DEBUGGGG CALIB
-
-        public void DEBUG_calib(KeyCode c)
-        {
-            if (c == KeyCode.A)
-            {
-                /// debug
-                CSVFile calibFile = new CSVFile();
-                calibFile.Init(new FileStream("calib.cal", FileMode.Open), ':');
-                var lines = calibFile.ReadLines();
-                List<ushort> upperVals = new List<ushort>();
-                List<ushort> lowerVals = new List<ushort>();
-                foreach (var line in lines)
-                {
-                    int indexOfMaxSpave = line[line.Length - 2].IndexOf(" ");
-                    string upperStr = line[line.Length - 2].Substring(0, indexOfMaxSpave);
-                    ushort upper = ushort.Parse(upperStr);
-                    ushort lower = ushort.Parse(line[line.Length - 1]);
-
-                    upperVals.Add(upper);
-                    lowerVals.Add(lower);
-                }
-                mGlove.SetCalibrationAll(upperVals.ToArray(), lowerVals.ToArray());
-                calibFile.Close();
-            }
-
-            if (c == KeyCode.R)
-            {
-                for (int i = 0; i < MAX.Length; i++)
-                {
-                    MAX[i] = ushort.MinValue;
-                    MIN[i] = ushort.MaxValue;
-                }
-                mGlove.SetCalibrationAll(MAX, MIN);
-            }
-
-            if (c == KeyCode.G)
-            {
-                CSVFile writeCalib = new CSVFile();
-                string firstLine = string.Format("S0: MIN:{0} MAX:{1}", MIN[0], MAX[0]);
-                writeCalib.Init(new FileStream("WriteCalib.cal", FileMode.Create), " MAX:", new List<string>() { firstLine});
-                for (int i = 1; i < MAX.Length; i++)
-                {
-                    writeCalib.WriteLine(string.Format("S{0}: MIN:{1} MAX:{2}", i, MIN[i],MAX[i]));
-                }
-                writeCalib.Close();
-            }
-            
-            if (c == KeyCode.M || isAuto)
-            {
-                if (!isAuto)
-                {
-                    for (int i = 0; i < MAX.Length; i++)
-                    {
-                        MAX[i] = ushort.MinValue;
-                        MIN[i] = ushort.MaxValue;
-                    }
-                }
-                isAuto = true;
-                ushort[] scaledSensors = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-                mGlove.GetSensorRawAll(ref scaledSensors);
-                for (int i = 0; i <= MAX.Length; i++)
-                {
-                    if (scaledSensors[i] > MAX[i])
-                    {
-                        MAX[i] = scaledSensors[i];
-                    }
-                    if (scaledSensors[i] < MIN[i])
-                    {
-                        MIN[i] = scaledSensors[i];
-                    }
-                }
-            }
-            if (c == KeyCode.S && isAuto)
-            {
-                mGlove.SetCalibrationAll(MAX, MIN);
-            }
-        }
-
-        private static ushort[] MAX = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-        private static ushort[] MIN = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-        private static bool isAuto = false; 
-        #endregion
+        
         #endregion
     }
 }

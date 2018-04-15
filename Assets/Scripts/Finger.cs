@@ -16,7 +16,7 @@ namespace JasHandExperiment
         /// <summary>
         /// the initial position of the finger
         /// </summary>
-        private Quaternion[] mInitialRotate;
+        internal Quaternion[] mInitialRotate;
 
         /// <summary>
         /// The type of the finger
@@ -72,9 +72,8 @@ namespace JasHandExperiment
             mBones[(int)BoneSection.Inter] = mBones[(int)BoneSection.Near].GetChild(0);
             // get dist bone
             mBones[(int)BoneSection.Far] = mBones[(int)BoneSection.Inter].GetChild(0);
-            // remember initial state
-            SetInitialRotation(mBones.Length);
 
+            SetInitialRotation(numOfBoneSections);
         }
         #endregion
 
@@ -89,7 +88,7 @@ namespace JasHandExperiment
                 return;
             }
 
-            for (int i = 0; i < mBones.Length; i++)
+            for (int i = 0; i < mBones.Length -1; i++)
             {
                 mBones[i].rotation = mInitialRotate[i];
             }
@@ -108,25 +107,25 @@ namespace JasHandExperiment
             }
             // set initial state before rotating
             ResetRotation();
-            for (int i = 0; i < mBones.Length; i++)
+            for (int i = 0; i < mBones.Length -1; i++)
             {
                 // calculate angle according to 5DT glove documentation
                 float angle = -90 * coordinates[mFingerType][i];
-                //if (Math.Abs(angle) > 10)
+                if (Math.Abs(angle) > 20)
                 {
                     mBones[i].Rotate(mMovementDirection, angle);
                 }
             }
         }
-
+        
         /// <summary>
         /// the function set's initial state of bones
         /// </summary>
         /// <param name="numOfBoneSections">the amount of bones in the finger</param>
-        private void SetInitialRotation(int numOfBoneSections)
+        internal void SetInitialRotation(int numOfBoneSections)
         {
             mInitialRotate = new Quaternion[numOfBoneSections];
-            for (int i = 0; i < mBones.Length; i++)
+            for (int i = 0; i < mBones.Length -1; i++)
             {
                 mInitialRotate[i] = mBones[i].rotation;
             }

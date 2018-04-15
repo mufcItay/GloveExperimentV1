@@ -2006,6 +2006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HandSide: 2
   HandGender: 1
+  Mode: 0
 --- !u!114 &114856831741898106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2019,6 +2020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HandSide: 1
   HandGender: 1
+  Mode: 0
 --- !u!137 &137649388110968020
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
