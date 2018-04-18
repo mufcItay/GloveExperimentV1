@@ -4,7 +4,7 @@
   <SubRuns>
     <SubRunConfiguration>
       <BlocksAmount>12</BlocksAmount>
-      <InterBlockTimeout>30</InterBlockTimeout>
+      <InterBlockTimeout>80</InterBlockTimeout>
       <BlockDuration>1</BlockDuration>
     </SubRunConfiguration>
   </SubRuns>
@@ -33,7 +33,7 @@
       <b>172</b>
       <a>255</a>
     </HandColor>
-    <HandGender>Male</HandGender>
+    <HandGender>Female</HandGender>
     <HandModel>hand_ModelM.obj</HandModel>
   </VRHandConfiguration>
   <ExperimentType>Active</ExperimentType>

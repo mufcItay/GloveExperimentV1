@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static HandController;
 
 namespace JasHandExperiment
@@ -59,6 +60,7 @@ namespace JasHandExperiment
         /// </summary>
         private static ushort[] mLowerCalibrationArray;
 
+        private static bool mIsFingerCalibration;
         #endregion
 
         #region Props
@@ -72,6 +74,10 @@ namespace JasHandExperiment
         /// property for lower sensor values used for calibration
         /// </summary>
         public static ushort[] LowerCalibValues { get { return mLowerCalibrationArray; } }
+
+        public static FingerType? CurrentFinger;
+        
+        public static HandPlayMode Mode { get; set; }
         #endregion
         
         #region Functions
@@ -89,6 +95,8 @@ namespace JasHandExperiment
             //    //mMiMaxCalcs[i] = new NaiveMinMax<ushort>();
             //    //mMiMaxCalcs[i].SetInitialValues(ushort.MaxValue, ushort.MinValue);
             //}
+            mIsFingerCalibration = false;
+            CurrentFinger = null;
             mGlove = gloveInst;
             mMode = mode;
             if (mIsInitialized)
@@ -105,16 +113,22 @@ namespace JasHandExperiment
             }
             else
             {
-                // for calibration set MAX and MIN vals to avoid conflicting 
-                mUpperCalibrationArray = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-                mLowerCalibrationArray = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-                for (int i = 0; i < mUpperCalibrationArray.Length; i++)
-                {
-                    mUpperCalibrationArray[i] = ushort.MinValue;
-                    mLowerCalibrationArray[i] = ushort.MaxValue;
-                }
+                ResetUpperAndLowerVals();
             }
         }
+
+        private static void ResetUpperAndLowerVals()
+        {
+            // for calibration set MAX and MIN vals to avoid conflicting 
+            mUpperCalibrationArray = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+            mLowerCalibrationArray = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+            for (int i = 0; i < mUpperCalibrationArray.Length; i++)
+            {
+                mUpperCalibrationArray[i] = ushort.MinValue;
+                mLowerCalibrationArray[i] = ushort.MaxValue;
+            }
+        }
+
         /// <summary>
         /// the function handles user input to manipulate calibration states
         /// if user pressed A - read calibration from file and apply it
@@ -136,7 +150,32 @@ namespace JasHandExperiment
             // if user pressed R - reset calibration and apply it
             if (Input.GetKeyDown(KeyCode.R))
             {
-                mGlove.ResetCalibration();
+                ResetUpperAndLowerVals();
+                SetCalibration();
+            }
+            if (mIsFingerCalibration == true)
+            {
+                UpdateUpperLowerValues(CurrentFinger);
+            }
+            // if user pressed R - reset calibration and apply it
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                if (!mIsFingerCalibration)
+                {
+                    mGlove.ResetCalibration();
+                }
+                if (CurrentFinger == null && mIsFingerCalibration == false)
+                {
+                    CurrentFinger = FingerType.Index;
+                    mIsFingerCalibration = true;
+                    return;
+                }
+                if (CurrentFinger == FingerType.Thumb)
+                {
+                    return;
+                }
+
+                CurrentFinger = (FingerType)((int)CurrentFinger + 1);
             }
             // if user pressed G - write current calibration to file
             if (Input.GetKeyDown(KeyCode.G))
@@ -163,8 +202,47 @@ namespace JasHandExperiment
             {
                 mGlove.SetCalibrationAll(mUpperCalibrationArray, mLowerCalibrationArray);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                CommonConstants.FirstRun = false;
+                SceneManager.LoadScene("restRoom");
+
+            }
         }
-        
+
+        private static void UpdateUpperLowerValues(FingerType? currentFinger, ushort[] rawSensors = null)
+        {
+            if (currentFinger == null)
+            {
+                Debug.Log("CURERNT FINGER IS NULL!!");
+            }
+            if (rawSensors == null)
+            {
+                rawSensors = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
+                mGlove.GetSensorRawAll(ref rawSensors);
+            }
+
+            int fingerOffset = 3 * ((int)CurrentFinger +1);
+
+            if (CurrentFinger == FingerType.Thumb)
+            {
+                fingerOffset = 0;
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (rawSensors[fingerOffset + i] > mUpperCalibrationArray[fingerOffset + 1])
+                {
+                    mUpperCalibrationArray[fingerOffset + 1] = rawSensors[fingerOffset + 1];
+                }
+                if (rawSensors[fingerOffset +1] < mLowerCalibrationArray[fingerOffset + 1])
+                {
+                    mLowerCalibrationArray[fingerOffset + 1] = rawSensors[fingerOffset + 1];
+                }
+            }
+            
+        }
+
         /// <summary>
         /// the functin reads calibration of glove device from file and returns it's values.
         /// </summary>
@@ -208,7 +286,7 @@ namespace JasHandExperiment
             writeCalib.Init(new FileStream(fileName, FileMode.Create), CALIBRATION_FILE_MAX_SEP, null);
             for (int i = 0; i < mUpperCalibrationArray.Length; i++)
             {
-                writeCalib.WriteLine(string.Format(CALIBRATION_FILE_LINE_FORMAT, i, mUpperCalibrationArray[i], mLowerCalibrationArray[i]));
+                writeCalib.WriteLine(string.Format(CALIBRATION_FILE_LINE_FORMAT, i, mLowerCalibrationArray[i], mUpperCalibrationArray[i]));
             }
             writeCalib.Close();
         }

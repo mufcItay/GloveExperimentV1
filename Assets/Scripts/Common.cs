@@ -11,9 +11,9 @@ namespace JasHandExperiment
     public enum FingerType
     {
         Index = 0,
-        Little = 1,
-        Middle = 2,
-        Ring = 3,
+        Middle = 1,
+        Ring = 2,
+        Little = 3,
         Thumb = 4
     }
 

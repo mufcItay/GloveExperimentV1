@@ -11,11 +11,21 @@ namespace JasHandExperiment
         public Material[] material;
         void Start()
         {
-            if (ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandGender == GenderType.Male)
-                RenderSettings.skybox = material[1];
-            else
-                RenderSettings.skybox = material[0];
-          
+            if (ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandGender == GenderType.Male) {
+                if (ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == HandType.Left)
+                    RenderSettings.skybox = material[0];
+                if (ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == HandType.Right)
+                    RenderSettings.skybox = material[1];
+
+            }
+            else if (ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandGender == GenderType.Female)
+            {
+                if (ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == HandType.Left)
+                    RenderSettings.skybox = material[2];
+                if (ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate == HandType.Right)
+                    RenderSettings.skybox = material[3];
+
+            }
         }
     }
 }

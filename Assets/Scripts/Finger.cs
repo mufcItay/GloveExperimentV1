@@ -88,7 +88,7 @@ namespace JasHandExperiment
                 return;
             }
 
-            for (int i = 0; i < mBones.Length -1; i++)
+            for (int i = 0; i < mBones.Length; i++)
             {
                 mBones[i].rotation = mInitialRotate[i];
             }
@@ -107,13 +107,14 @@ namespace JasHandExperiment
             }
             // set initial state before rotating
             ResetRotation();
-            for (int i = 0; i < mBones.Length -1; i++)
+            for (int i = 1; i < mBones.Length ; i++)
             {
                 // calculate angle according to 5DT glove documentation
-                float angle = -90 * coordinates[mFingerType][i];
-                if (Math.Abs(angle) > 20)
+                float angle = -90 * coordinates[mFingerType][i-1];
+                Debug.Log("finger : " + mFingerType.ToString() +", part : " + i+", angle : " + angle);
+                if (Math.Abs(angle) > 30)
                 {
-                    mBones[i].Rotate(mMovementDirection, angle);
+                    mBones[i].Rotate(mMovementDirection, angle /2); // why divide by 2? not sure
                 }
             }
         }
@@ -125,7 +126,7 @@ namespace JasHandExperiment
         internal void SetInitialRotation(int numOfBoneSections)
         {
             mInitialRotate = new Quaternion[numOfBoneSections];
-            for (int i = 0; i < mBones.Length -1; i++)
+            for (int i = 0; i < mBones.Length; i++)
             {
                 mInitialRotate[i] = mBones[i].rotation;
             }

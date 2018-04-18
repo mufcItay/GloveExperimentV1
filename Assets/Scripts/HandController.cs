@@ -65,6 +65,11 @@ public class HandController : MonoBehaviour {
         
         // set parameters and init selected strategy
         mExperimentType = ConfigurationManager.Instance.Configuration.ExperimentType;
+        CalibrationManager.Mode = this.Mode;
+        if (Mode == HandPlayMode.Calibration)
+        {
+            mExperimentType = ExperimentType.Active;
+        }
         mExperimentStrategy = ExperimentStrategyFactory.GetOrCreate(mExperimentType);
         mExperimentStrategy.Init(this);
     }
@@ -91,6 +96,7 @@ public class HandController : MonoBehaviour {
         Renderer rend = handModel.GetComponent<Renderer>();
         // set hand color
         rend.material.color = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandColor;
+        Debug.Log("handCOLOR: " + rend.material.color.ToString());
     }
 
     private void OnDestroy()

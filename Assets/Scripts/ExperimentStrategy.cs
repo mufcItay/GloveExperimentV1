@@ -52,39 +52,6 @@ namespace JasHandExperiment
         /// <param name="handController">the hand controller to apply experiment process to</param>
         public void Init(HandController handController)
         {
-            var cols = new string[] { "Time", "Thumb Near", "Thumb Far", "Thumb/Index", "Index Near ", "Index Far", "Index/Middle", " Middle Near", "Middle Far", "Middle/Ring", "Ring Near", "Ring Far", " Ring/Little", "Little Near", "Little Far" };
-
-            CSVFile d = new CSVFile();
-            d.Init(new System.IO.FileStream(@"D:\UnityWS\TestGame\KeybaordShit\NewReal.csv", System.IO.FileMode.Open),",", cols);
-            var line = d.ReadLine();
-            var dt = DateTime.Now;
-            var list = new List<string[]>();
-            bool flag = false;
-            while (line!= null)
-            {
-                if (flag || line[0].Equals("2018-04-12 21:21:27.699"))
-                {
-                    flag = true;
-                    dt = dt.AddMilliseconds(20);
-                    line[0] = dt.ToString("yyyy-MM-dd HH:mm:ss.fff",
-                                            System.Globalization.CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    dt = DateTime.Parse(line[0]);
-                }
-
-                list.Add(line);
-                line = d.ReadLine();
-            }
-            d.Close();
-            CSVFile wr = new CSVFile();
-            wr.Init("NewReal.csv", System.IO.FileMode.Create, ',', cols);
-            foreach (var item in list)
-            {
-                wr.WriteLine(item);
-            }
-            wr.Close();
             if (mIsInitialized)
             {
                 return;
@@ -125,6 +92,10 @@ namespace JasHandExperiment
             // roteate each finger
             foreach (var finger in mFingers)
             {
+                if (CalibrationManager.CurrentFinger != null && finger.FingerType != CalibrationManager.CurrentFinger)
+                {
+                    continue;
+                }
                 finger.Rotate(mDevice.GetHandData() as HandCoordinatesData);
             }
         }
