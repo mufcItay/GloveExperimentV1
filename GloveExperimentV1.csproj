@@ -335,6 +335,7 @@
     <Compile Include="Assets\Scripts\KeyBoardSimulationFileDevice.cs" />
     <Compile Include="Assets\Scripts\KeyPressedData.cs" />
     <Compile Include="Assets\Scripts\MinMaxMethods.cs" />
+    <Compile Include="Assets\Scripts\moveToCalibration.cs" />
     <Compile Include="Assets\Scripts\redButtonText.cs" />
     <Compile Include="Assets\Scripts\ReplayFileDevice.cs" />
     <Compile Include="Assets\Scripts\SimulationFileDevice.cs" />

@@ -16,7 +16,7 @@
   <ParticipantConfiguration>
     <Number>19</Number>
     <GroupNumber>1</GroupNumber>
-    <Gender>Female</Gender>
+    <Gender>Male</Gender>
     <Age>0</Age>
   </ParticipantConfiguration>
   <SessionsConfiguration>
@@ -294,11 +294,11 @@
       <b>66</b>
       <a>255</a>
     </HandColor>
-    <HandGender>Female</HandGender>
+    <HandGender>Male</HandGender>
     <HandModel>hand_ModelM.obj</HandModel>
   </VRHandConfiguration>
   <ExperimentType>Active</ExperimentType>
-  <ReplayFilePath>C:\WS\GloveExperimentV1\KeyboardExample.csv</ReplayFilePath>
-  <ReplayUserPressesFilePath>C:\WS\GloveExperimentV1\KeybaordShit\23-1.csv</ReplayUserPressesFilePath>
+  <ReplayFilePath>C:\WS\GloveExperimentV1\KeybaordShit\NewPassMove.csv</ReplayFilePath>
+  <ReplayUserPressesFilePath>C:\WS\GloveExperimentV1\KeybaordShit\passNewPress.csv</ReplayUserPressesFilePath>
   <PressFrequency>2</PressFrequency>
 </ExperimentConfiguration>

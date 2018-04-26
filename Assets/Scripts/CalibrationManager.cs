@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static HandController;
+using static JasHandExperiment.ExperimentManager;
 
 namespace JasHandExperiment
 {
@@ -75,30 +76,33 @@ namespace JasHandExperiment
         /// </summary>
         public static ushort[] LowerCalibValues { get { return mLowerCalibrationArray; } }
 
+        /// <summary>
+        /// member indicating which finger are wi calibrating now, nullable cause we don't need to calibrate for each finger and for bug fix
+        /// </summary>
         public static FingerType? CurrentFinger;
         
-        public static HandPlayMode Mode { get; set; }
+        /// <summary>
+        /// the mode of play, are we calibratiing or in actual experiment?
+        /// </summary>
+        public static HandPlayMode Mode { get { return mMode; } set { mMode = value; } }
         #endregion
         
         #region Functions
 
-        public static void Init(CfdGlove gloveInst, HandPlayMode mode)
+        /// <summary>
+        /// the function initializes the calibration manager accordign to glove and mode of play
+        /// </summary>
+        /// <param name="gloveInst">the flove from which we get sensor values</param>
+        /// <param name="mode">the mode of play, if it's undefined the function will not set mode</param>
+        public static void Init(CfdGlove gloveInst, HandPlayMode mode = HandPlayMode.Undefined)
         {
-            //CALIBBBB
-            //mMiMaxCalcs = new NaiveMinMax<ushort>[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-            //mMiMaxCalcs = new WeightedUShortMinMax[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-
-            //for (int i=0;i<mMiMaxCalcs.Length;i++)
-            //{
-            //    mMiMaxCalcs[i] = new WeightedUShortMinMax();
-
-            //    //mMiMaxCalcs[i] = new NaiveMinMax<ushort>();
-            //    //mMiMaxCalcs[i].SetInitialValues(ushort.MaxValue, ushort.MinValue);
-            //}
             mIsFingerCalibration = false;
             CurrentFinger = null;
             mGlove = gloveInst;
-            mMode = mode;
+            if (mode != HandPlayMode.Undefined)
+            {
+                mMode = mode;
+            }
             if (mIsInitialized)
             {
                 // already initialized don't re init.. 
@@ -116,7 +120,10 @@ namespace JasHandExperiment
                 ResetUpperAndLowerVals();
             }
         }
-
+        
+        /// <summary>
+        /// The function sets min and max values to relevant scaling UPPER and LOWER values
+        /// </summary>
         private static void ResetUpperAndLowerVals()
         {
             // for calibration set MAX and MIN vals to avoid conflicting 
@@ -136,6 +143,7 @@ namespace JasHandExperiment
         /// if user pressed G - write current calibration to file
         /// if user pressed M - start auto calibrating
         /// if user pressed S - just set the auto calibrated values 
+        /// if user pressed space - moving on from calibration scene to next scene
         /// </summary>
         internal static void HandCalibrationUserInput()
         {
@@ -211,6 +219,11 @@ namespace JasHandExperiment
             }
         }
 
+        /// <summary>
+        /// The function updates calibration values to be later on used for scaling hand movement
+        /// </summary>
+        /// <param name="currentFinger">current finger to scale, nullable - if null the function will fail</param>
+        /// <param name="rawSensors">all of the sesnor values</param>
         private static void UpdateUpperLowerValues(FingerType? currentFinger, ushort[] rawSensors = null)
         {
             if (currentFinger == null)
@@ -223,6 +236,7 @@ namespace JasHandExperiment
                 mGlove.GetSensorRawAll(ref rawSensors);
             }
 
+            // due to the array indexes we apply some mathematical calc to point out to right finger
             int fingerOffset = 3 * ((int)CurrentFinger +1);
 
             if (CurrentFinger == FingerType.Thumb)
@@ -279,7 +293,7 @@ namespace JasHandExperiment
         {
             if (mUpperCalibrationArray == null || mLowerCalibrationArray == null)
             {
-                // ERROR
+                Debug.Log("cannot write calibration file, lower and/or upper values are null");
             }
 
             CSVFile writeCalib = new CSVFile();
@@ -312,11 +326,6 @@ namespace JasHandExperiment
             
             for (int i = 0; i < rawSensors.Length; i++)
             {
-                //CALIBBBB
-                //mMiMaxCalcs[i].InsertValue(rawSensors[i]);
-                //mUpperCalibrationArray[i] = mMiMaxCalcs[i].Max;
-                //mLowerCalibrationArray[i] = mMiMaxCalcs[i].Min;
-
                 if (rawSensors[i] > mUpperCalibrationArray[i])
                 {
                     mUpperCalibrationArray[i] = rawSensors[i];

@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using UnityEngine;
 using static HandController;
+using static JasHandExperiment.ExperimentManager;
 
 namespace JasHandExperiment
 {
@@ -41,10 +42,6 @@ namespace JasHandExperiment
         /// </summary>
         CSVFile mWriteFile;
 
-        /// <summary>
-        /// the mode of the hand : calibration or realtime.
-        /// </summary>
-        internal HandPlayMode mMode;
         #endregion
 
         #region Functions
@@ -70,19 +67,13 @@ namespace JasHandExperiment
             float[] scaledSensors = new float[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
             mGlove.GetSensorScaledAll(ref scaledSensors);
 
-            //CALIBBBB
-            //ushort[] rawSensors = new ushort[CommonConstants.SCALED_SESORS_ARRAY_LENGTH];
-            //mGlove.GetSensorRawAll(ref rawSensors);
-            //CalibrationManager.UpdateUpperLowerValues(rawSensors);
-            //scaledSensors = ScaleRawData(rawSensors, CalibrationManager.UpperCalibValues, CalibrationManager.LowerCalibValues);
-
             // set current state
             mCoordinates.TimeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff",
                                             CultureInfo.InvariantCulture);
             mCoordinates.SetHandMovementData(scaledSensors);
-            if (mMode == HandPlayMode.RealTime)
+            if (CalibrationManager.Mode == HandPlayMode.RealTime)
             {
-                WriteCoordinatedToFile(scaledSensors, mCoordinates.TimeStamp);
+                WriteCoordinatesToFile(scaledSensors, mCoordinates.TimeStamp);
             }
             
             return mCoordinates;
@@ -97,13 +88,6 @@ namespace JasHandExperiment
         /// <param name="min">the minimum sensor value of snsors to scale according to</param>
         private float[] ScaleRawData(ushort[] rawSensors, ushort[] max, ushort[] min)
         {
-            //CALIBBBB
-            //if (min == null || max == null
-            //    || ConfigurationManager.Instance.Configuration.ExperimentType == Configuration.ExperimentType.PassiveWatchingReplay)
-            //{
-            //    sensorsData = ScaleRawData(ushortSensors, max, min);
-            //}
-
             float[] scaledSensors = new float[rawSensors.Length];
             for (int i = 0; i < rawSensors.Length; i++)
             {
@@ -116,9 +100,6 @@ namespace JasHandExperiment
                 }
 
                 scaledSensors[i] = (nominator / denom);
-                //Debug.Log("Scaled sensor number " + i + " is scaled to : " + scaledSensors[i]);
-                //Debug.Log("denom is : " + denom + " nominator is : " + (rawSensors[i] - min[i]));
-
             }
             return scaledSensors;
         }
@@ -128,7 +109,7 @@ namespace JasHandExperiment
         /// </summary>
         /// <param name="scaledSensors">the current sensors to write to file</param>
         /// <param name="timeStamp">the time stamp of these scaled sensors</param>
-        private void WriteCoordinatedToFile(float[] scaledSensors, string timeStamp)
+        private void WriteCoordinatesToFile(float[] scaledSensors, string timeStamp)
         {
             // attach time stampt to sensors
             string[] fullLine = new string[scaledSensors.Length + 1];
@@ -151,12 +132,13 @@ namespace JasHandExperiment
             // avoid re creating glove if it is already creted
             if (mGlove != null)
             {
-                // error
+
+                Debug.Log("trying to open glove which was already initialized");
                 return false;
             };
             // try to open glove
             mGlove = new CfdGlove();
-            CalibrationManager.Init(mGlove,mMode);
+            CalibrationManager.Init(mGlove, CalibrationManager.Mode);
             // before starting the glove device we need to fill calibration values
             try
             {
@@ -170,7 +152,7 @@ namespace JasHandExperiment
                 return false;
             }
             mCoordinates = new HandCoordinatesData();
-            if (mMode == HandPlayMode.RealTime)
+            if (CalibrationManager.Mode == HandPlayMode.RealTime)
             {
                 // write sensors data to file only on real time
                 mWriteFile = new CSVFile();

@@ -5,8 +5,10 @@ using UnityEngine;
 
 namespace JasHandExperiment
 {
+    
     public class ExperimentManager : MonoBehaviour {
 
+        
         #region Data Members
 
         private static ExperimentManager sInstance;
@@ -26,7 +28,24 @@ namespace JasHandExperiment
         /// </summary>
         public GameObject MaleHandPrefab;
 
+        /// <summary>
+        /// prefab for female hands
+        /// </summary>
+        public GameObject RightKeyboardPrefab;
+
+        /// <summary>
+        /// prefab for female hands
+        /// </summary>
+        public GameObject LeftKeyboardPrefab;
+
         private BaseConditionedDynamicObjectCreator<GenderType> mDynamicHandCreator;
+
+        private BaseConditionedDynamicObjectCreator<HandType> mDynamicKeyboardCreator;
+        
+        /// <summary>
+        /// indicates if we are in calibration mode or real time running
+        /// </summary>
+        public HandPlayMode Mode;
 
         #endregion
 
@@ -48,11 +67,17 @@ namespace JasHandExperiment
         void Start() {
             sInstance = this;
             mExperimentRuntime = ExperimentRuntime.Instance;
-            
+            CalibrationManager.Mode = Mode;
+
             // create and init hand creator
             mDynamicHandCreator = new BaseConditionedDynamicObjectCreator<GenderType>(MaleHandPrefab, FemaleHandPrefab);
             GenderType gender = ConfigurationManager.Instance.Configuration.ParticipantConfiguration.Gender;
             Instantiate(mDynamicHandCreator.GetObjectToCreate(x => x.Equals(GenderType.Male), gender));
+
+            // create and init keyboard creator
+            mDynamicKeyboardCreator = new BaseConditionedDynamicObjectCreator<HandType>(LeftKeyboardPrefab, RightKeyboardPrefab);
+            HandType side = ConfigurationManager.Instance.Configuration.VRHandConfiguration.HandToAnimate;
+            Instantiate(mDynamicKeyboardCreator.GetObjectToCreate(x => x.Equals(HandType.Left), side));
         }
     }
 }

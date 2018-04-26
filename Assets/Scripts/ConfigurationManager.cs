@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -73,7 +74,8 @@ namespace JasHandExperiment
             var runtimeConf = mRuntimeConfigurationFile.GetObject<RuntimeConfiguration>();
             if (!File.Exists(runtimeConf.PathToConfigurationFile))
             {
-                // ERROR
+                UnityEngine.Debug.Log("Cannot find configuration.xml file in main directory! need to create one or move it to the right spot");
+                return;
             }
             mConfigurationFile = new FileRepository();
             mConfigurationFile.Connect(runtimeConf.PathToConfigurationFile);

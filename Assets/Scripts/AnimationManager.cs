@@ -83,7 +83,8 @@ namespace JasHandExperiment
             // uninitialized?
             if (mProperties == null)
             {
-                // error
+                Debug.Log("properties for animation manager weren't set and are null");
+                return;
             }
 
             foreach (var prop in mProperties)
@@ -109,7 +110,8 @@ namespace JasHandExperiment
             // uninitialized?
             if (mProperties == null)
             {
-                // error
+                Debug.Log("properties for animation manager weren't set and are null");
+                return;
             }
             foreach (var prop in mProperties)
             {
@@ -127,7 +129,8 @@ namespace JasHandExperiment
             // uninitialized?
             if (mKeyPressToPropertyDict == null)
             {
-                // error
+
+                Debug.Log("keyToProperties dictionary for animation manager weren't set and are null");
             }
 
             // serach for relevant property and set exclusively

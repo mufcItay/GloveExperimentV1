@@ -100,7 +100,8 @@ namespace ConfigurationUI
                 catch (Exception)
                 {
                     // write to log
-                    //MessageBox.Show("load assembly error :" + e.Message);
+                    //MessageBox.Show("load assembly 
+                    :" + e.Message);
                 }
             }
 

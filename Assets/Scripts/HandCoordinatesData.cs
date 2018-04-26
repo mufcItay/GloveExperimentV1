@@ -147,7 +147,7 @@ namespace JasHandExperiment
             }
             else
             {
-                //ERROR
+                Debug.Log("hand movement data is not a the correct format (not in a suitable type)");
             }
         } 
         #endregion

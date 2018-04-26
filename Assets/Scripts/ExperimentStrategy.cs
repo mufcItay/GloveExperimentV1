@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static JasHandExperiment.ExperimentManager;
 
 namespace JasHandExperiment
 {
@@ -132,12 +133,11 @@ namespace JasHandExperiment
         {
             base.InnerInit();
             mGloveDevice = mDevice as GlovesDevice;
-            mGloveDevice.mMode = mHandController.Mode;
         }
 
         public override void MoveHand()
         {
-            if (mHandController.Mode == HandController.HandPlayMode.Calibration)
+            if (CalibrationManager.Mode == HandPlayMode.Calibration)
             {
                 CalibrationManager.HandCalibrationUserInput();
             }

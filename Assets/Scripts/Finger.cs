@@ -102,7 +102,7 @@ namespace JasHandExperiment
         {
             if (coordinates == null)
             {
-                //ERROR
+                Debug.Log("trying to rotate finger for coordinates that are null");
                 return;
             }
             // set initial state before rotating
@@ -111,7 +111,7 @@ namespace JasHandExperiment
             {
                 // calculate angle according to 5DT glove documentation
                 float angle = -90 * coordinates[mFingerType][i-1];
-                Debug.Log("finger : " + mFingerType.ToString() +", part : " + i+", angle : " + angle);
+        //        Debug.Log("finger : " + mFingerType.ToString() +", part : " + i+", angle : " + angle);
                 if (Math.Abs(angle) > 30)
                 {
                     mBones[i].Rotate(mMovementDirection, angle /2); // why divide by 2? not sure

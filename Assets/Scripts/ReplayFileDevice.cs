@@ -60,16 +60,14 @@ namespace JasHandExperiment
             }               
             else
             {
-                //error
+                Debug.Log("cannot set time stamp to null coordinates");
             }
         }
 
         public override void Init()
         {
             base.Init();
-            //CALIBBBB
-            //no glove, just a replay
-            //CalibrationManager.Init(null,HandController.HandPlayMode.Calibration);
+
             mTimedReader = new TimedCSVReader(mCSVFile, CommonConstants.TIME_COL_INDEX, MINIMAL_DELTA_MSEC);
         }
 

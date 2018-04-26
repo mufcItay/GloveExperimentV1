@@ -8,6 +8,17 @@ using UnityEngine;
 namespace JasHandExperiment
 {
     #region Enums
+    
+    /// <summary>
+    /// enum to differentiate betweeen calibration mode and realtime regular mode
+    /// </summary>
+    public enum HandPlayMode
+    {
+        RealTime,
+        Calibration,
+        Undefined
+    }
+
     public enum FingerType
     {
         Index = 0,

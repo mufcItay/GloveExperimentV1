@@ -4,6 +4,7 @@ using UnityEngine;
 using JasHandExperiment;
 using System;
 using JasHandExperiment.Configuration;
+using static JasHandExperiment.ExperimentManager;
 
 /// <summary>
 /// The class is the controller of a hand in the experiment.
@@ -11,19 +12,7 @@ using JasHandExperiment.Configuration;
 /// </summary>
 public class HandController : MonoBehaviour {
 
-    #region Enums
-
-    /// <summary>
-    /// enum to differentiate betweeen calibration mode and realtime regular mode
-    /// </summary>
-    public enum HandPlayMode
-    {
-        RealTime,
-        Calibration
-    }
-
-    #endregion
-
+    
     #region Data Members
 
     /// <summary>
@@ -45,11 +34,7 @@ public class HandController : MonoBehaviour {
     /// The experiment type
     /// </summary>
     private ExperimentType mExperimentType;
-
-    /// <summary>
-    /// indicates if we are in calibration mode or real time running
-    /// </summary>
-    public HandPlayMode Mode;
+    
     #endregion
 
     #region Functions
@@ -65,8 +50,7 @@ public class HandController : MonoBehaviour {
         
         // set parameters and init selected strategy
         mExperimentType = ConfigurationManager.Instance.Configuration.ExperimentType;
-        CalibrationManager.Mode = this.Mode;
-        if (Mode == HandPlayMode.Calibration)
+        if (CalibrationManager.Mode == HandPlayMode.Calibration)
         {
             mExperimentType = ExperimentType.Active;
         }

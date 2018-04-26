@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CommonTools;
 using JasHandExperiment.Configuration;
+using UnityEngine;
 
 namespace JasHandExperiment
 {
@@ -67,7 +68,7 @@ namespace JasHandExperiment
             Type devType = typeof(T);
             if (!sTypesDict.ContainsKey(devType))
             {
-                // ERROR
+                Debug.Log("factory cannot create this type : " + devType.AssemblyQualifiedName);
             }
 
             T device = sTypesDict[devType] as T;

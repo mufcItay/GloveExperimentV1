@@ -21,6 +21,10 @@ public class KeyBoardConroller : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if (CalibrationManager.Mode != HandPlayMode.RealTime)
+        {
+            return;
+        }
         // get keyboard component from unity
         keyboard = GetComponent<Animator>();
         //ask configuration which hand will show up on screnn 
@@ -66,6 +70,11 @@ public class KeyBoardConroller : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        if (CalibrationManager.Mode != HandPlayMode.RealTime)
+        {
+            return;
+        }
+
         if (ConfigurationManager.Instance.Configuration.ExperimentType != ExperimentType.Active)
         // getting info from file
         {

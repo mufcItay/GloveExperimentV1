@@ -9,13 +9,12 @@ namespace JasHandExperiment
 {
     public class switchScene : MonoBehaviour
     {
-        public AudioClip clip;
-        public AudioSource source;
-        private uint interBlockTimeout, blocksAmount;
-	    private bool flag;
-        public Text text;
-        private float timer, StartTime;
-        private bool flag2;	
+        public AudioClip clip; // beep sound 
+        public AudioSource source; // the source for beep sound 
+        private uint interBlockTimeout, blocksAmount; // times according to configuration 
+	    public Text text; // the text on the screen 
+        private float timer, StartTime; //timers to change scenes
+        private bool flag, flag2;	
         // Use this for initialization
         void Start()
         {
@@ -63,6 +62,7 @@ namespace JasHandExperiment
 
                 if (flag == true && ExperimentRuntime.Instance.EndOfExperement == false)
                 {
+                    //not the first run and still trail number is not number of blocks 
                     flag = false;
 					CommonConstants.TrialNumber++;
                     ExperimentRuntime.Instance.TrialNumber++;
